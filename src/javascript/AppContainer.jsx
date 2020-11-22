@@ -7,6 +7,7 @@ import ImageExPage from 'Pages/ImageExPage';
 import Error404Page from 'Pages/Error404Page';
 // ---Components
 import NavBar from 'Comp/NavBar';
+import Footer from 'Comp/Footer';
 
 function AppContainer() {
   return (
@@ -17,6 +18,7 @@ function AppContainer() {
         <Route exact path="/img" component={ImageExPage} />
         <Route exact path="*" component={Error404Page} />
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }

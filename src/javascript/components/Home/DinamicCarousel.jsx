@@ -9,17 +9,15 @@ import c2 from 'Images/banner2.jpg';
 function DinamicCarousel() {
   return (
     <React.Fragment>
-      <div className="border-round">
-        <div className="carousel-cont">
-          <Carousel autoplay effect="fade" dotPosition="left">
-            <div>
-              <img src={c1} width="236px" alt="vmo" />
-            </div>
-            <div>
-              <img src={c2} width="236px" alt="vmo" />
-            </div>
-          </Carousel>
-        </div>
+      <div className="carousel-cont">
+        <Carousel autoplay effect="fade" dotPosition="top">
+          <div>
+            <img src={c1} width="100%" alt="shelly" />
+          </div>
+          <div>
+            <img src={c2} width="100%" alt="shelly" />
+          </div>
+        </Carousel>
       </div>
     </React.Fragment>
   );
