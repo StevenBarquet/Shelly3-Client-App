@@ -1,16 +1,15 @@
 // ---Dependencys
 import React from 'react';
-import { Helmet } from 'react-helmet';
 // ---Components
 import HomeCont from 'Cont/HomeCont';
+// ---Handle html headers
+import CustomHelmet from 'Comp/CustomHelmet';
 
 // ------------------------------------------ COMPONENT-----------------------------------------
 const HomePage = () => {
   return (
     <React.Fragment>
-      <Helmet>
-        <title>Inicio</title>
-      </Helmet>
+      <CustomHelmet pageName="Home" />
       <HomeCont />
     </React.Fragment>
   );

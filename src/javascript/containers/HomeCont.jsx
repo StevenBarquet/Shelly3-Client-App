@@ -1,19 +1,23 @@
 // ---Dependencys
-import React, { useState } from 'react';
+import React from 'react';
 // ---Components
-import Home from 'Comp/Home';
+import DinamicCarousel from 'Comp/Home/DinamicCarousel';
+// ---Others
+import { title } from 'Others/labels.json';
+
+const { main, sub } = title;
 
 // ------------------------------------------ COMPONENT-----------------------------------------
 function HomeCont() {
-  const [showList, setShowList] = useState(false);
-  const handleclick = () => {
-    setShowList(!showList);
-    console.log('cambio showList', showList);
-  };
-
   return (
     <React.Fragment>
-      <Home handleclick={handleclick} showList={showList} />
+      <div className="h-title">
+        {main} <span>{sub}</span>
+      </div>
+      <p>
+        ¡Lo <span>mejor</span> te espera!
+      </p>
+      <DinamicCarousel />
     </React.Fragment>
   );
 }

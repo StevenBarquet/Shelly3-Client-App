@@ -5,10 +5,13 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HomePage from 'Pages/HomePage';
 import ImageExPage from 'Pages/ImageExPage';
 import Error404Page from 'Pages/Error404Page';
+// ---Components
+import NavBar from 'Comp/NavBar';
 
 function AppContainer() {
   return (
     <BrowserRouter>
+      <NavBar />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/img" component={ImageExPage} />
