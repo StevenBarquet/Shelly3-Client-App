@@ -14,10 +14,12 @@ import reducers from 'Reducers';
 // main container
 import AppContainer from './AppContainer';
 
+// More redux configuration
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__; // For redux browser devTool
 const store = createStore(
   reducers, // todos los reducers
   {}, // estado inicial
-  applyMiddleware(reduxThunk)
+  composeEnhancers(applyMiddleware(reduxThunk))
 );
 
 const rootElement = document.getElementById('root');

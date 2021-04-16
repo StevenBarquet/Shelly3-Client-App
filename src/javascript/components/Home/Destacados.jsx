@@ -8,7 +8,7 @@ import LazyBanner from 'Comp/Home/LazyBanner';
 // import c1 from 'Images/bannerD1.jpg';
 
 // ------------------------------------------ COMPONENT-----------------------------------------
-function DinamicCarousel(props) {
+function Destacados(props) {
   const { banners, isMovil } = props;
   if (banners)
     return (
@@ -34,4 +34,4 @@ function DinamicCarousel(props) {
   );
 }
 
-export default DinamicCarousel;
+export default Destacados;

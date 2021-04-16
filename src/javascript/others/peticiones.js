@@ -1,8 +1,22 @@
 import axios from 'axios';
 
-export const urlServer = 'https://shellyboost.com:4000/';
-// export const urlServer = 'http://localhost:4000/';
+// export const urlServer = 'https://shellyboost.com:4000/';
+export const urlServer = 'http://localhost:4000/';
 
+// -------------------------------------------Home---------------------------------------
+
+export async function getHomePublic(data) {
+  const endpoint = 'homeServices/getHomePublic';
+  const url = urlServer + endpoint;
+  try {
+    const respose = await axios.get(url, data);
+    return respose;
+  } catch (error) {
+    return error;
+  }
+}
+
+// -------------------------------------------Old----------------------------------------
 export async function genericGet(url) {
   try {
     const respose = await axios.get(url);

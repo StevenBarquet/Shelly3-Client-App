@@ -1,15 +1,15 @@
-import { INVERT_FLAG } from 'Types';
+import { CHANGE_RESPONSIVE } from 'Types';
 
 const INITIAL_STATE = {
-  showImg: false
+  isMovil: false
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case INVERT_FLAG:
+    case CHANGE_RESPONSIVE:
       return {
         ...state,
-        showImg: action.payload
+        isMovil: action.payload
       };
 
     default:
