@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 // ---Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { changeResponsiveFlag } from 'Actions/appInfo';
+import { changeResponsiveFlag, updatePath } from 'Actions/appInfo';
 // ---Components
 import AdminMenu from 'Comp/NavBar/AdminMenu';
 import ClientMenu from 'Comp/NavBar/ClientMenu';
@@ -20,11 +20,14 @@ const NavbarCont = withRouter(props => {
   // Redux Actions
   const dispatchR = useDispatch();
   const updateResponsiveData = data => dispatchR(changeResponsiveFlag(data));
+  const updateCurrentPath = () => dispatchR(updatePath(currentPath));
 
   const responsiveData = isMovilDetector();
   useEffect(() => {
     updateResponsiveData(responsiveData);
   }, [responsiveData]);
+
+  useEffect(() => updateCurrentPath(), [currentPath]);
 
   if (currentPath === '/master/login') {
     return null;

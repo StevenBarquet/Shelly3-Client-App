@@ -25,6 +25,18 @@
     },
     "SuccessOrder": {
       "title": "Exitoso"
+    },
+    "Login": {
+      "title": "Login"
+    },
+    "LogOut": {
+      "title": "Adios..."
+    },
+    "MasterHome": {
+      "title": "Inicio Administrador"
+    },
+    "ToHomeMasterPage": {
+      "title": "Redirigiendo..."
     }    
   }
 }

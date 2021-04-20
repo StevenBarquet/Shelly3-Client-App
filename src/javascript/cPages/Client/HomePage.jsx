@@ -1,7 +1,7 @@
 // ---Dependencys
 import React from 'react';
 // ---Components
-import HomeCont from 'Cont/HomeCont';
+import HomeCont from 'Cont/Client/HomeCont';
 // ---Handle html headers
 import CustomHelmet from 'Comp/CustomHelmet';
 

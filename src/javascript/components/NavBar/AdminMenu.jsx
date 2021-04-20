@@ -1,79 +1,104 @@
 // ---Dependencys
-import React from 'react';
+import React, { useState } from 'react';
+import { MenuFoldOutlined, MenuOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
-// ---Media
-// import c1 from 'Images/bannerD1.jpg';
 
 // ------------------------------------------ COMPONENT-----------------------------------------
 function AdminMenu(props) {
   const { isMovil, logo, currentPath } = props;
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  function changeMenuVisibility() {
+    setMenuVisible(!menuVisible);
+  }
+  if (isMovil)
+    return (
+      <Row className="nav-div">
+        <Col xs={24} sm={24} lg={8}>
+          <Link to="/">
+            <div className="to-home">
+              <img src={logo} alt="Shelly" width="100%" />
+            </div>
+          </Link>
+        </Col>
+        <Col xs={24} sm={24} lg={16}>
+          <Row>
+            <Col xs={24} sm={24} lg={5}>
+              <div
+                className="nav-btn"
+                onClick={changeMenuVisibility}
+                role="button"
+                tabIndex="0"
+              >
+                {menuVisible ? <MenuFoldOutlined /> : <MenuOutlined />}
+              </div>
+            </Col>
+            {menuVisible ? <JustButtons currentPath={currentPath} /> : null}
+          </Row>
+        </Col>
+      </Row>
+    );
   return (
     <Row className="nav-div">
-      <Col xs={24} sm={24} lg={6}>
+      <Col xs={24} sm={24} lg={8}>
         <Link to="/">
           <div className="to-home">
             <img src={logo} alt="Shelly" width="100%" />
           </div>
         </Link>
       </Col>
-      <Col xs={24} sm={24} lg={18}>
+      <Col xs={24} sm={24} lg={16}>
         <Row>
-          <Col xs={24} sm={24} lg={4}>
-            <Link to="/master/productos">
-              <div
-                className={
-                  currentPath === '/master/productos'
-                    ? 'nav-btn nav-border'
-                    : 'nav-btn'
-                }
-              >
-                Productos
-              </div>
-            </Link>
-          </Col>
-          <Col xs={24} sm={24} lg={4}>
-            <Link to="/master/ordenes">
-              <div
-                className={
-                  currentPath === '/master/ordenes'
-                    ? 'nav-btn nav-border'
-                    : 'nav-btn'
-                }
-              >
-                Ordenes
-              </div>
-            </Link>
-          </Col>
-          <Col xs={24} sm={24} lg={4}>
-            <Link to="/master/cuenta">
-              <div
-                className={
-                  currentPath === '/master/cuenta'
-                    ? 'nav-btn nav-border'
-                    : 'nav-btn'
-                }
-              >
-                Mi cuenta
-              </div>
-            </Link>
-          </Col>
-          <Col xs={24} sm={24} lg={4}>
-            <Link to="/master/salir">
-              <div
-                className={
-                  currentPath === '/master/salir'
-                    ? 'nav-btn nav-border'
-                    : 'nav-btn'
-                }
-              >
-                Salir
-              </div>
-            </Link>
-          </Col>
+          <JustButtons currentPath={currentPath} />
         </Row>
       </Col>
     </Row>
+  );
+}
+
+function JustButtons(props) {
+  const { currentPath } = props;
+  return (
+    <>
+      <Col xs={24} sm={24} lg={4}>
+        <Link to="/master/tienda">
+          <div
+            className={
+              currentPath === '/master/tienda'
+                ? 'nav-btn nav-border'
+                : 'nav-btn'
+            }
+          >
+            Mi Tienda
+          </div>
+        </Link>
+      </Col>
+      <Col xs={24} sm={24} lg={4}>
+        <Link to="/master/cuenta">
+          <div
+            className={
+              currentPath === '/master/cuenta'
+                ? 'nav-btn nav-border'
+                : 'nav-btn'
+            }
+          >
+            Mi cuenta
+          </div>
+        </Link>
+      </Col>
+      <Col xs={24} sm={24} lg={4}>
+        <Link to="/master/salir">
+          <div
+            className={
+              currentPath === '/master/salir' ? 'nav-btn nav-border' : 'nav-btn'
+            }
+          >
+            Salir
+          </div>
+        </Link>
+      </Col>
+    </>
   );
 }
 

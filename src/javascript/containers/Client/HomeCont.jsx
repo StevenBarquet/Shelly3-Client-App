@@ -4,10 +4,10 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPublicHomeAction } from 'Actions/home';
 // ---Components
-import DinamicCarousel from 'Comp/Home/DinamicCarousel';
-import BuySteps from 'Comp/Home/BuySteps';
-import ButtonProd from 'Comp/Home/ButtonProd';
-import Destacados from 'Comp/Home/Destacados';
+import DinamicCarousel from 'Comp/Client/Home/DinamicCarousel';
+import BuySteps from 'Comp/Client/Home/BuySteps';
+import ButtonProd from 'Comp/Client/Home/ButtonProd';
+import Destacados from 'Comp/Client/Home/Destacados';
 // ---Others
 import { title } from 'Others/labels.json';
 import { getHomePublic } from 'Others/peticiones.js';
@@ -26,13 +26,9 @@ function HomeCont() {
   const dispatchR = useDispatch();
   const updateHomeReducer = data => dispatchR(getPublicHomeAction(data));
 
-  function updateHomeState(homeData) {
-    updateHomeReducer(homeData);
-  }
-
-  // ---Call Home data
+  // ---Get Home data
   useEffect(() => {
-    asyncHandlerGet(getHomePublic, updateHomeState, testError);
+    asyncHandlerGet(getHomePublic, updateHomeReducer, testError);
   }, []);
   return (
     <React.Fragment>
