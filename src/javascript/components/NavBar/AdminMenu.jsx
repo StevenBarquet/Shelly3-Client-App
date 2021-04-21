@@ -59,15 +59,14 @@ function AdminMenu(props) {
 
 function JustButtons(props) {
   const { currentPath } = props;
+  const isStore = new RegExp('^[/][m][a][s][t][e][r][/][t][i][e][n][d][a]');
   return (
     <>
       <Col xs={24} sm={24} lg={4}>
         <Link to="/master/tienda">
           <div
             className={
-              currentPath === '/master/tienda'
-                ? 'nav-btn nav-border'
-                : 'nav-btn'
+              isStore.test(currentPath) ? 'nav-btn nav-border' : 'nav-btn'
             }
           >
             Mi Tienda

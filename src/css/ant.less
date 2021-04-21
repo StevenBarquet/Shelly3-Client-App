@@ -24,8 +24,6 @@
 .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
   background-color: @colorPrimaryText;
 }
-
-
 .ant-steps-item-finish .ant-steps-item-icon{
   background-color: transparent;
   border-color: @colorThree;
@@ -98,4 +96,36 @@
 }
 .ant-progress-inner:not(.ant-progress-circle-gradient) .ant-progress-circle-path {
   stroke: @colorPrimaryLigth;
+}
+//---Menu Panel
+.ant-btn-primary {
+  color: @colorPrimaryText;
+  background: @colorNavButtons;
+  border-color: @colorNavButtons;
+}
+.ant-btn-primary:hover {
+  color: @colorPrimaryText;
+  background: @colorNavButtonsLigth;
+  border-color: @colorNavButtonsLigth;
+}
+.ant-btn-primary:focus {
+  color: @colorPrimaryText;
+  background: @colorNavButtonsLigth;
+  border-color: @colorNavButtonsLigth;
+}
+.ant-btn-primary:active {
+  transform: scale(0.9);
+}
+.ant-menu.ant-menu-dark{
+  background: @colorPrimaryDark;
+}
+.ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub  {
+  background: @colorPrimaryDarkest;
+}
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: @colorNavButtonsLigth;
+  color: @colorPrimaryText;
+}
+.ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub {
+  font-size: 18px;
 }

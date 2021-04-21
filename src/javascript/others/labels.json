@@ -32,11 +32,20 @@
     "LogOut": {
       "title": "Adios..."
     },
-    "MasterHome": {
+    "HomeMaster": {
       "title": "Inicio Administrador"
     },
     "ToHomeMasterPage": {
       "title": "Redirigiendo..."
-    }    
+    },
+    "AdminProductsPage": {
+      "title": "Administrador de productos"
+    },
+    "AddProductsPage": {
+      "title": "Agregar productos"
+    },
+    "AdminPublicHomePage": {
+      "title": "Administrador del home page"
+    }
   }
 }

@@ -2,6 +2,10 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // ---Pages Master
+import HomePageMaster from 'Pages/Master/HomePageMaster';
+import AdminProductsPage from 'Pages/Master/AdminProductsPage';
+import AddProductsPage from 'Pages/Master/AddProductsPage';
+import AdminPublicHome from 'Pages/Master/AdminPublicHomePage';
 import ToHomeMaster from 'Pages/Master/ToHomeMasterPage';
 import MasterLogin from 'Pages/Master/MasterLoginPage';
 import MasterLogout from 'Pages/Master/MasterLogoutPage';
@@ -20,6 +24,22 @@ function AppContainer() {
       <Switch>
         {/* Master routes */}
         <Route exact path="/master" component={ToHomeMaster} />
+        <Route exact path="/master/tienda" component={HomePageMaster} />
+        <Route
+          exact
+          path="/master/tienda/adminProductos"
+          component={AdminProductsPage}
+        />
+        <Route
+          exact
+          path="/master/tienda/addProductos"
+          component={AddProductsPage}
+        />
+        <Route
+          exact
+          path="/master/tienda/publicHome"
+          component={AdminPublicHome}
+        />
         <Route exact path="/master/login" component={MasterLogin} />
         <Route exact path="/master/salir" component={MasterLogout} />
         {/* Client routes */}

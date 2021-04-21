@@ -1,18 +1,18 @@
 // ---Dependencys
 import React from 'react';
 // ---Components
-import HomeMasterCont from 'Cont/Master/HomeMasterCont';
+import AddProducts from 'Cont/Master/AddProducts';
 // ---Handle html headers
 import CustomHelmet from 'Comp/CustomHelmet';
 
 // ------------------------------------------ COMPONENT-----------------------------------------
-const HomePageMaster = () => {
+const AddProductsPage = () => {
   return (
     <React.Fragment>
-      <CustomHelmet pageName="HomeMaster" />
-      <HomeMasterCont />
+      <CustomHelmet pageName="AddProductsPage" />
+      <AddProducts />
     </React.Fragment>
   );
 };
 
-export default HomePageMaster;
+export default AddProductsPage;
