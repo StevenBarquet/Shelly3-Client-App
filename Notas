@@ -7,3 +7,4 @@ conisderar metodos de pago dinámicos
 mandar todas las busquedas a redux con numero de página para reducir número de solicitudes
 considerar contadores de productos en sort
 En la página de producto agregar links de contacto con servicio de incremento de preguntas
+Agregar analiticas
