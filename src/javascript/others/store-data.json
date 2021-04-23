@@ -1,5 +1,47 @@
 {
   "productos": {
+    "categoriasFiltro": [
+      {
+        "label": "Todas",
+        "value": "Todas"
+      },
+      {
+        "label": "Laptops",
+        "value": "Laptops"
+      },
+      {
+        "label": "Mobil",
+        "value": "Mobil"
+      },
+      {
+        "label": "Gaming",
+        "value": "Gaming"
+      },
+      {
+        "label": "Almacenamiento",
+        "value": "Almacenamiento"
+      },
+      {
+        "label": "Accesorios cool",
+        "value": "Accesorios cool"
+      },
+      {
+        "label": "Redes",
+        "value": "Redes"
+      },
+      {
+        "label": "Para geeks",
+        "value": "Para geeks"
+      },
+      {
+        "label": "Tu vehículo",
+        "value": "Tu vehículo"
+      },
+      {
+        "label": "Cosas que no necesitas",
+        "value": "Cosas que no necesitas"
+      }
+    ],
     "categorias": [
       {
         "label": "Laptops",

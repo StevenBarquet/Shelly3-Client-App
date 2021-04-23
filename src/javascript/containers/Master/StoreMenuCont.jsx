@@ -32,7 +32,7 @@ function StoreMenuCont(props) {
   return (
     <AuthValidate>
       <Row>
-        <Col xs={24} sm={24} lg={!collapsed ? 9 : 4}>
+        <Col xs={24} sm={24} lg={!collapsed ? 9 : 3}>
           <JustMenu
             goToRoute={goToRoute}
             toggleCollapsed={toggleCollapsed}
@@ -40,7 +40,7 @@ function StoreMenuCont(props) {
             currentPath={currentPath}
           />
         </Col>
-        <Col xs={24} sm={24} lg={!collapsed ? 14 : 20}>
+        <Col xs={24} sm={24} lg={!collapsed ? 14 : 21}>
           {children}
         </Col>
       </Row>

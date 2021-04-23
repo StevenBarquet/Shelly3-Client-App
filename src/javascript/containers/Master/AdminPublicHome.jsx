@@ -3,6 +3,7 @@ import React from 'react';
 // ---Components
 import StoreMenuCont from 'Cont/Master/StoreMenuCont';
 
+// Permite buscar, redirigir a editar, agregar a home, ver ficha con background close button
 // ------------------------------------------ COMPONENT-----------------------------------------
 function AdminPublicHome() {
   return (

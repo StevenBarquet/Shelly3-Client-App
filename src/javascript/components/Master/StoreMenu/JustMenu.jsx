@@ -65,6 +65,7 @@ function JustMenu(props) {
           <Menu.Item key="sub4-1">Administrar Ordenes</Menu.Item>
           <Menu.Item key="sub4-2">Modo caja</Menu.Item>
           <Menu.Item key="sub4-3">Generar orden</Menu.Item>
+          <Menu.Item key="sub4-4">Seguimiento de ordenes</Menu.Item>
         </SubMenu>
         <SubMenu
           key="5"
