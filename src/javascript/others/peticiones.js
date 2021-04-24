@@ -15,6 +15,18 @@ export async function getHomePublic(data) {
     return error;
   }
 }
+// -------------------------------------------MasterProductos---------------------------------------
+
+export async function adminSearchProducts(data) {
+  const endpoint = 'admin/productos/buscar';
+  const url = urlServer + endpoint;
+  try {
+    const respose = await axios.post(url, data);
+    return respose;
+  } catch (error) {
+    return error;
+  }
+}
 
 // -------------------------------------------Old----------------------------------------
 export async function genericGet(url) {

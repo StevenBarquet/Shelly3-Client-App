@@ -31,30 +31,25 @@ const filterOption = [
 
 // ------------------------------------------ COMPONENT-----------------------------------------
 function ProductSearcher(props) {
-  const { defaultValues } = props;
-  const [advanceSearch, setAdvanceSearch] = useState(true);
+  const { defaultValues, submitData } = props;
+  const [advanceSearch, setAdvanceSearch] = useState(false);
 
-  // recibe el valor de un input y valida que no esté vació y que cumpla la regex isID
+  // valida que si la cadena no está vacía tenga entre 3 y 25 de longitud
   function validate(rule, value) {
-    if (!value || (value && value.length < 50)) {
+    if (!value || (value.length > 2 && value.length < 26)) {
       return Promise.resolve();
     }
-    return Promise.reject('Ingresa una palabra menor a 50 caracteres');
+    return Promise.reject('Ingresa una palabra entre 3 y 25 caracteres');
   }
 
   const changeAdvance = () => setAdvanceSearch(!advanceSearch);
-
-  // const formItemLayoutLong = {
-  //   labelCol: { span: 8 },
-  //   wrapperCol: { span: 15 }
-  // };
   return (
     <div className="store-content-container">
       {/* ----------------------------form------------------------- */}
       <Form
         style={{ width: '100%' }}
         initialValues={defaultValues || null}
-        onFinish={data => console.log('www', data)}
+        onFinish={data => submitData(data)}
       >
         <Row>
           <Col style={{ marginTop: '20px' }} xl={17}>
@@ -80,113 +75,155 @@ function ProductSearcher(props) {
             changeAdvance={changeAdvance}
           />
           {/* -------------------Advanced options---------------- */}
-          {advanceSearch ? (
-            <>
-              {/* --Filtros-- */}
-              <Col offset={1} xs={22} sm={22} lg={20}>
-                <h2>Filtrar por:</h2>
-              </Col>
-              <Col xs={11} sm={11} lg={7}>
-                <Form.Item
-                  labelCol={{ span: 12 }}
-                  wrapperCol={{ span: 12 }}
-                  name={['filters', 'online']}
-                  label="Venta Online"
-                >
-                  <Select>{mapOptions(filterOption)}</Select>
-                </Form.Item>
-              </Col>
-              <Col
-                xs={{ span: 11, offset: 1 }}
-                sm={{ span: 11, offset: 1 }}
-                lg={7}
+          {/* ---Use display none to keep the form values on false advanceSearch */}
+          <Row style={advanceSearch ? null : { display: 'none' }}>
+            {/* --Filtros-- */}
+            <Col offset={1} xs={22} sm={22} lg={20}>
+              <h2>Filtrar por:</h2>
+            </Col>
+            <Col xs={11} sm={11} lg={7}>
+              <Form.Item
+                labelCol={{ span: 12 }}
+                wrapperCol={{ span: 12 }}
+                name={['filters', 'online']}
+                label="Venta Online"
               >
-                <Form.Item
-                  labelCol={{ span: 12 }}
-                  wrapperCol={{ span: 12 }}
-                  name={['filters', 'nuevo']}
-                  label="Producto Nuevo"
-                >
-                  <Select>{mapOptions(filterOption)}</Select>
-                </Form.Item>
-              </Col>
-              <Col xs={11} sm={11} lg={7}>
-                <Form.Item
-                  labelCol={{ span: 12 }}
-                  wrapperCol={{ span: 12 }}
-                  name={['filters', 'descuento']}
-                  label="Descuento"
-                >
-                  <Select>{mapOptions(filterOption)}</Select>
-                </Form.Item>
-              </Col>
-              <Col xs={24} sm={24} lg={18}>
-                <Form.Item
-                  labelCol={{ span: 4 }}
-                  wrapperCol={{ span: 18 }}
-                  name={['filters', 'categoria']}
-                  label="Categoria"
-                >
-                  <Select>{mapOptions(productos.categoriasFiltro)}</Select>
-                </Form.Item>
-              </Col>
-              {/* --Sort-- */}
-              <Col offset={1} xs={22} sm={22} lg={20}>
-                <h2>Ordenar por:</h2>
-              </Col>
-              <Col className="col-vertical-align" xs={24} sm={24} lg={24}>
-                <Form.Item name="sortBy">
-                  <Radio.Group>
-                    <Row style={{ marginTop: 25 }}>
-                      <Col xs={12} sm={12} lg={{ span: 5, offset: 3 }}>
-                        <Radio value={{ nombre: 1 }}>
-                          <h5>
-                            Nombre <span>A-Z</span>
-                          </h5>
-                        </Radio>
-                      </Col>
-                      <Col xs={12} sm={12} lg={5}>
-                        <Radio value={{ nombre: -1 }}>
-                          <h5>
-                            Nombre <span>Z-A</span>
-                          </h5>
-                        </Radio>
-                      </Col>
-                      <Col xs={12} sm={12} lg={5}>
-                        <Radio value={{ marca: 1 }}>
-                          <h5>
-                            Marca <span>A-Z</span>
-                          </h5>
-                        </Radio>
-                      </Col>
-                      <Col xs={12} sm={12} lg={5}>
-                        <Radio value={{ marca: -1 }}>
-                          <h5>
-                            Marca <span>Z-A</span>
-                          </h5>
-                        </Radio>
-                      </Col>
-                      <Col xs={12} sm={12} lg={{ span: 6, offset: 6 }}>
-                        <Radio value={{ precioOnline: -1 }}>
-                          <h5>
-                            Precio <span>- +</span>
-                          </h5>
-                        </Radio>
-                      </Col>
-                      <Col xs={12} sm={12} lg={6}>
-                        <Radio value={{ precioOnline: 1 }}>
-                          <h5>
-                            Precio <span>+ -</span>
-                          </h5>
-                        </Radio>
-                      </Col>
-                    </Row>
-                  </Radio.Group>
-                </Form.Item>
-              </Col>
-              <SubmitButton2 />
-            </>
-          ) : null}
+                <Select>{mapOptions(filterOption)}</Select>
+              </Form.Item>
+            </Col>
+            <Col
+              xs={{ span: 11, offset: 1 }}
+              sm={{ span: 11, offset: 1 }}
+              lg={7}
+            >
+              <Form.Item
+                labelCol={{ span: 12 }}
+                wrapperCol={{ span: 12 }}
+                name={['filters', 'nuevo']}
+                label="Producto Nuevo"
+              >
+                <Select>{mapOptions(filterOption)}</Select>
+              </Form.Item>
+            </Col>
+            <Col xs={11} sm={11} lg={7}>
+              <Form.Item
+                labelCol={{ span: 12 }}
+                wrapperCol={{ span: 12 }}
+                name={['filters', 'descuento']}
+                label="Descuento"
+              >
+                <Select>{mapOptions(filterOption)}</Select>
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} lg={18}>
+              <Form.Item
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 18 }}
+                name={['filters', 'categoria']}
+                label="Categoria"
+              >
+                <Select>{mapOptions(productos.categoriasFiltro)}</Select>
+              </Form.Item>
+            </Col>
+            {/* --Sort-- */}
+            <Col offset={1} xs={22} sm={22} lg={20}>
+              <h2>Ordenar por:</h2>
+            </Col>
+            <Col className="col-vertical-align" xs={24} sm={24} lg={24}>
+              <Form.Item name="sortBy">
+                <Radio.Group>
+                  <Row style={{ marginTop: 25 }}>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "nombre": 1 }'}>
+                        <h5>
+                          Nombre <span>A-Z</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "nombre": -1 }'}>
+                        <h5>
+                          Nombre <span>Z-A</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "marca": 1 }'}>
+                        <h5>
+                          Marca <span>A-Z</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "marca": -1 }'}>
+                        <h5>
+                          Marca <span>Z-A</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "precioOnline": -1 }'}>
+                        <h5>
+                          Precio <span>- +</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "precioOnline": 1 }'}>
+                        <h5>
+                          Precio <span>+ -</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "countVisits": 1 }'}>
+                        <h5>
+                          Visitas <span>+ -</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "countVisits": -1 }'}>
+                        <h5>
+                          Visitas <span>- +</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "countQuestions": 1 }'}>
+                        <h5>
+                          Preguntas <span>+ -</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "countQuestions": -1 }'}>
+                        <h5>
+                          Preguntas <span>- +</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "countPurchases": 1 }'}>
+                        <h5>
+                          Ventas <span>+ -</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                    <Col xs={12} sm={12} lg={6}>
+                      <Radio value={'{ "countPurchases": -1 }'}>
+                        <h5>
+                          Ventas <span>- +</span>
+                        </h5>
+                      </Radio>
+                    </Col>
+                  </Row>
+                </Radio.Group>
+              </Form.Item>
+            </Col>
+            <SubmitButton2 />
+          </Row>
         </Row>
       </Form>
     </div>

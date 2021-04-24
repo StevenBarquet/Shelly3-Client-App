@@ -40,6 +40,19 @@ export const copyToEnd = (str, index) => {
   return copy;
 };
 
+export function removeNullProperties(obj) {
+  Object.keys(obj).forEach(key => {
+    const value = obj[key];
+    const hasProperties = value && Object.keys(value).length > 0;
+    if (value === null) {
+      delete obj[key];
+    } else if (typeof value !== 'string' && hasProperties) {
+      removeNullProperties(value);
+    }
+  });
+  return obj;
+}
+
 export const copyToIndex = (str, index) => {
   // Copia una cadena hasta el index indicado
   let copy = '';
@@ -99,3 +112,26 @@ export const isId = cadena => {
   // regex valida una palabra continua que sólo puede contener letras numeros y '-'
   return /^[0-9a-zA-ZñÑ]+$/.test(cadena);
 };
+
+export function cloneObj(obj) {
+  // console.log('cloneObj original: ', obj);
+  let clone = [];
+  if (Object.prototype.toString.call(obj) === '[object Array]') {
+    for (let i = 0; i < obj.length; i++) clone[i] = obj[i].clone();
+
+    return clone;
+  }
+
+  if (typeof obj === 'object') {
+    clone = {};
+    const keys = Object.keys(obj);
+    const values = Object.values(obj);
+    keys.forEach((element, index) => {
+      clone[element] = values[index];
+      // console.log('building clone...', clone);
+    });
+
+    return clone;
+  }
+  return obj;
+}

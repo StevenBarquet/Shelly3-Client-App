@@ -5,10 +5,11 @@ import {
   TeamOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  PieChartOutlined,
+  BarChartOutlined,
   DesktopOutlined,
-  ContainerOutlined,
-  MailOutlined
+  CodepenOutlined,
+  CarryOutOutlined,
+  DollarCircleOutlined
 } from '@ant-design/icons';
 // ---Components
 
@@ -33,7 +34,7 @@ function JustMenu(props) {
         inlineCollapsed={collapsed}
         selectedKeys={[currentPath]}
       >
-        <SubMenu key="1" icon={<PieChartOutlined />} title="Utilidades">
+        <SubMenu key="1" icon={<DollarCircleOutlined />} title="Utilidades">
           <Menu.Item key="sub1-1">Hoy</Menu.Item>
           <Menu.Item key="sub1-2">Semanal</Menu.Item>
           <Menu.Item key="sub1-3">Mensual</Menu.Item>
@@ -47,7 +48,7 @@ function JustMenu(props) {
         >
           Home publico
         </Menu.Item>
-        <SubMenu key="3" icon={<ContainerOutlined />} title="Productos">
+        <SubMenu key="3" icon={<CodepenOutlined />} title="Productos">
           <Menu.Item
             key="/master/tienda/adminProductos"
             onClick={() => goToRoute('/master/tienda/adminProductos')}
@@ -61,7 +62,7 @@ function JustMenu(props) {
             Agregar Productos
           </Menu.Item>
         </SubMenu>
-        <SubMenu key="4" icon={<MailOutlined />} title="Ordenes">
+        <SubMenu key="4" icon={<CarryOutOutlined />} title="Ordenes">
           <Menu.Item key="sub4-1">Administrar Ordenes</Menu.Item>
           <Menu.Item key="sub4-2">Modo caja</Menu.Item>
           <Menu.Item key="sub4-3">Generar orden</Menu.Item>
@@ -81,6 +82,13 @@ function JustMenu(props) {
             <Menu.Item key="sub5-2-2">Master</Menu.Item>
           </SubMenu>
         </SubMenu>
+        <Menu.Item
+          icon={<BarChartOutlined />}
+          key="/master/tienda/Analytics"
+          onClick={() => goToRoute('/master/tienda/Analytics')}
+        >
+          Analyticas
+        </Menu.Item>
       </Menu>
     </div>
   );

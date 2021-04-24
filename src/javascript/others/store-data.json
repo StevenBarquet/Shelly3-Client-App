@@ -3,7 +3,7 @@
     "categoriasFiltro": [
       {
         "label": "Todas",
-        "value": "Todas"
+        "value": null
       },
       {
         "label": "Laptops",

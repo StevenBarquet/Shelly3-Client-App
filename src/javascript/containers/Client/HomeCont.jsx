@@ -10,6 +10,7 @@ import ButtonProd from 'Comp/Client/Home/ButtonProd';
 import Destacados from 'Comp/Client/Home/Destacados';
 // ---Others
 import { title } from 'Others/labels.json';
+// --Request
 import { getHomePublic } from 'Others/peticiones.js';
 import { asyncHandlerGet, testError } from 'Others/requestHandlers.js';
 

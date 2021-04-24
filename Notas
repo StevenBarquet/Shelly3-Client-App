@@ -1,10 +1,20 @@
-crear dummy data para cuando no cargan los servicios (home, productos, etc)
-Hacer master tienda wrapper container y comps y crear la home de tienda y la de administrar productos
-El rastreo de orden contiene el link de pago e instrucciones para hacer el pago, el admin puede generar ordenes.
-Hacer Condicion en home para que sólo haga el request si no están los datos del home
-importar todos los colores de button mlg desde store-data.json y agregar evento sintetico
-conisderar metodos de pago dinámicos
-mandar todas las busquedas a redux con numero de página para reducir número de solicitudes
-considerar contadores de productos en sort
-En la página de producto agregar links de contacto con servicio de incremento de preguntas
-Agregar analiticas
+    Pendiente:
+-Crear dummy data para cuando no cargan los servicios (home, productos, etc)
+-El rastreo de orden contiene el link de pago e instrucciones para hacer el pago, el admin puede generar ordenes.
+-Hacer Condicion en home para que sólo haga el request si no están los datos del home
+-importar todos los colores de button mlg desde store-data.json y agregar evento sintetico
+-conisderar metodos de pago dinámicos
+-mandar todas las busquedas a redux con numero de página para reducir número de solicitudes
+-En la página de producto agregar links de contacto con servicio de incremento de preguntas
+-Hacer componente de carga global en navbar
+-Terminar tabla paginada de productos
+-Fix responsive en filtros
+
+
+    Smurfeado:
+    -Hacer pantalla de "Realiza una busqueda o deja vacio para traer todos los productos"
+-Hacer pantalla de "Sin resultados de busqueda"
+-Agregar analiticas al menu
+-Cambiar iconos del menu
+-Considerar contadores de productos en sort
+-Hacer master tienda wrapper container y comps y crear la home de tienda y la de administrar productos
