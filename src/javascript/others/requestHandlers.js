@@ -1,4 +1,4 @@
-export function asyncHandlerGet(
+export function asyncHandler(
   requestFunction,
   successFunction,
   rejectFunction,

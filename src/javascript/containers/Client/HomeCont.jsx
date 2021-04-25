@@ -12,7 +12,7 @@ import Destacados from 'Comp/Client/Home/Destacados';
 import { title } from 'Others/labels.json';
 // --Request
 import { getHomePublic } from 'Others/peticiones.js';
-import { asyncHandlerGet, testError } from 'Others/requestHandlers.js';
+import { asyncHandler, testError } from 'Others/requestHandlers.js';
 
 const { main, sub } = title;
 
@@ -29,7 +29,7 @@ function HomeCont() {
 
   // ---Get Home data
   useEffect(() => {
-    asyncHandlerGet(getHomePublic, updateHomeReducer, testError);
+    asyncHandler(getHomePublic, updateHomeReducer, testError);
   }, []);
   return (
     <React.Fragment>

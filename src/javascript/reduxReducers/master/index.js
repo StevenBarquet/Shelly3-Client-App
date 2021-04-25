@@ -1,4 +1,9 @@
-import { UPDATE_CURRENT_PRODUCTS, UPDATE_SEARCH_PARAMS } from 'Types';
+import {
+  UPDATE_CURRENT_PRODUCTS,
+  UPDATE_SEARCH_PARAMS,
+  UPDATE_PAGE,
+  UPDATE_PAGE_AND_SIZE
+} from 'Types';
 
 const INITIAL_STATE = {
   masterProducts: {
@@ -7,7 +12,7 @@ const INITIAL_STATE = {
     updatedData: false,
     searchParams: {
       pageNumber: 1,
-      pageSize: 30,
+      pageSize: 1,
       searchedValue: null,
       filters: {
         categoria: null,
@@ -40,6 +45,31 @@ export default (state = INITIAL_STATE, action) => {
           ...state.masterProducts,
           updatedData: true,
           ...payload
+        }
+      };
+
+    case UPDATE_PAGE:
+      return {
+        ...state,
+        masterProducts: {
+          ...state.masterProducts,
+          searchParams: {
+            ...state.masterProducts.searchParams,
+            pageNumber: payload
+          }
+        }
+      };
+
+    case UPDATE_PAGE_AND_SIZE:
+      return {
+        ...state,
+        masterProducts: {
+          ...state.masterProducts,
+          searchParams: {
+            ...state.masterProducts.searchParams,
+            pageNumber: payload.pageNumber,
+            pageSize: payload.pageSize
+          }
         }
       };
 

@@ -1,21 +1,29 @@
-import { CHANGE_RESPONSIVE, UPDATE_PATH } from 'Types';
+import { CHANGE_RESPONSIVE, UPDATE_PATH, UPDATE_LOADING } from 'Types';
 
 const INITIAL_STATE = {
-  isMovil: false
+  isMovil: false,
+  isLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case CHANGE_RESPONSIVE:
       return {
         ...state,
-        isMovil: action.payload
+        isMovil: payload
       };
 
     case UPDATE_PATH:
       return {
         ...state,
-        currentPath: action.payload
+        currentPath: payload
+      };
+
+    case UPDATE_LOADING:
+      return {
+        ...state,
+        isLoading: payload
       };
 
     default:

@@ -145,3 +145,40 @@
 .ant-switch-checked {
   background-color: @colorPrimary;
 }
+
+// ---Pagination
+.ant-pagination-item a {
+  color: @colorPrimaryDark;
+  &:hover{
+    color: @colorNavButtonsLigth;
+  }
+}
+.ant-pagination-item-active a {
+  color: @colorPrimary;
+}
+.ant-pagination-item-active {
+  color: @colorPrimary;
+}
+.ant-pagination-item{
+  border: 1px solid @colorPrimary;
+  &:hover{
+    border: 1px solid @colorNavButtonsLigth;
+  }
+}
+.ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link {
+  .anticon{
+    color: @colorPrimaryDark;
+  }
+  &:hover{
+    border: 1px solid @colorNavButtonsLigth;
+    .anticon{
+      color: @colorNavButtonsLigth;
+    }
+  }
+}
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: @colorPrimaryText;
+  &:hover{
+    border-color: @colorNavButtonsLigth;
+  }
+}

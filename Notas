@@ -6,13 +6,21 @@
 -conisderar metodos de pago dinámicos
 -mandar todas las busquedas a redux con numero de página para reducir número de solicitudes
 -En la página de producto agregar links de contacto con servicio de incremento de preguntas
--Hacer componente de carga global en navbar
--Terminar tabla paginada de productos
+-Formulario de agregar producto
+-Privilegios dinámicos de admin
+-Utilidad
+-Administrar  ordenes
+-Modo caja
+-Seccion de información completa del producto
 -Fix responsive en filtros
-
+-Implementar Fixed Columns and Header para mostrar más datos en la tabla de productos
+-Agregar ver información completa del producto al menu
 
     Smurfeado:
-    -Hacer pantalla de "Realiza una busqueda o deja vacio para traer todos los productos"
+-Hacer que los filtros se escondan después de una busqueda correcta
+-Hacer componente de carga global en navbar
+-Terminar tabla paginada de productos
+-Hacer pantalla de "Realiza una busqueda o deja vacio para traer todos los productos"
 -Hacer pantalla de "Sin resultados de busqueda"
 -Agregar analiticas al menu
 -Cambiar iconos del menu

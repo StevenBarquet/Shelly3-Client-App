@@ -7,6 +7,8 @@ import { changeResponsiveFlag, updatePath } from 'Actions/appInfo';
 // ---Components
 import AdminMenu from 'Comp/NavBar/AdminMenu';
 import ClientMenu from 'Comp/NavBar/ClientMenu';
+// ---ComonComponents
+import LoadingFullScreen from 'CommonComps/LoadingFullScreen';
 // ---Others
 import logo from 'Images/logoStoreL.png';
 import isMovilDetector from 'Others/isMovilDetector';
@@ -16,7 +18,9 @@ const NavbarCont = withRouter(props => {
   const currentPath = props.location.pathname;
   const isAdmin = new RegExp('^[/][m][a][s][t][e][r]');
   // Redux States
-  const { isMovil } = useSelector(reducers => reducers.appInfoReducer);
+  const { isMovil, isLoading } = useSelector(
+    reducers => reducers.appInfoReducer
+  );
   // Redux Actions
   const dispatchR = useDispatch();
   const updateResponsiveData = data => dispatchR(changeResponsiveFlag(data));
@@ -30,14 +34,22 @@ const NavbarCont = withRouter(props => {
   useEffect(() => updateCurrentPath(), [currentPath]);
 
   if (currentPath === '/master/login') {
-    return null;
+    return <LoadingFullScreen isLoading={isLoading} />;
   }
   if (isAdmin.test(currentPath)) {
     return (
-      <AdminMenu currentPath={currentPath} isMovil={isMovil} logo={logo} />
+      <>
+        <AdminMenu currentPath={currentPath} isMovil={isMovil} logo={logo} />
+        <LoadingFullScreen isLoading={isLoading} />
+      </>
     );
   }
-  return <ClientMenu currentPath={currentPath} isMovil={isMovil} logo={logo} />;
+  return (
+    <>
+      <ClientMenu currentPath={currentPath} isMovil={isMovil} logo={logo} />
+      <LoadingFullScreen isLoading={isLoading} />
+    </>
+  );
 });
 
 export default NavbarCont;

@@ -3,12 +3,20 @@
 // ---Dependencys
 import React from 'react';
 // ---Components
-import { Button, Table } from 'antd';
+import { Button, Table, Pagination } from 'antd';
 // ---Others
 // import { getALLLaptops } from 'Others/peticiones';
 
 const ProductTable = props => {
-  const { products, onDeleteP, onOpenEditProduct, current, pageSize } = props;
+  const {
+    products,
+    onDeleteP,
+    onOpenEditProduct,
+    current,
+    pageSize,
+    total,
+    onPageChange
+  } = props;
   const dataSource = products;
 
   function handleDelete(e) {
@@ -70,15 +78,22 @@ const ProductTable = props => {
       )
     }
   ];
+
+  //   function onShowSizeChange(current2, pageSize2) {
+  //     console.log('onShowSizeChange', current2, pageSize2);
+  //   }
   return (
     <React.Fragment>
-      <Table
-        pagination={{
-          current,
-          pageSize
-        }}
-        dataSource={dataSource}
-        columns={columns}
+      <Table pagination={false} dataSource={dataSource} columns={columns} />
+      <Pagination
+        style={{ margin: '15px auto 0px auto' }}
+        onShowSizeChange={onPageChange}
+        pageSizeOptions={[20, 30, 50, 100]}
+        showSizeChanger
+        current={current}
+        pageSize={pageSize}
+        onChange={onPageChange}
+        total={total}
       />
     </React.Fragment>
   );

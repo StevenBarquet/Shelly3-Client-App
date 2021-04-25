@@ -43,13 +43,19 @@ function ProductSearcher(props) {
   }
 
   const changeAdvance = () => setAdvanceSearch(!advanceSearch);
+
+  function onFinish(data) {
+    setAdvanceSearch(false);
+    submitData(data);
+  }
+
   return (
     <div className="store-content-container">
       {/* ----------------------------form------------------------- */}
       <Form
         style={{ width: '100%' }}
         initialValues={defaultValues || null}
-        onFinish={data => submitData(data)}
+        onFinish={onFinish}
       >
         <Row>
           <Col style={{ marginTop: '20px' }} xl={17}>
