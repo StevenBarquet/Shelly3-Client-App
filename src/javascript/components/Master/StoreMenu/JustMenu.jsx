@@ -59,7 +59,13 @@ function JustMenu(props) {
             key="/master/tienda/addProductos"
             onClick={() => goToRoute('/master/tienda/addProductos')}
           >
-            Agregar Productos
+            Agregar/Editar Productos
+          </Menu.Item>
+          <Menu.Item
+            key="/master/tienda/productInfo"
+            onClick={() => goToRoute('/master/tienda/productInfo')}
+          >
+            Consultar un producto
           </Menu.Item>
         </SubMenu>
         <SubMenu key="4" icon={<CarryOutOutlined />} title="Ordenes">

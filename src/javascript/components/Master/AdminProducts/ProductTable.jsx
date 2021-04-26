@@ -2,35 +2,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // ---Dependencys
 import React from 'react';
+import { Link } from 'react-router-dom';
 // ---Components
 import { Button, Table, Pagination } from 'antd';
 // ---Others
 // import { getALLLaptops } from 'Others/peticiones';
 
 const ProductTable = props => {
-  const {
-    products,
-    onDeleteP,
-    onOpenEditProduct,
-    current,
-    pageSize,
-    total,
-    onPageChange
-  } = props;
+  const { products, onDeleteP, current, pageSize, total, onPageChange } = props;
   const dataSource = products;
 
   function handleDelete(e) {
     onDeleteP(e.target.value);
   }
-  const editOpen = e => {
-    onOpenEditProduct(e.target.value);
-  };
 
   const columns = [
     {
       title: 'Nombre',
       dataIndex: 'nombre',
-      key: 'nombre'
+      key: 'nombre',
+      fixed: 'left'
+    },
+    {
+      title: 'ID',
+      dataIndex: '_id',
+      key: '_id'
     },
     {
       title: 'Precio Online',
@@ -38,17 +34,12 @@ const ProductTable = props => {
       key: 'precioOnline'
     },
     {
-      title: 'Disponibles',
-      dataIndex: 'disponibles',
-      key: 'disponibles'
-    },
-    {
       title: 'Categoria',
       dataIndex: 'categoria',
       key: 'categoria'
     },
     {
-      title: 'Delete',
+      title: 'Borrar',
       dataIndex: '_id',
       key: '_id',
       render: _id => (
@@ -58,19 +49,63 @@ const ProductTable = props => {
       )
     },
     {
-      title: 'Edit',
+      title: 'Editar',
       dataIndex: '_id',
       key: '_id',
       render: _id => (
-        <Button onClick={editOpen} value={_id} type="primary">
-          Editar
-        </Button>
+        <Link to={`/master/tienda/addProductos/${_id}`}>editar producto</Link>
       )
+    },
+    {
+      title: 'Consulta',
+      dataIndex: '_id',
+      key: '_id',
+      render: _id => (
+        <Link to={`/master/tienda/productInfo/${_id}`}>info completa</Link>
+      )
+    },
+    {
+      title: 'Disponibles',
+      dataIndex: 'disponibles',
+      key: 'disponibles'
+    },
+    {
+      title: 'Nuevo',
+      dataIndex: 'nuevo',
+      key: 'nuevo',
+      render: nuevo => <span>{nuevo ? 'Si' : 'No'}</span>
+    },
+    {
+      title: 'Visible online',
+      dataIndex: 'online',
+      key: 'online',
+      render: online => <span>{online ? 'Si' : 'No'}</span>
+    },
+    {
+      title: 'Visitas',
+      dataIndex: 'countVisits',
+      key: 'countVisits'
+    },
+    {
+      title: 'Preguntas',
+      dataIndex: 'countQuestions',
+      key: 'countQuestions'
+    },
+    {
+      title: 'Ventas locales',
+      dataIndex: 'countLocalPurchases',
+      key: 'countLocalPurchases'
+    },
+    {
+      title: 'Ventas online',
+      dataIndex: 'countPurchases',
+      key: 'countPurchases'
     },
     {
       title: 'Portada',
       dataIndex: 'images',
       key: 'images',
+      fixed: 'right',
       render: images => (
         <span>
           <img src={images.cover} alt="vmo" width="40px" />
@@ -84,7 +119,12 @@ const ProductTable = props => {
   //   }
   return (
     <React.Fragment>
-      <Table pagination={false} dataSource={dataSource} columns={columns} />
+      <Table
+        pagination={false}
+        dataSource={dataSource}
+        columns={columns}
+        scroll={{ y: 240, x: 1600 }}
+      />
       <Pagination
         style={{ margin: '15px auto 0px auto' }}
         onShowSizeChange={onPageChange}

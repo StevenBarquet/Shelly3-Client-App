@@ -12,11 +12,14 @@
 -Administrar  ordenes
 -Modo caja
 -Seccion de información completa del producto
+-Fix path en StoreMenu JustMenu para regExpressions
 -Fix responsive en filtros
--Implementar Fixed Columns and Header para mostrar más datos en la tabla de productos
 -Agregar ver información completa del producto al menu
+-New error function with isLoading false and error modal
+-Agregar funcion de eliminar con warning modal de confirmacion
 
     Smurfeado:
+-Implementar Fixed Columns and Header para mostrar más datos en la tabla de productos
 -Hacer que los filtros se escondan después de una busqueda correcta
 -Hacer componente de carga global en navbar
 -Terminar tabla paginada de productos

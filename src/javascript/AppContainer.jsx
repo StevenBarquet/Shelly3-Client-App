@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // ---Pages Master
 import HomePageMaster from 'Pages/Master/HomePageMaster';
+import ProductsInfoPage from 'Pages/Master/ProductsInfoPage';
 import AdminProductsPage from 'Pages/Master/AdminProductsPage';
 import AddProductsPage from 'Pages/Master/AddProductsPage';
 import AdminPublicHome from 'Pages/Master/AdminPublicHomePage';
@@ -32,8 +33,13 @@ function AppContainer() {
         />
         <Route
           exact
-          path="/master/tienda/addProductos"
+          path="/master/tienda/addProductos([/0-9a-zA-Z]*)"
           component={AddProductsPage}
+        />
+        <Route
+          exact
+          path="/master/tienda/productInfo([/0-9a-zA-Z]*)"
+          component={ProductsInfoPage}
         />
         <Route
           exact

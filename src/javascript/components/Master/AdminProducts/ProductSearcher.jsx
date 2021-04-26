@@ -2,7 +2,6 @@
 // ---Dependencys
 import React, { useState } from 'react';
 import { Row, Col, Form, Input, Select, Radio } from 'antd';
-// import { useHistory } from 'react-router-dom';
 import {
   LoginOutlined,
   VerticalAlignBottomOutlined,
@@ -14,41 +13,99 @@ import mapOptions from 'CommonComps/mapOptions';
 // ---Other
 import { productos } from 'Others/store-data.json';
 
-const filterOption = [
-  {
-    label: 'Ambos',
-    value: null
-  },
-  {
-    label: 'Si',
-    value: true
-  },
-  {
-    label: 'No',
-    value: false
-  }
-];
+// ---AUX COMPONENTS
+function SubmitButton(props) {
+  const { advanceSearch } = props;
+  if (!advanceSearch)
+    return (
+      <Col className="col-vertical-align" xl={4}>
+        <ButtonMlg
+          variant="yellow"
+          size="small"
+          htmlType="submit"
+          widthB="85%"
+          label="Buscar"
+          icon={<LoginOutlined />}
+        />
+      </Col>
+    );
+  return null;
+}
+function SubmitButton2() {
+  return (
+    <Col className="col-vertical-align" xl={24}>
+      <ButtonMlg
+        variant="yellow"
+        size="small"
+        htmlType="submit"
+        widthB="85%"
+        label="Buscar"
+        icon={<LoginOutlined />}
+      />
+    </Col>
+  );
+}
 
+function FilterButton(props) {
+  const { advanceSearch, changeAdvance } = props;
+  return (
+    <Col className="col-vertical-align" xl={advanceSearch ? 7 : 3}>
+      <ButtonMlg
+        variant="purple"
+        size="small"
+        htmlType="button"
+        widthB="85%"
+        label="Filtros"
+        onClick={changeAdvance}
+        icon={
+          advanceSearch ? (
+            <VerticalAlignTopOutlined />
+          ) : (
+            <VerticalAlignBottomOutlined />
+          )
+        }
+      />
+    </Col>
+  );
+}
 // ------------------------------------------ COMPONENT-----------------------------------------
 function ProductSearcher(props) {
+  // ----------------------- hooks, const, props y states
   const { defaultValues, submitData } = props;
   const [advanceSearch, setAdvanceSearch] = useState(false);
-
-  // valida que si la cadena no está vacía tenga entre 3 y 25 de longitud
-  function validate(rule, value) {
-    if (!value || (value.length > 2 && value.length < 26)) {
-      return Promise.resolve();
+  const filterOption = [
+    {
+      label: 'Ambos',
+      value: null
+    },
+    {
+      label: 'Si',
+      value: true
+    },
+    {
+      label: 'No',
+      value: false
     }
-    return Promise.reject('Ingresa una palabra entre 3 y 25 caracteres');
-  }
+  ];
 
+  // ----------------------- Metodos Principales
   const changeAdvance = () => setAdvanceSearch(!advanceSearch);
 
   function onFinish(data) {
     setAdvanceSearch(false);
     submitData(data);
   }
+  // ----------------------- Metodos Auxiliares
+  function validate(rule, value) {
+    // Valida:
+    // -Si la cadena no está vacía que tenga entre 3 y 25 de longitud
+    if (!value || (value.length > 2 && value.length < 26)) {
+      return Promise.resolve();
+    }
+    return Promise.reject('Ingresa una palabra entre 3 y 25 caracteres');
+  }
 
+  // ----------------------- Render
   return (
     <div className="store-content-container">
       {/* ----------------------------form------------------------- */}
@@ -236,58 +293,3 @@ function ProductSearcher(props) {
   );
 }
 export default ProductSearcher;
-
-function SubmitButton(props) {
-  const { advanceSearch } = props;
-  if (!advanceSearch)
-    return (
-      <Col className="col-vertical-align" xl={4}>
-        <ButtonMlg
-          variant="yellow"
-          size="small"
-          htmlType="submit"
-          widthB="85%"
-          label="Buscar"
-          icon={<LoginOutlined />}
-        />
-      </Col>
-    );
-  return null;
-}
-function SubmitButton2() {
-  return (
-    <Col className="col-vertical-align" xl={24}>
-      <ButtonMlg
-        variant="yellow"
-        size="small"
-        htmlType="submit"
-        widthB="85%"
-        label="Buscar"
-        icon={<LoginOutlined />}
-      />
-    </Col>
-  );
-}
-
-function FilterButton(props) {
-  const { advanceSearch, changeAdvance } = props;
-  return (
-    <Col className="col-vertical-align" xl={advanceSearch ? 7 : 3}>
-      <ButtonMlg
-        variant="purple"
-        size="small"
-        htmlType="button"
-        widthB="85%"
-        label="Filtros"
-        onClick={changeAdvance}
-        icon={
-          advanceSearch ? (
-            <VerticalAlignTopOutlined />
-          ) : (
-            <VerticalAlignBottomOutlined />
-          )
-        }
-      />
-    </Col>
-  );
-}

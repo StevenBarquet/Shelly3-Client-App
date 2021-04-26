@@ -14,7 +14,7 @@ import { removeNullProperties } from 'Others/otherMethods';
 import { asyncHandler, testError } from 'Others/requestHandlers.js';
 import { adminSearchProducts } from 'Others/peticiones.js';
 
-// ---AUX COMPONENT
+// ---AUX COMPONENTS
 function ProductsDisplay(props) {
   const {
     updatedData,
@@ -42,7 +42,7 @@ function ProductsDisplay(props) {
 
 // ------------------------------------------ COMPONENT-----------------------------------------
 function AdminProducts() {
-  // ----------------------- hooks, const y states
+  // ----------------------- hooks, const, props y states
   // Redux States
   const { masterProducts } = useSelector(reducers => reducers.masterReducer);
   const { productCount, products, updatedData, searchParams } = masterProducts;
@@ -93,6 +93,7 @@ function AdminProducts() {
     };
   }
 
+  // ----------------------- Render
   return (
     <StoreMenuCont>
       <div className="store-content-container">
