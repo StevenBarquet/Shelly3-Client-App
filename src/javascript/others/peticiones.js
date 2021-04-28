@@ -28,6 +28,17 @@ export async function adminSearchProducts(data) {
   }
 }
 
+export async function getOneProduct(id) {
+  const endpoint = 'admin/productos/';
+  const url = urlServer + endpoint + id;
+  try {
+    const respose = await axios.get(url);
+    return respose;
+  } catch (error) {
+    return error;
+  }
+}
+
 // -------------------------------------------Old----------------------------------------
 export async function genericGet(url) {
   try {

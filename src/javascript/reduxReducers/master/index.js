@@ -2,7 +2,8 @@ import {
   UPDATE_CURRENT_PRODUCTS,
   UPDATE_SEARCH_PARAMS,
   UPDATE_PAGE,
-  UPDATE_PAGE_AND_SIZE
+  UPDATE_PAGE_AND_SIZE,
+  UPDATE_ONE_PRODUCT
 } from 'Types';
 
 const INITIAL_STATE = {
@@ -22,6 +23,9 @@ const INITIAL_STATE = {
       },
       sortBy: '{ "nombre": 1 }'
     }
+  },
+  singleProduct: {
+    productData: {}
   }
 };
 
@@ -70,6 +74,15 @@ export default (state = INITIAL_STATE, action) => {
             pageNumber: payload.pageNumber,
             pageSize: payload.pageSize
           }
+        }
+      };
+
+    case UPDATE_ONE_PRODUCT:
+      return {
+        ...state,
+        singleProduct: {
+          ...state.singleProduct,
+          productData: payload
         }
       };
 

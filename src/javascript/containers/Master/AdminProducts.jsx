@@ -68,7 +68,7 @@ function AdminProducts() {
       ? { ...searchParams, pageNumber: newPage, pageSize: newSize }
       : { ...searchParams, pageNumber: newPage };
     const cleanedData = cleanSearchData(changedPage, searchParams);
-    asyncHandler(adminSearchProducts, onSuccessSearch, testError, cleanedData);
+    asyncHandler(adminSearchProducts, onSuccessSearch, onError, cleanedData);
   }
 
   // ----------------------- Metodos Auxiliares
@@ -76,6 +76,11 @@ function AdminProducts() {
   function onSuccessSearch(data) {
     isLoading(false);
     updateReduxProducts(data);
+  }
+
+  function onError(err) {
+    testError(err);
+    isLoading(false);
   }
 
   function cleanSearchData(searchData, formData) {

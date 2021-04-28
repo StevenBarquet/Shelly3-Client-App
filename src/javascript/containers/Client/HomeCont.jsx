@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 // ---Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { getPublicHomeAction } from 'Actions/home';
+import { updateLoading } from 'Actions/appInfo';
 // ---Components
 import DinamicCarousel from 'Comp/Client/Home/DinamicCarousel';
 import BuySteps from 'Comp/Client/Home/BuySteps';
@@ -14,10 +15,9 @@ import { title } from 'Others/labels.json';
 import { getHomePublic } from 'Others/peticiones.js';
 import { asyncHandler, testError } from 'Others/requestHandlers.js';
 
-const { main, sub } = title;
-
 // ------------------------------------------ COMPONENT-----------------------------------------
 function HomeCont() {
+  // ----------------------- hooks, const, props y states
   // Redux States
   const { banners, paragraph, products } = useSelector(
     reducers => reducers.homeReducer
@@ -26,11 +26,27 @@ function HomeCont() {
   // Redux Actions
   const dispatchR = useDispatch();
   const updateHomeReducer = data => dispatchR(getPublicHomeAction(data));
+  const isLoading = flag => dispatchR(updateLoading(flag));
+  const { main, sub } = title;
+  useEffect(() => getHomeData(), []);
 
-  // ---Get Home data
-  useEffect(() => {
-    asyncHandler(getHomePublic, updateHomeReducer, testError);
-  }, []);
+  // ----------------------- Metodos Principales
+  function getHomeData() {
+    isLoading(true);
+    asyncHandler(getHomePublic, onSuccessData, onError);
+  }
+
+  // ----------------------- Metodos Auxiliares
+  function onSuccessData(data) {
+    updateHomeReducer(data);
+    isLoading(false);
+  }
+
+  function onError(err) {
+    testError(err);
+    isLoading(false);
+  }
+  // ----------------------- Render
   return (
     <React.Fragment>
       <div className="h-title">

@@ -5,8 +5,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 // ---Components
 import { Button, Table, Pagination } from 'antd';
-// ---Others
-// import { getALLLaptops } from 'Others/peticiones';
+// --Others
+import { priceFormat } from 'Others/otherMethods';
 
 const ProductTable = props => {
   const { products, onDeleteP, current, pageSize, total, onPageChange } = props;
@@ -31,7 +31,14 @@ const ProductTable = props => {
     {
       title: 'Precio Online',
       dataIndex: 'precioOnline',
-      key: 'precioOnline'
+      key: 'precioOnline',
+      render: precioOnline => <span>{priceFormat(precioOnline)}</span>
+    },
+    {
+      title: 'Descuento',
+      dataIndex: 'descuento',
+      key: 'descuento',
+      render: descuento => <span>{descuento + '%'}</span>
     },
     {
       title: 'Categoria',
@@ -123,7 +130,7 @@ const ProductTable = props => {
         pagination={false}
         dataSource={dataSource}
         columns={columns}
-        scroll={{ y: 240, x: 1600 }}
+        scroll={{ y: 500, x: 1600 }}
       />
       <Pagination
         style={{ margin: '15px auto 0px auto' }}

@@ -1,3 +1,7 @@
+// ---Redux
+import { useDispatch } from 'react-redux';
+import { updateLoading } from 'Actions/appInfo';
+
 export function asyncHandler(
   requestFunction,
   successFunction,
@@ -20,4 +24,5 @@ export function testSuccess(response) {
 
 export function testError(response) {
   console.log('testError este: --->', response);
+  return null;
 }

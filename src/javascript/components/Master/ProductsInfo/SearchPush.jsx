@@ -36,9 +36,9 @@ function SearchPush(props) {
   // ----------------------- Metodos Auxiliares
   function validate(rule, value) {
     // valida:
-    // -Cadena exista y tenga entre 5 y 26 de longitud
+    // -Cadena exista y tenga entre 24 de longitud
     // -Sólo contiene caracteres alfanumericos
-    if (value && (value.length > 4 && value.length < 27) && isId(value)) {
+    if (value && isId(value)) {
       return Promise.resolve();
     }
     return Promise.reject('Ingresa una ID válido');

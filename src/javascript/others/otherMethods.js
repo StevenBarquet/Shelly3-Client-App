@@ -110,7 +110,7 @@ export const getStringKey = cadena => {
 
 export const isId = cadena => {
   // regex valida una palabra continua que sólo puede contener letras numeros y '-'
-  return /^[0-9a-zA-ZñÑ]+$/.test(cadena);
+  return /^[0-9a-fA-F]{24}$/.test(cadena);
 };
 
 export function cloneObj(obj) {
