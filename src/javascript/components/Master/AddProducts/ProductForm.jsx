@@ -1,6 +1,7 @@
 // ---Dependencys
 import React from 'react';
 import { Form, Row, Col, Input, Select, Switch, InputNumber } from 'antd';
+import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 // ---ComonComponents
 import ButtonMlg from 'CommonComps/ButtonMlg';
 import mapOptions from 'CommonComps/mapOptions';
@@ -12,7 +13,8 @@ function ProductForm(props) {
     onChangeForm,
     onSubmit,
     validation,
-    isValidForm
+    isValidForm,
+    isEdit
   } = props;
   const {
     _id,
@@ -337,7 +339,8 @@ function ProductForm(props) {
                 size="small"
                 htmlType="submit"
                 widthB="85%"
-                label="Submit"
+                label={isEdit ? 'Editar producto' : 'Agregar producto'}
+                icon={isEdit ? <EditOutlined /> : <PlusOutlined />}
               />
             </div>
           </Col>

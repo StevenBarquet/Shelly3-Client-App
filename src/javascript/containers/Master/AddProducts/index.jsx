@@ -8,7 +8,12 @@ import SearchPush from 'Comp/Master/ProductsInfo/SearchPush';
 import StoreMenuCont from 'Cont/Master/StoreMenuCont';
 import ProductForm from 'Comp/Master/AddProducts/ProductForm';
 // ---Others
-import { isId } from 'Others/otherMethods';
+import {
+  isId,
+  ignoreArgs,
+  removeNullProperties,
+  removeBlankProperties
+} from 'Others/otherMethods';
 // --Request
 import { asyncHandler, testError } from 'Others/requestHandlers.js';
 import { getOneProduct } from 'Others/peticiones.js';
@@ -92,7 +97,7 @@ function AddProducts() {
   function onSubmit(formData) {
     const { isValid } = validateForm(formData);
     if (isValid) {
-      console.log('onSubmit: Success\n', formData);
+      fitDataToRequest(formData);
     } else {
       console.log('onSubmit: Error\n', formData);
     }
@@ -115,13 +120,83 @@ function AddProducts() {
   }
 
   function onSuccessSearch(data) {
-    onChangeForm(data, true);
+    const fixedData = fitDataToForm(data);
+    onChangeForm(fixedData, true);
     isLoading(false);
   }
 
   function onErrorSearch(err) {
     testError(err);
     isLoading(false);
+  }
+  function fitDataToForm(data) {
+    const keys = Object.keys(data);
+    const values = Object.values(data);
+    let newData = {};
+
+    keys.forEach((key, i) => {
+      if (key === 'images') {
+        newData = {
+          ...newData,
+          imagesCover: data.images.cover,
+          imagesMini: data.images.mini || '',
+          imagesExtra1: data.images.extra ? data.images.extra[0] || '' : '',
+          imagesExtra2: data.images.extra ? data.images.extra[1] || '' : '',
+          imagesExtra3: data.images.extra ? data.images.extra[2] || '' : ''
+        };
+      } else {
+        newData = { ...newData, [key]: values[i] };
+      }
+    });
+    // console.log('fit data: ', newData);
+    return newData;
+  }
+  function fitDataToRequest(data) {
+    const ignore = [
+      '__v',
+      'date',
+      'countVisits',
+      'countQuestions',
+      'countPurchases',
+      'countLocalPurchases'
+    ];
+    let cleanData = ignoreArgs(data, ignore);
+    cleanData = removeBlankProperties(cleanData);
+    cleanData = removeNullProperties(cleanData);
+    const keys = Object.keys(cleanData);
+    const values = Object.values(cleanData);
+    // console.log(cleanData);
+    let newData = {};
+
+    keys.forEach((key, i) => {
+      if (key === 'imagesCover') {
+        newData = {
+          ...newData,
+          images: { ...newData.images, cover: values[i] }
+        };
+      } else if (key === 'imagesMini') {
+        newData = {
+          ...newData,
+          images: { ...newData.images, mini: values[i] }
+        };
+      } else if (
+        key === 'imagesExtra1' ||
+        key === 'imagesExtra2' ||
+        key === 'imagesExtra3'
+      ) {
+        newData = {
+          ...newData,
+          images: {
+            ...newData.images,
+            extra: [...(newData.images.extra || []), values[i]]
+          }
+        };
+      } else {
+        newData = { ...newData, [key]: values[i] };
+      }
+    });
+    // console.log('fitDataToRequest: ', newData);
+    return newData;
   }
   function getID(value) {
     // valida:
@@ -157,6 +232,7 @@ function AddProducts() {
             onSubmit={onSubmit}
             validation={state.msgSchema}
             isValidForm={state.isValidForm}
+            isEdit={state.form._id}
           />
         )}
       </div>

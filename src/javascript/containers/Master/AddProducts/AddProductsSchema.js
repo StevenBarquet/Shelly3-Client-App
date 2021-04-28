@@ -86,23 +86,23 @@ export const messagesSchema = {
 export function joiFormValidate(formData) {
   const schema = Joi.object({
     _id: Joi.string().pattern(/^[0-9a-fA-F]{24}$/),
-    marca: Joi.string().optional(),
+    marca: Joi.string().allow(''),
     nombre: Joi.string().required(),
     imagesCover: Joi.string().required(),
-    imagesExtra1: Joi.string().optional(),
-    imagesExtra2: Joi.string().optional(),
-    imagesExtra3: Joi.string().optional(),
-    imagesMini: Joi.string().optional(),
+    imagesExtra1: Joi.string().allow(''),
+    imagesExtra2: Joi.string().allow(''),
+    imagesExtra3: Joi.string().allow(''),
+    imagesMini: Joi.string().allow(''),
     costo: Joi.number().required(),
     precioPlaza: Joi.number().required(),
     precioOnline: Joi.number().required(),
     disponibles: Joi.number().required(),
     online: Joi.boolean().required(),
     nuevo: Joi.boolean().required(),
-    descripcion: Joi.string().optional(),
-    estetica: Joi.string().optional(),
+    descripcion: Joi.string().allow(''),
+    estetica: Joi.string().allow(''),
     categoria: Joi.string().required(),
-    subcategoria: Joi.string().optional(),
+    subcategoria: Joi.string().allow(''),
     descuento: Joi.number()
       .min(0)
       .max(99)

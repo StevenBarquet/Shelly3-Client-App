@@ -40,19 +40,6 @@ export const copyToEnd = (str, index) => {
   return copy;
 };
 
-export function removeNullProperties(obj) {
-  Object.keys(obj).forEach(key => {
-    const value = obj[key];
-    const hasProperties = value && Object.keys(value).length > 0;
-    if (value === null) {
-      delete obj[key];
-    } else if (typeof value !== 'string' && hasProperties) {
-      removeNullProperties(value);
-    }
-  });
-  return obj;
-}
-
 export const copyToIndex = (str, index) => {
   // Copia una cadena hasta el index indicado
   let copy = '';
@@ -112,6 +99,66 @@ export const isId = cadena => {
   // regex valida una palabra continua que sólo puede contener letras numeros y '-'
   return /^[0-9a-fA-F]{24}$/.test(cadena);
 };
+
+export function ignoreArgs(someObj, args) {
+  const keys = Object.keys(someObj);
+  const values = Object.values(someObj);
+  let newData = {};
+  let doCopy = true;
+
+  keys.forEach((key, i) => {
+    args.forEach(arg => {
+      if (key === arg) {
+        doCopy = false;
+      }
+    });
+    newData = doCopy ? { ...newData, [key]: values[i] } : newData;
+    doCopy = true;
+  });
+  return newData;
+}
+export function selectArgs(someObj, args) {
+  const keys = Object.keys(someObj);
+  const values = Object.values(someObj);
+  let newData = {};
+  let doCopy = false;
+
+  keys.forEach((key, i) => {
+    args.forEach(arg => {
+      if (key === arg) {
+        doCopy = true;
+      }
+    });
+    newData = doCopy ? { ...newData, [key]: values[i] } : newData;
+    doCopy = false;
+  });
+  return newData;
+}
+
+export function removeNullProperties(obj) {
+  Object.keys(obj).forEach(key => {
+    const value = obj[key];
+    const hasProperties = value && Object.keys(value).length > 0;
+    if (value === null) {
+      delete obj[key];
+    } else if (typeof value !== 'string' && hasProperties) {
+      removeNullProperties(value);
+    }
+  });
+  return obj;
+}
+export function removeBlankProperties(obj) {
+  Object.keys(obj).forEach(key => {
+    const value = obj[key];
+    const hasProperties = value && Object.keys(value).length > 0;
+    if (value === '') {
+      delete obj[key];
+    } else if (typeof value !== 'string' && hasProperties) {
+      removeBlankProperties(value);
+    }
+  });
+  return obj;
+}
 
 export function cloneObj(obj) {
   // console.log('cloneObj original: ', obj);
