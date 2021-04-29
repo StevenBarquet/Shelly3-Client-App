@@ -37,7 +37,7 @@ const DisplayProductInfo = props => {
         <Descriptions.Item label="Producto" span={3}>
           {data.nombre}
         </Descriptions.Item>
-        <Descriptions.Item label="Marca">{data.nombre}</Descriptions.Item>
+        <Descriptions.Item label="Marca">{data.marca}</Descriptions.Item>
         <Descriptions.Item label="id" span={2}>
           {data._id}
         </Descriptions.Item>

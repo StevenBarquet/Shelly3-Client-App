@@ -39,6 +39,28 @@ export async function getOneProduct(id) {
   }
 }
 
+export async function updateProductRequest(data) {
+  const endpoint = 'admin/productos/editar';
+  const url = urlServer + endpoint;
+  try {
+    const respose = await axios.put(url, data);
+    return respose;
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function createProductRequest(data) {
+  const endpoint = 'admin/productos/registrar';
+  const url = urlServer + endpoint;
+  try {
+    const respose = await axios.post(url, data);
+    return respose;
+  } catch (error) {
+    return error;
+  }
+}
+
 // -------------------------------------------Old----------------------------------------
 export async function genericGet(url) {
   try {

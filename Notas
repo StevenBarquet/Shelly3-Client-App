@@ -18,7 +18,8 @@
 -New error function with isLoading false and error modal
 -Agregar funcion de eliminar con warning modal de confirmacion
 -Hacer funcion recursiva de construccion de un objeto anidado a partir de un string y viceversa
--Limpiar datos pre-request
+-Limpiar datos pre-request en agregar/editar
+-Agregar boton de limpiar al form de editar producto
 
     Smurfeado:
 -Agregar ver información completa del producto al menu

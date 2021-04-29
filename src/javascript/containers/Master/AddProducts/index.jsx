@@ -7,6 +7,7 @@ import { updateLoading } from 'Actions/appInfo';
 import SearchPush from 'Comp/Master/ProductsInfo/SearchPush';
 import StoreMenuCont from 'Cont/Master/StoreMenuCont';
 import ProductForm from 'Comp/Master/AddProducts/ProductForm';
+import SearchMercadoLibre from 'Comp/Master/AddProducts/SearchMercadoLibre';
 // ---Others
 import {
   isId,
@@ -14,9 +15,14 @@ import {
   removeNullProperties,
   removeBlankProperties
 } from 'Others/otherMethods';
+import superMLhandler from 'Others/superMLhandler';
 // --Request
 import { asyncHandler, testError } from 'Others/requestHandlers.js';
-import { getOneProduct } from 'Others/peticiones.js';
+import {
+  getOneProduct,
+  updateProductRequest,
+  createProductRequest
+} from 'Others/peticiones.js';
 import { joiFormValidate, messagesSchema } from './AddProductsSchema';
 
 // ------------------------------------------ REDUCER -----------------------------------------
@@ -24,6 +30,7 @@ const typesR = {
   UPDATE_MSGSCHEMA: 'UPDATE_MSGSCHEMA',
   UPDATE_FORM: 'UPDATE_FORM',
   STOP_RELOAD: 'STOP_RELOAD',
+  START_RELOAD: 'START_RELOAD',
   RESET_VALIDATIONS: 'RESET_VALIDATIONS'
 };
 
@@ -47,12 +54,20 @@ function reducer(state, action) {
     case typesR.UPDATE_FORM:
       return {
         ...state,
-        reload: payload.reload,
-        form: { ...state.form, ...payload.formData }
+        form: { ...state.form, ...payload }
       };
 
     case typesR.STOP_RELOAD:
       return { ...state, reload: false };
+
+    case typesR.START_RELOAD:
+      return {
+        ...state,
+        reload: true,
+        form: { ...state.form, ...payload },
+        isValidForm: true,
+        msgSchema: messagesSchema
+      };
 
     default:
       return state;
@@ -65,7 +80,8 @@ function AddProducts() {
     RESET_VALIDATIONS,
     UPDATE_FORM,
     UPDATE_MSGSCHEMA,
-    STOP_RELOAD
+    STOP_RELOAD,
+    START_RELOAD
   } = typesR;
   const initialState = {
     msgSchema: messagesSchema,
@@ -86,18 +102,29 @@ function AddProducts() {
   useEffect(() => getProductData(), [currentPath]);
   useEffect(() => dispatch({ type: STOP_RELOAD }), [state.reload]); // truco para hacer un rerendero condicional
   // ----------------------- Metodos Principales
-  function onChangeForm(formData, reload) {
+  function onChangeForm(formData) {
     // console.log('onChangeForm: ', formData);
     dispatch({ type: RESET_VALIDATIONS });
     dispatch({
       type: UPDATE_FORM,
-      payload: { formData, reload }
+      payload: formData
+    });
+  }
+  function onSearchML(data) {
+    isLoading(true);
+    superMLhandler(data.id).then(res => {
+      // console.log('onSearchML: ', res);
+      onSuccessSearch(res);
+      isLoading(false);
     });
   }
   function onSubmit(formData) {
     const { isValid } = validateForm(formData);
     if (isValid) {
-      fitDataToRequest(formData);
+      const data = fitDataToRequest(formData);
+      const { _id } = data;
+      if (_id) updateProduct(data);
+      else createProduct(data);
     } else {
       console.log('onSubmit: Error\n', formData);
     }
@@ -106,8 +133,16 @@ function AddProducts() {
     const urlID = getID(currentPath);
     if (urlID) {
       isLoading(true);
-      asyncHandler(getOneProduct, onSuccessSearch, onErrorSearch, urlID);
+      asyncHandler(getOneProduct, onSuccessSearch, onError, urlID);
     }
+  }
+  function updateProduct(data) {
+    isLoading(true);
+    asyncHandler(updateProductRequest, isLoadingFalse, onError, data);
+  }
+  function createProduct(data) {
+    isLoading(true);
+    asyncHandler(createProductRequest, isLoadingFalse, onError, data);
   }
   // ----------------------- Metodos Auxiliares
   function validateForm(formData) {
@@ -118,18 +153,20 @@ function AddProducts() {
     });
     return validation;
   }
-
-  function onSuccessSearch(data) {
-    const fixedData = fitDataToForm(data);
-    onChangeForm(fixedData, true);
+  function isLoadingFalse() {
     isLoading(false);
   }
-
-  function onErrorSearch(err) {
+  function onSuccessSearch(data) {
+    const fixedData = fitDataToForm(data);
+    dispatch({ type: START_RELOAD, payload: fixedData });
+    isLoading(false);
+  }
+  function onError(err) {
     testError(err);
     isLoading(false);
   }
   function fitDataToForm(data) {
+    // console.log('fitDataToForm', data);
     const keys = Object.keys(data);
     const values = Object.values(data);
     let newData = {};
@@ -224,6 +261,7 @@ function AddProducts() {
         <h1>Agregar Productos</h1>
       </div>
       <SearchPush pushPath="/master/tienda/addProductos" />
+      <SearchMercadoLibre onFinish={onSearchML} />
       <div className="store-form-container">
         {!state.reload && (
           <ProductForm
