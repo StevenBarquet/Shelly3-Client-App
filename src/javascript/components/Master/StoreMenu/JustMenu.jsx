@@ -70,7 +70,12 @@ function JustMenu(props) {
         </SubMenu>
         <SubMenu key="4" icon={<CarryOutOutlined />} title="Ordenes">
           <Menu.Item key="sub4-1">Administrar Ordenes</Menu.Item>
-          <Menu.Item key="sub4-2">Modo caja</Menu.Item>
+          <Menu.Item
+            key="/master/tienda/storeCart"
+            onClick={() => goToRoute('/master/tienda/storeCart')}
+          >
+            Vender en mostrador
+          </Menu.Item>
           <Menu.Item key="sub4-3">Generar orden</Menu.Item>
           <Menu.Item key="sub4-4">Seguimiento de ordenes</Menu.Item>
         </SubMenu>

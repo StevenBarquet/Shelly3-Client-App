@@ -27,7 +27,6 @@ export async function adminSearchProducts(data) {
     return error;
   }
 }
-
 export async function getOneProduct(id) {
   const endpoint = 'admin/productos/';
   const url = urlServer + endpoint + id;
@@ -38,7 +37,6 @@ export async function getOneProduct(id) {
     return error;
   }
 }
-
 export async function updateProductRequest(data) {
   const endpoint = 'admin/productos/editar';
   const url = urlServer + endpoint;
@@ -49,12 +47,21 @@ export async function updateProductRequest(data) {
     return error;
   }
 }
-
 export async function createProductRequest(data) {
   const endpoint = 'admin/productos/registrar';
   const url = urlServer + endpoint;
   try {
     const respose = await axios.post(url, data);
+    return respose;
+  } catch (error) {
+    return error;
+  }
+}
+export async function deleteProductRequest(id) {
+  const endpoint = 'admin/productos/borrar/' + id;
+  const url = urlServer + endpoint;
+  try {
+    const respose = await axios.delete(url);
     return respose;
   } catch (error) {
     return error;

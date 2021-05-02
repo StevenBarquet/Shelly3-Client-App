@@ -49,6 +49,9 @@
     },
     "ProductsInfoPage": {
       "title": "Consulta del producto"
+    },
+    "StoreCartPage": {
+      "title": "Venta de mostrador"
     }
   }
 }

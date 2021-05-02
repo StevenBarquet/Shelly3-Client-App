@@ -16,13 +16,15 @@
 -Fix responsive en filtros
 -Boton limpiar filtros
 -New error function with isLoading false and error modal
--Agregar funcion de eliminar con warning modal de confirmacion
--Hacer funcion recursiva de construccion de un objeto anidado a partir de un string y viceversa
--Limpiar datos pre-request en agregar/editar
+
 -Agregar boton de limpiar al form de editar producto
 
+
     Smurfeado:
+-Limpiar datos pre-request en agregar/editar
+-Agregar funcion de eliminar con warning modal de confirmacion
 -Agregar ver información completa del producto al menu
+-Modificar funcionalidad updated false en search all products
 -Implementar Fixed Columns and Header para mostrar más datos en la tabla de productos
 -Hacer que los filtros se escondan después de una busqueda correcta
 -Hacer componente de carga global en navbar

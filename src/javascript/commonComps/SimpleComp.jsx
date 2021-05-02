@@ -6,12 +6,12 @@ import React from 'react';
 // ---Components
 // import AuthValidate from 'Comp/Master/AuthValidate';
 // ------------------------------------------ COMPONENT-----------------------------------------
-const SimpleComp = () => {
+function SimpleComp() {
   return (
     <React.Fragment>
       <span>Ejemplo Simple</span>
     </React.Fragment>
   );
-};
+}
 
 export default SimpleComp;

@@ -1,15 +1,16 @@
 // ---Dependencys
+import React from 'react';
 import { Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const { confirm } = Modal;
 
 // ------------------------------------------ COMPONENT-----------------------------------------
-function ModalConfirmation(callback, data) {
+function ModalConfirmation(question, details, callback, data) {
   confirm({
-    title: 'Do you Want to delete these items?',
+    title: question,
     icon: <ExclamationCircleOutlined />,
-    content: 'Some descriptions',
+    content: details,
     onOk() {
       if (data) callback(data);
       else callback();

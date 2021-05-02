@@ -3,6 +3,7 @@ import React, { useReducer, useEffect } from 'react';
 // ---Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLoading } from 'Actions/appInfo';
+import { setNotUpdated } from 'Actions/master';
 // ---Components
 import SearchPush from 'Comp/Master/ProductsInfo/SearchPush';
 import StoreMenuCont from 'Cont/Master/StoreMenuCont';
@@ -97,6 +98,7 @@ function AddProducts() {
   const { currentPath } = useSelector(reducers => reducers.appInfoReducer);
   const dispatchR = useDispatch();
   // Redux Actions
+  const notUpdated = () => dispatchR(setNotUpdated());
   const isLoading = flag => dispatchR(updateLoading(flag));
 
   useEffect(() => getProductData(), [currentPath]);
@@ -121,6 +123,7 @@ function AddProducts() {
   function onSubmit(formData) {
     const { isValid } = validateForm(formData);
     if (isValid) {
+      notUpdated();
       const data = fitDataToRequest(formData);
       const { _id } = data;
       if (_id) updateProduct(data);

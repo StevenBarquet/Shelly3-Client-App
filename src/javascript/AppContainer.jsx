@@ -10,6 +10,7 @@ import AdminPublicHome from 'Pages/Master/AdminPublicHomePage';
 import ToHomeMaster from 'Pages/Master/ToHomeMasterPage';
 import MasterLogin from 'Pages/Master/MasterLoginPage';
 import MasterLogout from 'Pages/Master/MasterLogoutPage';
+import StoreCart from 'Pages/Master/StoreCartPage';
 // ---Pages Client
 import HomePage from 'Pages/Client/HomePage';
 // ---Pages Others
@@ -23,7 +24,8 @@ function AppContainer() {
     <BrowserRouter>
       <NavbarCont />
       <Switch>
-        {/* Master routes */}
+        {/* --------- Master routes --------- */}
+        {/* Products */}
         <Route exact path="/master" component={ToHomeMaster} />
         <Route exact path="/master/tienda" component={HomePageMaster} />
         <Route
@@ -41,6 +43,9 @@ function AppContainer() {
           path="/master/tienda/productInfo([/0-9a-zA-Z]*)"
           component={ProductsInfoPage}
         />
+        {/* Orders */}
+        <Route exact path="/master/tienda/storeCart" component={StoreCart} />
+        {/* Others */}
         <Route
           exact
           path="/master/tienda/publicHome"
@@ -48,7 +53,7 @@ function AppContainer() {
         />
         <Route exact path="/master/login" component={MasterLogin} />
         <Route exact path="/master/salir" component={MasterLogout} />
-        {/* Client routes */}
+        {/* --------- Client routes --------- */}
         <Route exact path="/" component={HomePage} />
         <Route exact path="*" component={Error404Page} />
       </Switch>

@@ -3,7 +3,10 @@ import {
   UPDATE_SEARCH_PARAMS,
   UPDATE_PAGE,
   UPDATE_PAGE_AND_SIZE,
-  UPDATE_ONE_PRODUCT
+  UPDATE_ONE_PRODUCT,
+  CHANGE_FIRST_RENDER,
+  PRODUCTS_NOT_UPDATED,
+  RESET_SEARCH_PARAMS
 } from 'Types';
 
 const INITIAL_STATE = {
@@ -11,9 +14,10 @@ const INITIAL_STATE = {
     productCount: 0,
     products: [],
     updatedData: false,
+    firstRender: true,
     searchParams: {
       pageNumber: 1,
-      pageSize: 1,
+      pageSize: 30,
       searchedValue: null,
       filters: {
         categoria: null,
@@ -42,6 +46,16 @@ export default (state = INITIAL_STATE, action) => {
       };
     }
 
+    case CHANGE_FIRST_RENDER: {
+      return {
+        ...state,
+        masterProducts: {
+          ...state.masterProducts,
+          firstRender: payload
+        }
+      };
+    }
+
     case UPDATE_CURRENT_PRODUCTS:
       return {
         ...state,
@@ -61,6 +75,35 @@ export default (state = INITIAL_STATE, action) => {
             ...state.masterProducts.searchParams,
             pageNumber: payload
           }
+        }
+      };
+
+    case RESET_SEARCH_PARAMS:
+      return {
+        ...state,
+        masterProducts: {
+          ...state.masterProducts,
+          searchParams: {
+            pageNumber: 1,
+            pageSize: 30,
+            searchedValue: null,
+            filters: {
+              categoria: null,
+              descuento: null,
+              nuevo: null,
+              online: null
+            },
+            sortBy: '{ "nombre": 1 }'
+          }
+        }
+      };
+
+    case PRODUCTS_NOT_UPDATED:
+      return {
+        ...state,
+        masterProducts: {
+          ...state.masterProducts,
+          updatedData: false
         }
       };
 

@@ -1,10 +1,5 @@
 // ---Dependencys
-import React, { useEffect } from 'react';
-// ---Components
-import StoreMenuCont from 'Cont/Master/StoreMenuCont';
-import ProductSearcher from 'Comp/Master/AdminProducts/ProductSearcher';
-import ProductTable from 'Comp/Master/AdminProducts/ProductTable';
-import ModalConfirmation from 'CommonComps/ModalConfirmation';
+import React, { useEffect, useState } from 'react';
 // ---Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLoading } from 'Actions/appInfo';
@@ -12,18 +7,18 @@ import {
   updateSearchParams,
   updateProducts,
   updatePage,
-  setNotUpdated,
   changeFirstRender,
   resetSearchParams
 } from 'Actions/master';
+// ---Components
+import ProductTable from 'Comp/Master/StoreCart/ProductTable';
+import ProductCard from 'Comp/Master/StoreCart/ProductCard';
+import ProductSearcher from 'Comp/Master/AdminProducts/ProductSearcher';
 // ---Others
 import { removeNullProperties } from 'Others/otherMethods';
 // --Request
 import { asyncHandler, testError } from 'Others/requestHandlers.js';
-import {
-  adminSearchProducts,
-  deleteProductRequest
-} from 'Others/peticiones.js';
+import { adminSearchProducts } from 'Others/peticiones.js';
 
 // ---AUX COMPONENTS
 function ProductsDisplay(props) {
@@ -34,7 +29,7 @@ function ProductsDisplay(props) {
     current,
     pageSize,
     onPageChange,
-    onDelete
+    onShowCard
   } = props;
   if (firstRender)
     return (
@@ -48,14 +43,18 @@ function ProductsDisplay(props) {
       pageSize={pageSize}
       total={productCount}
       onPageChange={onPageChange}
-      onDelete={onDelete}
+      onShowCard={onShowCard}
     />
   );
 }
 
 // ------------------------------------------ COMPONENT-----------------------------------------
-function AdminProducts() {
-  // ----------------------- hooks, const, props y states
+function SearchCont() {
+  const initialState = {
+    showCard: false,
+    productData: {}
+  };
+  const [state, setState] = useState(initialState);
   // Redux States
   const { masterProducts } = useSelector(reducers => reducers.masterReducer);
   const {
@@ -72,7 +71,6 @@ function AdminProducts() {
   const updateReduxPage = page => dispatchR(updatePage(page));
   const isLoading = flag => dispatchR(updateLoading(flag));
   const setFirstRender = flag => dispatchR(changeFirstRender(flag));
-  const notUpdated = () => dispatchR(setNotUpdated());
   const clearFilters = () => dispatchR(resetSearchParams());
 
   useEffect(() => reloadData(), [updatedData]);
@@ -104,23 +102,21 @@ function AdminProducts() {
     }
   }
 
-  function onDeleteButton(data) {
-    const question = '¿Deseas eliminar éste producto?';
-    const details = `El producto con id: ${data} será eliminado permanentemente`;
-    ModalConfirmation(question, details, onDelete, data);
+  function onShowCard(data) {
+    setState({
+      ...state,
+      showCard: true,
+      productData: data
+    });
   }
 
+  function onHideCard() {
+    setState({
+      ...state,
+      showCard: false
+    });
+  }
   // ----------------------- Metodos Auxiliares
-
-  function onDelete(id) {
-    isLoading(true);
-    asyncHandler(deleteProductRequest, onSuccessDelete, onError, id);
-  }
-  function onSuccessDelete() {
-    notUpdated();
-    isLoading(false);
-  }
-
   function onSuccessSearch(data) {
     isLoading(false);
     setFirstRender(false);
@@ -147,12 +143,8 @@ function AdminProducts() {
     };
   }
 
-  // ----------------------- Render
   return (
-    <StoreMenuCont>
-      <div className="store-content-container">
-        <h1>Administrar Productos</h1>
-      </div>
+    <>
       <ProductSearcher
         clearFilters={clearFilters}
         submitData={submitData}
@@ -166,10 +158,14 @@ function AdminProducts() {
           current={searchParams.pageNumber}
           pageSize={searchParams.pageSize}
           onPageChange={onPageChange}
-          onDelete={onDeleteButton}
+          onShowCard={onShowCard}
         />
       </div>
-    </StoreMenuCont>
+      {state.showCard && (
+        <ProductCard onHideCard={onHideCard} data={state.productData} />
+      )}
+    </>
   );
 }
-export default AdminProducts;
+
+export default SearchCont;

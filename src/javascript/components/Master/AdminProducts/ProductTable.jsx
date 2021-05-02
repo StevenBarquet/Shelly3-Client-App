@@ -9,11 +9,12 @@ import { Button, Table, Pagination } from 'antd';
 import { priceFormat } from 'Others/otherMethods';
 
 const ProductTable = props => {
-  const { products, onDeleteP, current, pageSize, total, onPageChange } = props;
+  const { products, onDelete, current, pageSize, total, onPageChange } = props;
   const dataSource = products;
 
-  function handleDelete(e) {
-    onDeleteP(e.target.value);
+  function handleDelete(value) {
+    console.log(value);
+    onDelete(value);
   }
 
   const columns = [
@@ -50,7 +51,7 @@ const ProductTable = props => {
       dataIndex: '_id',
       key: '_id',
       render: _id => (
-        <Button onClick={handleDelete} value={_id} type="danger">
+        <Button onClick={() => handleDelete(_id)} type="danger">
           Borrar
         </Button>
       )
@@ -130,7 +131,7 @@ const ProductTable = props => {
         pagination={false}
         dataSource={dataSource}
         columns={columns}
-        scroll={{ y: 500, x: 1600 }}
+        scroll={{ y: 500, x: 1800 }}
       />
       <Pagination
         style={{ margin: '15px auto 0px auto' }}
