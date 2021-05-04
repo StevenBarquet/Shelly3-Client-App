@@ -29,7 +29,8 @@ function ProductsDisplay(props) {
     current,
     pageSize,
     onPageChange,
-    onShowCard
+    onShowCard,
+    addToCart
   } = props;
   if (firstRender)
     return (
@@ -44,12 +45,14 @@ function ProductsDisplay(props) {
       total={productCount}
       onPageChange={onPageChange}
       onShowCard={onShowCard}
+      addToCart={addToCart}
     />
   );
 }
 
 // ------------------------------------------ COMPONENT-----------------------------------------
-function SearchCont() {
+function SearchCont(props) {
+  const { addToCart } = props;
   const initialState = {
     showCard: false,
     productData: {}
@@ -159,6 +162,7 @@ function SearchCont() {
           pageSize={searchParams.pageSize}
           onPageChange={onPageChange}
           onShowCard={onShowCard}
+          addToCart={addToCart}
         />
       </div>
       {state.showCard && (

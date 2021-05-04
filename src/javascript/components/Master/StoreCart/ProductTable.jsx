@@ -14,7 +14,8 @@ const ProductTable = props => {
     pageSize,
     total,
     onPageChange,
-    onShowCard
+    onShowCard,
+    addToCart
   } = props;
   const dataSource = products;
 
@@ -46,7 +47,7 @@ const ProductTable = props => {
       dataIndex: '_id',
       key: '_id',
       render: (_id, fullData) => (
-        <Button onClick={() => onShowCard(fullData)} type="outline">
+        <Button onClick={() => addToCart(fullData)} type="outline">
           Agregar
         </Button>
       )
