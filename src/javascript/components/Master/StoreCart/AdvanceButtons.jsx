@@ -1,7 +1,7 @@
 // ---Dependencys
 import React from 'react';
 import { Col, Row } from 'antd';
-import { LeftOutlined, RightOutlined, SendOutlined } from '@ant-design/icons';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 // ---ComonComponents
 import ButtonMlg from 'CommonComps/ButtonMlg';
 // ------------------------------------------ COMPONENT-----------------------------------------
@@ -15,7 +15,7 @@ function AdvanceButtons(props) {
     else console.log('Finalizando orden...');
   }
   return (
-    <Row>
+    <Row style={{ margin: '20px 0px 60px 0px' }}>
       <Col xs={24} sm={24} lg={8}>
         <ButtonMlg
           variant={step === 0 ? 'block' : 'yellow'}
@@ -29,13 +29,13 @@ function AdvanceButtons(props) {
       </Col>
       <Col xs={24} sm={24} lg={{ span: 8, offset: 8 }}>
         <ButtonMlg
-          variant={step === 0 ? 'yellow' : 'yellow-outline'}
+          variant={step === 0 ? 'yellow' : 'block'}
           size="small"
           htmlType="button"
           widthB="85%"
-          label={step === 0 ? 'Siguiente' : 'Finalizar'}
+          label="Siguiente"
           onClick={next}
-          icon={step === 0 ? <RightOutlined /> : <SendOutlined />}
+          icon={<RightOutlined />}
         />
       </Col>
     </Row>

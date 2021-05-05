@@ -881,6 +881,42 @@
     text-align: center;
   }
 }
+.store-cart-form-container{
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding: 10px;
+  width: 94%;
+  margin: 30px 3% 15px 3%;
+  h4{
+    color: @colorError;
+  }
+  h2{
+    text-align: center;
+  }
+  h3{
+    font-size: 20px;
+    font-weight: bold;
+    color: @colorDark;
+  }
+  h1{
+    text-align: center;
+    font-size: 20px;
+    color: @colorDark;
+    span{
+      font-weight: bold;
+      color: @colorSuccess;
+    }
+  }
+  h5{
+    text-align: center;
+    font-size: 16px;
+    color: @colorDark;
+    span{
+      font-weight: bold;
+      color: @colorNavButtonsLigth;
+    }
+  }
+}
 .store-product-info-container{
   display: block;
   width: 80%;
@@ -904,12 +940,12 @@
   h2{
     text-align: center;
   }
-  .submit-container{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-  }
+}
+.submit-container{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 .store-all-images{
   width: 87%;
@@ -925,21 +961,32 @@
   margin: 10px auto 10px auto;
 }
 //-------------------------------------------------STORE WELCOM-----------------------------------------------
-.store-welcom-container{
-  width: 87%;
-  margin: 10px auto 10px auto;
-  h1{
+.store-CartMaths-container{
+  width: 200px;
+  padding: 8px;
+  border: solid @colorPrimary 1px;
+  border-radius: 3px;
+  color: @colorSecundaryText;
+  position: fixed;
+  // top: 50vh;
+  // left: 12vw;
+  font-size: 16px;
+  span{
+    color: @colorPrimaryText;
+    font-weight: bold;
+    margin-left: 4px;
+  }
+  h3{
     color: @colorPrimary;
-    font-size: 40px;
-    margin-left: 40px;
+    font-size: 18px;
   }
   h4{
     color: @colorPrimaryText;
-    font-size: 20px;
-  }
-  span{
-    color: @colorPrimary;
-    font-size: 30px;
+    span{
+      color: @colorPrimary;
+      font-weight: bold;
+      margin-left: 4px;
+    }
   }
 }
 //-------------------------------------------------LOG IN-----------------------------------------------

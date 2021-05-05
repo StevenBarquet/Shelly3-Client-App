@@ -10,7 +10,7 @@ import { priceFormat } from 'Others/otherMethods';
 
 const ProductTable = props => {
   const { products, onDelete, current, pageSize, total, onPageChange } = props;
-  const dataSource = products;
+  const dataSource = products.map(item => ({ ...item, key: item._id })); // add key prop
 
   function handleDelete(value) {
     console.log(value);

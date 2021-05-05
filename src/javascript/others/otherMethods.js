@@ -1,4 +1,5 @@
 export const priceFormat = number => {
+  if (typeof number !== 'number') return '0';
   // A partir de un int o float genera un string con formato de precio ($1,000.00)
   let num = number;
   num = num.toFixed(2);
@@ -71,6 +72,15 @@ export const findIndexArrayObj = (array, obj) => {
     }
   }
   return found ? i : -1;
+};
+
+export const searchProductByID = (items, id) => {
+  // Busca el index de un id específico en un array con key llamada "_id"
+  let found = null;
+  items.forEach((item, index) => {
+    if (item._id === id) found = index;
+  });
+  return found;
 };
 
 export const getOneParam = cadena => {

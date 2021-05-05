@@ -43,17 +43,17 @@ function PiezasForm(props) {
 function CartItem(props) {
   const {
     images,
-    confirmDelete,
     piezas,
     _id,
     updatePiezas,
     precio,
     nombre,
-    disponibles
+    disponibles,
+    onDeleteButton
   } = props;
   // ----------------------- Render
   return (
-    <Col xs={24} sm={24} lg={12}>
+    <Col xs={24} sm={24} lg={{ offset: 1, span: 20 }}>
       <div className="buy-item-container">
         <Row>
           <div className="buy-item-header">
@@ -89,7 +89,7 @@ function CartItem(props) {
                 variant="yellow"
                 size="mini"
                 value={_id}
-                onClick={() => confirmDelete(_id)}
+                onClick={() => onDeleteButton(_id)}
                 widthB="26px"
                 icon={<CloseOutlined />}
               />

@@ -17,7 +17,7 @@ const ProductTable = props => {
     onShowCard,
     addToCart
   } = props;
-  const dataSource = products;
+  const dataSource = products.map(item => ({ ...item, key: item._id })); // add key prop
 
   const columns = [
     {
