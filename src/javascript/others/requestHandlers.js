@@ -1,7 +1,3 @@
-// ---Redux
-import { useDispatch } from 'react-redux';
-import { updateLoading } from 'Actions/appInfo';
-
 export function asyncHandler(
   requestFunction,
   successFunction,

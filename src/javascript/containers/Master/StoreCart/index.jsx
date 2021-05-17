@@ -1,5 +1,10 @@
 // ---Dependencys
 import React, { useEffect, useReducer } from 'react';
+// ---Redux
+import { useDispatch } from 'react-redux';
+import { updateLoading } from 'Actions/appInfo';
+import { setNotUpdated } from 'Actions/master';
+
 // ---Components
 import StepsMostrador from 'Comp/Master/StoreCart/StepsMostrador';
 import AdvanceButtons from 'Comp/Master/StoreCart/AdvanceButtons';
@@ -10,7 +15,15 @@ import ModalConfirmation from 'CommonComps/ModalConfirmation';
 // ---Cont
 import StoreMenuCont from 'Cont/Master/StoreMenuCont';
 // ---Others
-import { searchProductByID } from 'Others/otherMethods';
+import {
+  searchProductByID,
+  selectArgs,
+  ignoreArgs,
+  removeEmptyAndNull
+} from 'Others/otherMethods';
+// --Request
+import { asyncHandler } from 'Others/requestHandlers.js';
+import { createLocalOrder } from 'Others/peticiones.js';
 import { joiFormValidate, messagesSchema } from './OrderDataFormJoi';
 
 // ------------------------------------------ REDUCER -----------------------------------------
@@ -21,33 +34,58 @@ const typesR = {
   UPDATE_FORM: 'UPDATE_FORM',
   RESET_VALIDATIONS: 'RESET_VALIDATIONS',
   UPDATE_MATHS: 'UPDATE_MATHS',
-  UPDATE_TOTAL: 'UPDATE_TOTAL'
+  UPDATE_TOTAL: 'UPDATE_TOTAL',
+  RESET_ALL: 'RESET_ALL'
+};
+
+const {
+  ADD_TO_CART,
+  CHANGE_STEP,
+  RESET_VALIDATIONS,
+  UPDATE_FORM,
+  UPDATE_MSGSCHEMA,
+  UPDATE_MATHS,
+  UPDATE_TOTAL,
+  RESET_ALL
+} = typesR;
+
+const initialState = {
+  orderData: {
+    items: [],
+    ventaTipo: 'local 133',
+    estatus: 'Finalizado',
+    responsableVenta: 'Pruebas',
+    totalVenta: 0
+  },
+  step: 0,
+  msgSchema: messagesSchema,
+  isValidForm: true
 };
 
 function reducer(state, action) {
   const { type, payload } = action;
   switch (type) {
-    case typesR.RESET_VALIDATIONS:
+    case RESET_VALIDATIONS:
       return {
         ...state,
         isValidForm: true,
         msgSchema: messagesSchema
       };
 
-    case typesR.UPDATE_MSGSCHEMA:
+    case UPDATE_MSGSCHEMA:
       return {
         ...state,
         isValidForm: payload.isValid,
         msgSchema: payload.messagesSchema
       };
 
-    case typesR.UPDATE_FORM:
+    case UPDATE_FORM:
       return {
         ...state,
         orderData: { ...state.orderData, ...payload }
       };
 
-    case typesR.UPDATE_MATHS:
+    case UPDATE_MATHS:
       return {
         ...state,
         subTotal: payload.subTotal,
@@ -58,7 +96,7 @@ function reducer(state, action) {
         }
       };
 
-    case typesR.UPDATE_TOTAL:
+    case UPDATE_TOTAL:
       return {
         ...state,
         orderData: {
@@ -67,7 +105,7 @@ function reducer(state, action) {
         }
       };
 
-    case typesR.ADD_TO_CART:
+    case ADD_TO_CART:
       return {
         ...state,
         orderData: {
@@ -76,10 +114,24 @@ function reducer(state, action) {
         }
       };
 
-    case typesR.CHANGE_STEP:
+    case CHANGE_STEP:
       return {
         ...state,
         step: payload
+      };
+
+    case RESET_ALL:
+      return {
+        orderData: {
+          items: [],
+          ventaTipo: 'local 133',
+          estatus: 'Finalizado',
+          responsableVenta: 'Pruebas',
+          totalVenta: 0
+        },
+        step: 0,
+        msgSchema: messagesSchema,
+        isValidForm: true
       };
 
     default:
@@ -89,28 +141,11 @@ function reducer(state, action) {
 // ------------------------------------------ COMPONENT-----------------------------------------
 function StoreCart() {
   // ----------------------- hooks, const, props y states
-  const {
-    ADD_TO_CART,
-    CHANGE_STEP,
-    RESET_VALIDATIONS,
-    UPDATE_FORM,
-    UPDATE_MSGSCHEMA,
-    UPDATE_MATHS,
-    UPDATE_TOTAL
-  } = typesR;
-  const initialState = {
-    orderData: {
-      items: [],
-      ventaTipo: 'local 133',
-      estatus: 'Finalizado',
-      responsableVenta: 'Pruebas',
-      totalVenta: 0
-    },
-    step: 0,
-    msgSchema: messagesSchema,
-    isValidForm: true
-  };
   const [state, dispatch] = useReducer(reducer, initialState);
+  // Redux Actions
+  const dispatchR = useDispatch();
+  const isLoading = flag => dispatchR(updateLoading(flag));
+  const notUpdated = () => dispatchR(setNotUpdated());
 
   useEffect(() => updateMaths(), [state.orderData.items]);
   useEffect(() => updateTotal(), [state.subTotal, state.orderData.cantidad]);
@@ -144,7 +179,9 @@ function StoreCart() {
   function onSubmit(formData) {
     const { isValid } = validateForm(formData);
     if (isValid) {
-      console.log('onSubmit: Success\n', formData);
+      isLoading(true);
+      const fixedData = formatDataForRequest(state.orderData);
+      asyncHandler(createLocalOrder, onSuccessOrder, onErrorOrder, fixedData);
     } else {
       console.log('onSubmit: Error\n', formData);
     }
@@ -181,11 +218,44 @@ function StoreCart() {
     ModalConfirmation(question, details, deleteFromCart, id);
   }
   // ----------------------- Metodos Auxiliares
+  function formatDataForRequest(data) {
+    const { concepto, cantidad, items } = data;
+    const cobroAdicional = cantidad ? { concepto, cantidad } : null;
+    const newItems = items.map(item => {
+      const justThis = [
+        'nombre',
+        '_id',
+        'costo',
+        'precio',
+        'categoria',
+        'piezas',
+        'disponibles',
+        'images'
+      ];
+      const newItem = selectArgs(item, justThis);
+      const { cover, mini } = newItem.images;
+      return { ...newItem, images: { cover, mini } };
+    });
+    const ignore = ['concepto', 'cantidad', 'montoCliente'];
+    let newData = ignoreArgs(data, ignore);
+    newData = { ...newData, cobroAdicional, items: newItems };
+
+    return removeEmptyAndNull(newData);
+  }
+  function onSuccessOrder(response) {
+    isLoading(false);
+    dispatch({ type: RESET_ALL });
+    notUpdated();
+    // console.log('testSuccess este:  --->', response);
+  }
+  function onErrorOrder(response) {
+    isLoading(false);
+    console.log('testError este: --->', response);
+  }
   function deleteFromCart(id) {
     const { items } = state.orderData;
     const itemIndex = searchProductByID(items, id);
     const reducedItems = getReducedItems(itemIndex);
-    console.log('reducedItems: ', reducedItems);
     dispatch({
       type: UPDATE_FORM,
       payload: { items: reducedItems }
@@ -244,16 +314,20 @@ function StoreCart() {
     });
     return newItems;
   }
+
+  // ----------------------- Render
   return (
     <StoreMenuCont>
       <div className="store-content-container">
         <h1>Venta de mostrador</h1>
       </div>
-      <StepsMostrador step={state.step} />
+      <StepsMostrador
+        step={state.step}
+        subTotal={state.subTotal}
+        size={state.size}
+      />
       {state.step === 0 ? (
         <CartContainer
-          subTotal={state.subTotal}
-          size={state.size}
           items={state.orderData.items}
           addToCart={addToCart}
           updatePiezas={updatePiezas}

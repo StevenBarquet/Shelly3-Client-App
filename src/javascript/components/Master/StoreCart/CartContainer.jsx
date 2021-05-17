@@ -4,7 +4,6 @@ import { Row, Col } from 'antd';
 // ---Cont
 import SearchCont from 'Cont/Master/StoreCart/SearchCont';
 // ---Components
-import CartMaths from 'Comp/Master/StoreCart/CartMaths';
 import CartItem from 'Comp/Master/StoreCart/CartItem';
 
 // ---AUX COMPONENTS
@@ -26,24 +25,14 @@ function CartList(props) {
 }
 // ------------------------------------------ COMPONENT-----------------------------------------
 function CartContainer(props) {
-  const {
-    subTotal,
-    size,
-    addToCart,
-    items,
-    updatePiezas,
-    onDeleteButton
-  } = props;
+  const { addToCart, items, updatePiezas, onDeleteButton } = props;
   return (
     <>
-      <Row>
-        <Col xs={24} sm={24} lg={6}>
-          <CartMaths subTotal={subTotal} size={size} />
-        </Col>
-        <Col xs={24} sm={24} lg={18}>
+      <Row style={{ marginTop: 30 }}>
+        <Col xs={24} sm={24} lg={24}>
           <SearchCont addToCart={addToCart} />
         </Col>
-        <Col xs={24} sm={24} lg={{ offset: 6, span: 18 }}>
+        <Col xs={24} sm={24} lg={24}>
           <CartList
             updatePiezas={updatePiezas}
             items={items}

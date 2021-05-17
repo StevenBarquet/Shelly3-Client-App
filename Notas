@@ -18,7 +18,6 @@
 -New error function with isLoading false and error modal
 -Responsable de venta en redux
 -Agregar boton de limpiar carrito
-
 -Agregar boton de limpiar al form de editar producto
 
 

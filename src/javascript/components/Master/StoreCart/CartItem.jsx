@@ -1,11 +1,9 @@
 // ---Dependencys
 import React from 'react';
 import { Row, Col, Form, InputNumber } from 'antd';
-import { Link } from 'react-router-dom';
-import { CloseOutlined } from '@ant-design/icons';
 // ---ComonComponents
 import FitImg from 'CommonComps/FitImg';
-import ButtonMlg from 'CommonComps/ButtonMlg';
+import CloseButton from 'CommonComps/CloseButton';
 // ---Others
 import { priceFormat } from 'Others/otherMethods';
 
@@ -54,21 +52,24 @@ function CartItem(props) {
   // ----------------------- Render
   return (
     <Col xs={24} sm={24} lg={{ offset: 1, span: 20 }}>
-      <div className="buy-item-container">
-        <Row>
-          <div className="buy-item-header">
-            <Link to={'/item=' + _id}>{nombre}</Link>
-          </div>
+      <div className="cart-item-container">
+        <Row className="cart-item-header">
+          <Col className="elipse" xs={22} sm={22} lg={22}>
+            {nombre}
+          </Col>
+          <Col xs={2} sm={2} lg={2}>
+            <CloseButton onDeleteButton={onDeleteButton} value={_id} />
+          </Col>
         </Row>
         <Row>
-          <Col xs={24} sm={24} lg={6}>
+          <Col xs={24} sm={24} lg={8}>
             <FitImg
               srcImg={images ? images.mini || images.cover : 'none'}
               estilo="cart-images-big"
               alt={nombre}
             />
           </Col>
-          <Col xs={24} sm={24} lg={6}>
+          <Col xs={24} sm={24} lg={8}>
             <div className="col-vertical-align">
               <PiezasForm
                 callback={updatePiezas}
@@ -78,22 +79,17 @@ function CartItem(props) {
               />
             </div>
           </Col>
-          <Col xs={24} sm={24} lg={6}>
-            <div className="col-vertical-align">
-              {priceFormat(precio * piezas)}
-            </div>
-          </Col>
-          <Col xs={24} sm={24} lg={6}>
-            <div className="col-vertical-align">
-              <ButtonMlg
-                variant="yellow"
-                size="mini"
-                value={_id}
-                onClick={() => onDeleteButton(_id)}
-                widthB="26px"
-                icon={<CloseOutlined />}
-              />
-            </div>
+          <Col xs={24} sm={24} lg={8}>
+            <section>
+              <h5>
+                Por pieza: <span>{priceFormat(precio)}</span>
+              </h5>
+            </section>
+            <section>
+              <h4>
+                Precio: <span>{priceFormat(precio * piezas)}</span>
+              </h4>
+            </section>
           </Col>
         </Row>
       </div>

@@ -7,11 +7,11 @@ import { invalidMessages, validateSchema } from 'Others/joi-stuff';
 export const messagesSchema = {
   concepto: {
     status: 'success',
-    message: invalidMessages.optional
+    message: invalidMessages.isRequired
   },
   cantidad: {
     status: 'success',
-    message: invalidMessages.isNumber
+    message: invalidMessages.isNumber + ' mayor a 0'
   },
   notaVenta: {
     status: 'success',
@@ -45,11 +45,18 @@ export const messagesSchema = {
 
 export function joiFormValidate(formData) {
   const schema = Joi.object({
-    concepto: Joi.string().allow(''),
-    cantidad: Joi.number(),
+    concepto: Joi.string().when('cantidad', {
+      is: Joi.number().required(),
+      then: Joi.required(),
+      otherwise: Joi.allow('')
+    }),
+    cantidad: Joi.when(Joi.number().greater(0), {
+      // Valida que sea un numero mayor a 0 o una cadena vacia o nula
+      otherwise: Joi.valid(null, '')
+    }),
     notaVenta: Joi.string().allow(''),
     metodoPago: Joi.string().required(),
-    montoCliente: Joi.number().min(0),
+    montoCliente: Joi.number().greater(0),
     correo: Joi.string().allow(''),
     nombre: Joi.string().allow(''),
     apellido: Joi.string().allow(''),

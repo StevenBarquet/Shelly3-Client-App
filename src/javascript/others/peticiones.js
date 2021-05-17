@@ -67,7 +67,17 @@ export async function deleteProductRequest(id) {
     return error;
   }
 }
-
+// -------------------------------------------Ordenes---------------------------------------
+export async function createLocalOrder(data) {
+  const endpoint = 'ordenes/ventaLocal';
+  const url = urlServer + endpoint;
+  try {
+    const respose = await axios.post(url, data);
+    return respose;
+  } catch (error) {
+    return error;
+  }
+}
 // -------------------------------------------Old----------------------------------------
 export async function genericGet(url) {
   try {

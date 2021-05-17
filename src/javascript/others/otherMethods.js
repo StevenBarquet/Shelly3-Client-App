@@ -149,7 +149,19 @@ export function removeNullProperties(obj) {
   Object.keys(obj).forEach(key => {
     const value = obj[key];
     const hasProperties = value && Object.keys(value).length > 0;
-    if (value === null) {
+    if (value === null || value === undefined) {
+      delete obj[key];
+    } else if (typeof value !== 'string' && hasProperties) {
+      removeNullProperties(value);
+    }
+  });
+  return obj;
+}
+export function removeEmptyAndNull(obj) {
+  Object.keys(obj).forEach(key => {
+    const value = obj[key];
+    const hasProperties = value && Object.keys(value).length > 0;
+    if (value === null || value === undefined || value === '') {
       delete obj[key];
     } else if (typeof value !== 'string' && hasProperties) {
       removeNullProperties(value);
