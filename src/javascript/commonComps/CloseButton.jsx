@@ -4,13 +4,14 @@ import { CloseCircleFilled } from '@ant-design/icons';
 
 // ------------------------------------------ COMPONENT-----------------------------------------
 function CloseButton(props) {
-  const { onDeleteButton, _id } = props;
+  const { onDeleteButton, value } = props;
+  console.log('CloseButton', props);
   return (
     <button
       className="close-button"
       type="button"
-      value={_id}
-      onClick={() => onDeleteButton(_id)}
+      value={value}
+      onClick={() => onDeleteButton(value)}
     >
       <CloseCircleFilled />
     </button>

@@ -1,10 +1,13 @@
 // ---Dependencys
 import React from 'react';
 import { Row, Col } from 'antd';
+import { ClearOutlined } from '@ant-design/icons';
 // ---Cont
 import SearchCont from 'Cont/Master/StoreCart/SearchCont';
 // ---Components
 import CartItem from 'Comp/Master/StoreCart/CartItem';
+// ---ComonComponents
+import ButtonMlg from 'CommonComps/ButtonMlg';
 
 // ---AUX COMPONENTS
 function CartList(props) {
@@ -23,15 +26,34 @@ function CartList(props) {
     </Row>
   );
 }
+function ClearButton(props) {
+  const { onClearCart, length } = props;
+  if (length > 0)
+    return (
+      <Col className="center-block" xs={24} sm={24} lg={24}>
+        <ButtonMlg
+          variant="purple"
+          size="normal"
+          htmlType="button"
+          widthB="60%"
+          onClick={onClearCart}
+          label="Limpiar carrito"
+          icon={<ClearOutlined />}
+        />
+      </Col>
+    );
+  return null;
+}
 // ------------------------------------------ COMPONENT-----------------------------------------
 function CartContainer(props) {
-  const { addToCart, items, updatePiezas, onDeleteButton } = props;
+  const { addToCart, items, updatePiezas, onDeleteButton, onClearCart } = props;
   return (
     <>
       <Row style={{ marginTop: 30 }}>
         <Col xs={24} sm={24} lg={24}>
           <SearchCont addToCart={addToCart} />
         </Col>
+        <ClearButton length={items.length} onClearCart={onClearCart} />
         <Col xs={24} sm={24} lg={24}>
           <CartList
             updatePiezas={updatePiezas}

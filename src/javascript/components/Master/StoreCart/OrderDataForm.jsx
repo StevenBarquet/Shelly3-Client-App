@@ -64,8 +64,9 @@ function PayMethods(props) {
   const { label, name, validation } = props;
   return (
     <Form.Item
-      labelCol={{ span: 12 }}
-      wrapperCol={{ span: 12 }}
+      className="pay-methods"
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
       label={label}
       name={name}
       validateStatus={validation[name].status}
@@ -76,17 +77,17 @@ function PayMethods(props) {
     >
       <Radio.Group>
         <Row style={{ marginTop: 25, width: '100%' }}>
-          <Col xs={12} sm={12} lg={12}>
+          <Col xs={12} sm={12} lg={8}>
             <Radio value="Efectivo">
               <h5>Efectivo</h5>
             </Radio>
           </Col>
-          <Col xs={12} sm={12} lg={12}>
+          <Col xs={12} sm={12} lg={8}>
             <Radio value="Tarjeta">
               <h5>Tarjeta</h5>
             </Radio>
           </Col>
-          <Col xs={12} sm={12} lg={12}>
+          <Col xs={12} sm={12} lg={8}>
             <Radio value="Transferencia">
               <h5>Transferencia</h5>
             </Radio>
@@ -102,7 +103,7 @@ function ClientDataButtons(props) {
     <>
       <Col className="col-vertical-align" xs={24} sm={24} lg={12}>
         <ButtonMlg
-          variant="purple"
+          variant="yellow"
           size="small"
           htmlType="button"
           widthB="85%"
@@ -156,14 +157,14 @@ function CashHelper(props) {
   const { validation, defaultValues, totalVenta } = props;
   return (
     <>
-      <Col xs={24} sm={24} lg={8}>
+      <Col xs={24} sm={24} lg={12}>
         <JoiInputNumber
           label="Monto pagado"
           name="montoCliente"
           validation={validation}
         />
       </Col>
-      <Col xs={24} sm={24} lg={8}>
+      <Col xs={24} sm={24} lg={12}>
         <h1>
           Cambio:
           <span>
@@ -178,20 +179,20 @@ function ClientForm(props) {
   const { validation } = props;
   return (
     <>
-      <Col xs={24} sm={24} lg={12}>
+      <Col xs={24} sm={24} lg={24}>
         <JoiTextInput label="Nombre" name="nombre" validation={validation} />
       </Col>
-      <Col xs={24} sm={24} lg={12}>
+      <Col xs={24} sm={24} lg={24}>
         <JoiTextInput
           label="Apellido"
           name="apellido"
           validation={validation}
         />
       </Col>
-      <Col xs={24} sm={24} lg={12}>
+      <Col xs={24} sm={24} lg={24}>
         <JoiTextInput label="Correo" name="correo" validation={validation} />
       </Col>
-      <Col xs={24} sm={24} lg={12}>
+      <Col xs={24} sm={24} lg={24}>
         <JoiInputNumber
           label="Teléfono"
           name="telefono"
@@ -221,58 +222,70 @@ function OrderDataForm(props) {
         onValuesChange={onChangeForm}
         onFinish={onSubmit}
       >
-        <Row gutter={[20, 10]}>
-          <Col xs={24} sm={24} lg={24}>
-            <h2>Datos de la compra</h2>
+        <Row gutter={[15, 0]}>
+          <Col xs={24} sm={24} lg={15}>
+            <Row gutter={[20, 10]}>
+              <Col xs={24} sm={24} lg={24}>
+                <h2>Datos de la compra</h2>
+              </Col>
+              <Col xs={24} sm={24} lg={24}>
+                <JoiTextArea
+                  label="Detalle"
+                  name="notaVenta"
+                  validation={validation}
+                />
+              </Col>
+              <Col xs={24} sm={24} lg={12}>
+                <h3>
+                  Cobro adicional:
+                  <span>{priceFormat(defaultValues.cantidad || 0)}</span>
+                </h3>
+              </Col>
+              <Col xs={24} sm={24} lg={12}>
+                <JoiInputNumber
+                  label="Cantidad"
+                  name="cantidad"
+                  validation={validation}
+                />
+              </Col>
+              <Col xs={24} sm={24} lg={24}>
+                <JoiTextArea
+                  label="Concepto"
+                  name="concepto"
+                  validation={validation}
+                />
+              </Col>
+              <Col xs={24} sm={24} lg={24}>
+                <PayMethods
+                  label="Método de pago"
+                  name="metodoPago"
+                  validation={validation}
+                />
+              </Col>
+              {defaultValues.metodoPago === 'Efectivo' && (
+                <CashHelper
+                  defaultValues={defaultValues}
+                  validation={validation}
+                  totalVenta={totalVenta}
+                />
+              )}
+              <MathData
+                subTotal={subTotal}
+                responsableVenta={responsableVenta}
+                totalVenta={totalVenta}
+              />
+            </Row>
           </Col>
-          <ClientDataButtons
-            clientData={clientData}
-            setClientData={setClientData}
-          />
-          {clientData && <ClientForm validation={validation} />}
-          <Col xs={24} sm={24} lg={22}>
-            <JoiTextArea
-              label="Comentarios"
-              name="notaVenta"
-              validation={validation}
-            />
+          <Col xs={24} sm={24} lg={9}>
+            <Row gutter={[20, 10]}>
+              <ClientDataButtons
+                clientData={clientData}
+                setClientData={setClientData}
+              />
+              {clientData && <ClientForm validation={validation} />}
+            </Row>
           </Col>
-          <Col xs={24} sm={24} lg={24}>
-            <h3>Cobro adicional:</h3>
-          </Col>
-          <Col xs={24} sm={24} lg={16}>
-            <JoiTextArea
-              label="Concepto"
-              name="concepto"
-              validation={validation}
-            />
-          </Col>
-          <Col xs={24} sm={24} lg={8}>
-            <JoiInputNumber
-              label="Cantidad"
-              name="cantidad"
-              validation={validation}
-            />
-          </Col>
-          <MathData
-            subTotal={subTotal}
-            responsableVenta={responsableVenta}
-            totalVenta={totalVenta}
-          />
-          <Col xs={24} sm={24} lg={8}>
-            <PayMethods
-              label="Método de pago"
-              name="metodoPago"
-              validation={validation}
-            />
-          </Col>
-          {defaultValues.metodoPago === 'Efectivo' && (
-            <CashHelper
-              defaultValues={defaultValues}
-              validation={validation}
-              totalVenta={totalVenta}
-            />
-          )}
+
           {/* Finish Form */}
           <Col xs={24} sm={24} lg={24}>
             {!isValidForm && (
@@ -282,7 +295,7 @@ function OrderDataForm(props) {
             )}
             <div className="submit-container">
               <ButtonMlg
-                variant="yellow"
+                variant="yellow-outline"
                 size="small"
                 htmlType="submit"
                 widthB="85%"

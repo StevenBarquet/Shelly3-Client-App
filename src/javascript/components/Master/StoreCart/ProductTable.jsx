@@ -17,7 +17,11 @@ const ProductTable = props => {
     onShowCard,
     addToCart
   } = props;
-  const dataSource = products.map(item => ({ ...item, key: item._id })); // add key prop
+  let dataSource = [];
+  products.forEach(item => {
+    if (item.disponibles > 0)
+      dataSource = [...dataSource, { ...item, key: item._id }];
+  }); // add key prop and filter disponibles < 0
 
   const columns = [
     {

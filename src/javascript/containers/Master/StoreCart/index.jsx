@@ -156,7 +156,7 @@ function StoreCart() {
     const { _id } = item;
     const { items } = state.orderData;
     const itemExist = searchProductByID(items, _id);
-    if (!itemExist && itemExist !== 0) {
+    if (!itemExist && itemExist !== 0 && item.disponibles > 0) {
       dispatch({
         type: ADD_TO_CART,
         payload: item
@@ -217,6 +217,11 @@ function StoreCart() {
     const details = `El producto será eliminado de la lista`;
     ModalConfirmation(question, details, deleteFromCart, id);
   }
+  function onClearCart() {
+    const question = '¿Deseas limpiar el carrito?';
+    const details = `Todos los productos serán eliminados`;
+    ModalConfirmation(question, details, deleteAllCart);
+  }
   // ----------------------- Metodos Auxiliares
   function formatDataForRequest(data) {
     const { concepto, cantidad, items } = data;
@@ -256,9 +261,16 @@ function StoreCart() {
     const { items } = state.orderData;
     const itemIndex = searchProductByID(items, id);
     const reducedItems = getReducedItems(itemIndex);
+
     dispatch({
       type: UPDATE_FORM,
       payload: { items: reducedItems }
+    });
+  }
+  function deleteAllCart() {
+    dispatch({
+      type: UPDATE_FORM,
+      payload: { items: [] }
     });
   }
   function validateForm(formData) {
@@ -332,6 +344,7 @@ function StoreCart() {
           addToCart={addToCart}
           updatePiezas={updatePiezas}
           onDeleteButton={onDeleteButton}
+          onClearCart={onClearCart}
         />
       ) : (
         <OrderDataForm

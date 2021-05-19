@@ -10,18 +10,21 @@
 -Privilegios dinámicos de admin
 -Utilidad
 -Administrar  ordenes
--Modo caja
--Seccion de información completa del producto
 -Fix path en StoreMenu JustMenu para regExpressions
 -Fix responsive en filtros
--Boton limpiar filtros
 -New error function with isLoading false and error modal
 -Responsable de venta en redux
--Agregar boton de limpiar carrito
 -Agregar boton de limpiar al form de editar producto
+-Inicializar form de agregar producto con imagen dummy
+-revisar formularios que acepten empty string y vacios
+-Cambiar categoria y subcategoria a un arreglo
 
 
     Smurfeado:
+-Boton limpiar filtros
+-Agregar boton de limpiar carrito
+-Modo caja
+-Seccion de información completa del producto
 -Limpiar datos pre-request en agregar/editar
 -Agregar funcion de eliminar con warning modal de confirmacion
 -Agregar ver información completa del producto al menu
