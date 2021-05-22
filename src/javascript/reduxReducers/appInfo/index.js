@@ -1,4 +1,9 @@
-import { CHANGE_RESPONSIVE, UPDATE_PATH, UPDATE_LOADING } from 'Types';
+import {
+  UPDATE_PARAMS,
+  CHANGE_RESPONSIVE,
+  UPDATE_PATH,
+  UPDATE_LOADING
+} from 'Types';
 
 const INITIAL_STATE = {
   isMovil: false,
@@ -18,6 +23,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentPath: payload
+      };
+
+    case UPDATE_PARAMS:
+      return {
+        ...state,
+        currentParams: payload
       };
 
     case UPDATE_LOADING:

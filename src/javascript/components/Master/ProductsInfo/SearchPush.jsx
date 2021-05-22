@@ -31,7 +31,7 @@ function SearchPush(props) {
   const history = useHistory();
 
   // ----------------------- Metodos Principales
-  const onFinish = data => history.push(`${pushPath}/${data.id}`);
+  const onFinish = data => history.push(`${pushPath}?${data.id}`);
 
   // ----------------------- Metodos Auxiliares
   function validate(rule, value) {

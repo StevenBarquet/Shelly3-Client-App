@@ -24,11 +24,11 @@ function ProductsInfo() {
   const updateReduxProduct = data => dispatchR(updateOneProduct(data));
   const isLoading = flag => dispatchR(updateLoading(flag));
   // Redux States
-  const { currentPath } = useSelector(reducers => reducers.appInfoReducer);
-  useEffect(() => getProductData(), [currentPath]);
+  const { currentParams } = useSelector(reducers => reducers.appInfoReducer);
+  useEffect(() => getProductData(), [currentParams]);
 
   function getProductData() {
-    const urlID = getID(currentPath);
+    const urlID = getID(currentParams);
     if (urlID) {
       isLoading(true);
       asyncHandler(getOneProduct, onSuccessSearch, onError, urlID);
@@ -50,15 +50,12 @@ function ProductsInfo() {
     // -Sólo contiene caracteres alfanumericos
     // Retorna:
     // -El id de la url o falso
-    if (
-      (value && value === '/master/tienda/productInfo') ||
-      value === '/master/tienda/productInfo/'
-    ) {
+    if (value && value === '') {
       updateReduxProduct({});
       return false;
     }
-    if (value && value.length === 51) {
-      const urlID = currentPath.substring(27, currentPath.length);
+    if (value && value.length === 25) {
+      const urlID = value.substring(1, value.length);
       return isId(urlID) ? urlID : false;
     }
     return false;
@@ -68,7 +65,7 @@ function ProductsInfo() {
       <div className="store-content-container">
         <h1>Información del producto</h1>
       </div>
-      <SearchPush pushPath="/master/tienda/productInfo" />
+      <SearchPush pushPath="/master/productInfo" />
       <DisplayProductInfo data={productData} />
     </StoreMenuCont>
   );

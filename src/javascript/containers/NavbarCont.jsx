@@ -3,7 +3,11 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 // ---Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { changeResponsiveFlag, updatePath } from 'Actions/appInfo';
+import {
+  changeResponsiveFlag,
+  updatePath,
+  updateParams
+} from 'Actions/appInfo';
 // ---Components
 import AdminMenu from 'Comp/NavBar/AdminMenu';
 import ClientMenu from 'Comp/NavBar/ClientMenu';
@@ -15,6 +19,7 @@ import isMovilDetector from 'Others/isMovilDetector';
 // ------------------------------------------ COMPONENT-----------------------------------------
 const NavbarCont = withRouter(props => {
   const currentPath = props.location.pathname;
+  const urlParams = props.location.search;
   const isAdmin = new RegExp('^[/][m][a][s][t][e][r]');
   // Redux States
   const { isMovil } = useSelector(reducers => reducers.appInfoReducer);
@@ -22,6 +27,7 @@ const NavbarCont = withRouter(props => {
   const dispatchR = useDispatch();
   const updateResponsiveData = data => dispatchR(changeResponsiveFlag(data));
   const updateCurrentPath = () => dispatchR(updatePath(currentPath));
+  const updateCurrentParams = () => dispatchR(updateParams(urlParams));
 
   const responsiveData = isMovilDetector();
   useEffect(() => {
@@ -29,6 +35,7 @@ const NavbarCont = withRouter(props => {
   }, [responsiveData]);
 
   useEffect(() => updateCurrentPath(), [currentPath]);
+  useEffect(() => updateCurrentParams(), [urlParams]);
 
   if (currentPath === '/master/login') {
     return <GlobalComponents />;

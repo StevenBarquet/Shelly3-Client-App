@@ -43,27 +43,27 @@ function JustMenu(props) {
         </SubMenu>
         <Menu.Item
           icon={<DesktopOutlined />}
-          key="/master/tienda/publicHome"
-          onClick={() => goToRoute('/master/tienda/publicHome')}
+          key="/master/publicHome"
+          onClick={() => goToRoute('/master/publicHome')}
         >
           Home publico
         </Menu.Item>
         <SubMenu key="3" icon={<CodepenOutlined />} title="Productos">
           <Menu.Item
-            key="/master/tienda/adminProductos"
-            onClick={() => goToRoute('/master/tienda/adminProductos')}
+            key="/master/adminProductos"
+            onClick={() => goToRoute('/master/adminProductos')}
           >
             Administrar Productos
           </Menu.Item>
           <Menu.Item
-            key="/master/tienda/addProductos"
-            onClick={() => goToRoute('/master/tienda/addProductos')}
+            key="/master/addProductos"
+            onClick={() => goToRoute('/master/addProductos')}
           >
             Agregar/Editar Productos
           </Menu.Item>
           <Menu.Item
-            key="/master/tienda/productInfo"
-            onClick={() => goToRoute('/master/tienda/productInfo')}
+            key="/master/productInfo"
+            onClick={() => goToRoute('/master/productInfo')}
           >
             Consultar un producto
           </Menu.Item>
@@ -71,8 +71,8 @@ function JustMenu(props) {
         <SubMenu key="4" icon={<CarryOutOutlined />} title="Ordenes">
           <Menu.Item key="sub4-1">Administrar Ordenes</Menu.Item>
           <Menu.Item
-            key="/master/tienda/storeCart"
-            onClick={() => goToRoute('/master/tienda/storeCart')}
+            key="/master/storeCart"
+            onClick={() => goToRoute('/master/storeCart')}
           >
             Vender en mostrador
           </Menu.Item>
@@ -95,8 +95,8 @@ function JustMenu(props) {
         </SubMenu>
         <Menu.Item
           icon={<BarChartOutlined />}
-          key="/master/tienda/Analytics"
-          onClick={() => goToRoute('/master/tienda/Analytics')}
+          key="/master/Analytics"
+          onClick={() => goToRoute('/master/Analytics')}
         >
           Analyticas
         </Menu.Item>

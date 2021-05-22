@@ -95,13 +95,13 @@ function AddProducts() {
   };
   const [state, dispatch] = useReducer(reducer, initialState);
   // Redux States
-  const { currentPath } = useSelector(reducers => reducers.appInfoReducer);
+  const { currentParams } = useSelector(reducers => reducers.appInfoReducer);
   const dispatchR = useDispatch();
   // Redux Actions
   const notUpdated = () => dispatchR(setNotUpdated());
   const isLoading = flag => dispatchR(updateLoading(flag));
 
-  useEffect(() => getProductData(), [currentPath]);
+  useEffect(() => getProductData(), [currentParams]);
   useEffect(() => dispatch({ type: STOP_RELOAD }), [state.reload]); // truco para hacer un rerendero condicional
   // ----------------------- Metodos Principales
   function onChangeForm(formData) {
@@ -133,7 +133,7 @@ function AddProducts() {
     }
   }
   function getProductData() {
-    const urlID = getID(currentPath);
+    const urlID = getID(currentParams);
     if (urlID) {
       isLoading(true);
       asyncHandler(getOneProduct, onSuccessSearch, onError, urlID);
@@ -244,15 +244,12 @@ function AddProducts() {
     // -Sólo contiene caracteres alfanumericos
     // Retorna:
     // -El id de la url o falso
-    if (
-      (value && value === '/master/tienda/addProductos') ||
-      value === '/master/tienda/addProductos/'
-    ) {
+    if (value && value === '') {
       onChangeForm({ nuevo: true, online: false });
       return false;
     }
-    if (value && value.length === 52) {
-      const urlID = currentPath.substring(28, currentPath.length);
+    if (value && value.length === 25) {
+      const urlID = value.substring(1, value.length);
       return isId(urlID) ? urlID : false;
     }
     return false;
@@ -263,7 +260,7 @@ function AddProducts() {
       <div className="store-content-container">
         <h1>Agregar Productos</h1>
       </div>
-      <SearchPush pushPath="/master/tienda/addProductos" />
+      <SearchPush pushPath="/master/addProductos" />
       <SearchMercadoLibre onFinish={onSearchML} />
       <div className="store-form-container">
         {!state.reload && (

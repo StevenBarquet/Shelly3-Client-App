@@ -61,7 +61,7 @@ const ProductTable = props => {
       dataIndex: '_id',
       key: '_id',
       render: _id => (
-        <Link to={`/master/tienda/addProductos/${_id}`}>editar producto</Link>
+        <Link to={`/master/addProductos?${_id}`}>editar producto</Link>
       )
     },
     {
@@ -69,7 +69,7 @@ const ProductTable = props => {
       dataIndex: '_id',
       key: '_id',
       render: _id => (
-        <Link to={`/master/tienda/productInfo/${_id}`}>info completa</Link>
+        <Link to={`/master/productInfo?${_id}`}>info completa</Link>
       )
     },
     {
@@ -131,7 +131,7 @@ const ProductTable = props => {
         pagination={false}
         dataSource={dataSource}
         columns={columns}
-        scroll={{ y: 500, x: 1800 }}
+        scroll={{ x: 1800 }}
       />
       <Pagination
         style={{ margin: '15px auto 0px auto' }}

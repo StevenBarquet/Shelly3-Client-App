@@ -1,4 +1,9 @@
-import { CHANGE_RESPONSIVE, UPDATE_PATH, UPDATE_LOADING } from 'Types';
+import {
+  UPDATE_PARAMS,
+  CHANGE_RESPONSIVE,
+  UPDATE_PATH,
+  UPDATE_LOADING
+} from 'Types';
 
 export const changeResponsiveFlag = newFlag => dispatch => {
   dispatch({
@@ -11,6 +16,13 @@ export const updatePath = newPath => dispatch => {
   dispatch({
     type: UPDATE_PATH,
     payload: newPath
+  });
+};
+
+export const updateParams = newParam => dispatch => {
+  dispatch({
+    type: UPDATE_PARAMS,
+    payload: newParam
   });
 };
 

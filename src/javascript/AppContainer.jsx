@@ -30,27 +30,23 @@ function AppContainer() {
         <Route exact path="/master/tienda" component={HomePageMaster} />
         <Route
           exact
-          path="/master/tienda/adminProductos"
+          path="/master/adminProductos"
           component={AdminProductsPage}
         />
         <Route
           exact
-          path="/master/tienda/addProductos([/0-9a-zA-Z]*)"
+          path="/master/addProductos([?0-9a-zA-Z]*)"
           component={AddProductsPage}
         />
         <Route
           exact
-          path="/master/tienda/productInfo([/0-9a-zA-Z]*)"
+          path="/master/productInfo([?0-9a-zA-Z]*)"
           component={ProductsInfoPage}
         />
         {/* Orders */}
-        <Route exact path="/master/tienda/storeCart" component={StoreCart} />
+        <Route exact path="/master/storeCart" component={StoreCart} />
         {/* Others */}
-        <Route
-          exact
-          path="/master/tienda/publicHome"
-          component={AdminPublicHome}
-        />
+        <Route exact path="/master/publicHome" component={AdminPublicHome} />
         <Route exact path="/master/login" component={MasterLogin} />
         <Route exact path="/master/salir" component={MasterLogout} />
         {/* --------- Client routes --------- */}
