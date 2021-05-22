@@ -69,7 +69,12 @@ function JustMenu(props) {
           </Menu.Item>
         </SubMenu>
         <SubMenu key="4" icon={<CarryOutOutlined />} title="Ordenes">
-          <Menu.Item key="sub4-1">Administrar Ordenes</Menu.Item>
+          <Menu.Item
+            key="/master/adminOrders"
+            onClick={() => goToRoute('/master/adminOrders')}
+          >
+            Administrar Ordenes
+          </Menu.Item>
           <Menu.Item
             key="/master/storeCart"
             onClick={() => goToRoute('/master/storeCart')}

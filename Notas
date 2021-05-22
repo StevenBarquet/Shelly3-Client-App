@@ -18,6 +18,20 @@
 -Inicializar form de agregar producto con imagen dummy
 -revisar formularios que acepten empty string y vacios
 -Cambiar categoria y subcategoria a un arreglo
+-Cambiar precio local por precio mostrador
+-Ajustar estandar de programacion en todos los contenedores
+-Limpiar y estandarizar css
+-Cambiar colores botones por ajustes de json tipo "primary, secodary, third, etc"
+-Copiar nuevos estandares a ptoyectos limpios
+-Generar html y servidor limpio preparado para prototipo y subir a github
+-Cambiar imports locales de estilos en custom components
+-Revisar class components vs typescript para documentar custom comps
+-Crear algoritmo de lectura de arbol de categorias
+-Crear multiples temas
+-Revisar y suavizar flujo de administrar productos
+-Estandarizar custom Inputs y agregar mas formularios de ejemplo en  CommonComps
+-Hacer un formulario no controlado con validaciones de joi utilizando una master function tipo switch case y funciones validadoras para cada caso tipo promise resolve
+-Repasar nombres con mi hermana
 
 
     Smurfeado:

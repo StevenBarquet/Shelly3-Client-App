@@ -52,6 +52,9 @@
     },
     "StoreCartPage": {
       "title": "Venta de mostrador"
+    },
+    "AdminOrdersPage": {
+      "title": "Administrador de ordenes"
     }
   }
 }

@@ -78,6 +78,16 @@ export async function createLocalOrder(data) {
     return error;
   }
 }
+export async function searchOrders(data) {
+  const endpoint = 'ordenes/buscar';
+  const url = urlServer + endpoint;
+  try {
+    const respose = await axios.post(url, data);
+    return respose;
+  } catch (error) {
+    return error;
+  }
+}
 // -------------------------------------------Old----------------------------------------
 export async function genericGet(url) {
   try {

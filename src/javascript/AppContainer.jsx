@@ -11,6 +11,7 @@ import ToHomeMaster from 'Pages/Master/ToHomeMasterPage';
 import MasterLogin from 'Pages/Master/MasterLoginPage';
 import MasterLogout from 'Pages/Master/MasterLogoutPage';
 import StoreCart from 'Pages/Master/StoreCartPage';
+import AdminOrders from 'Pages/Master/AdminOrdersPage';
 // ---Pages Client
 import HomePage from 'Pages/Client/HomePage';
 // ---Pages Others
@@ -47,6 +48,7 @@ function AppContainer() {
         <Route exact path="/master/storeCart" component={StoreCart} />
         {/* Others */}
         <Route exact path="/master/publicHome" component={AdminPublicHome} />
+        <Route exact path="/master/adminOrders" component={AdminOrders} />
         <Route exact path="/master/login" component={MasterLogin} />
         <Route exact path="/master/salir" component={MasterLogout} />
         {/* --------- Client routes --------- */}
