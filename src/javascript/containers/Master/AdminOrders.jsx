@@ -3,6 +3,7 @@ import React, { useEffect, useReducer } from 'react';
 // ---Components
 import StoreMenuCont from 'Cont/Master/StoreMenuCont';
 import OrderTable from 'Comp/Master/AdminOrders/OrderTable';
+import OrderCard from 'Comp/Master/AdminOrders/OrderCard';
 // ---Redux
 import { useDispatch } from 'react-redux';
 import { updateLoading } from 'Actions/appInfo';
@@ -16,10 +17,12 @@ import { removeEmptyAndNull } from 'Others/otherMethods';
 
 // ------------------------------------------ REDUCER -----------------------------------------
 const typesR = {
-  UPDATE_ORDERS: 'UPDATE_ORDERS'
+  UPDATE_ORDERS: 'UPDATE_ORDERS',
+  HIDE_CARD: 'HIDE_CARD',
+  VIEW_CARD: 'VIEW_CARD'
 };
 
-const { UPDATE_ORDERS } = typesR;
+const { UPDATE_ORDERS, HIDE_CARD, VIEW_CARD } = typesR;
 
 const searchParams = {
   pageNumber: 1,
@@ -38,7 +41,9 @@ const searchParams = {
 const initialState = {
   searchParams,
   orderCount: 0,
-  orders: []
+  orders: [],
+  viewCard: false,
+  cardOrder: {}
 };
 
 function reducer(state, action) {
@@ -49,6 +54,19 @@ function reducer(state, action) {
         ...state,
         orderCount: payload.orderCount,
         orders: payload.orders
+      };
+
+    case HIDE_CARD:
+      return {
+        ...state,
+        viewCard: false
+      };
+
+    case VIEW_CARD:
+      return {
+        ...state,
+        viewCard: true,
+        cardOrder: payload
       };
 
     default:
@@ -70,6 +88,12 @@ function AdminOrders() {
     isLoading(true);
     const fixedData = formatDataForRequest(state.searchParams);
     asyncHandler(searchOrders, onSuccessOrder, onErrorOrder, fixedData);
+  }
+  function onHideCard() {
+    dispatch({ type: HIDE_CARD });
+  }
+  function onViewCard(index) {
+    dispatch({ type: VIEW_CARD, payload: index });
   }
   // ----------------------- Metodos Auxiliares
   function updateOrders(data) {
@@ -111,7 +135,11 @@ function AdminOrders() {
         current={state.searchParams.pageNumber}
         pageSize={state.searchParams.pageSize}
         total={state.orderCount}
+        onViewCard={onViewCard}
       />
+      {state.viewCard && (
+        <OrderCard data={state.cardOrder} onHideCard={onHideCard} />
+      )}
     </StoreMenuCont>
   );
 }

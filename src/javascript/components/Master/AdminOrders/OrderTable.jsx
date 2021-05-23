@@ -9,7 +9,15 @@ import { Button, Table, Pagination } from 'antd';
 import { priceFormat } from 'Others/otherMethods';
 
 const OrderTable = props => {
-  const { orders, onDelete, current, pageSize, total, onPageChange } = props;
+  const {
+    orders,
+    onDelete,
+    current,
+    pageSize,
+    total,
+    onPageChange,
+    onViewCard
+  } = props;
   const dataSource = orders.map(item => ({ ...item, key: item._id })); // add key prop
 
   function handleDelete(value) {
@@ -59,8 +67,8 @@ const OrderTable = props => {
       title: 'Consultar',
       dataIndex: '_id',
       key: '_id',
-      render: _id => (
-        <Button onClick={() => handleDelete(_id)} type="primary">
+      render: (_id, fullData) => (
+        <Button onClick={() => onViewCard(fullData)} type="primary">
           Vistazo
         </Button>
       )
