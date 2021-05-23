@@ -7,6 +7,7 @@ import FitImg from 'CommonComps/FitImg';
 import CloseButton from 'CommonComps/CloseButton';
 // ---Others
 import { priceFormat } from 'Others/otherMethods';
+import { dateMongoToClient } from 'Others/dateMethods';
 
 function Item(props) {
   const { item } = props;
@@ -136,7 +137,7 @@ function DatosVenta(props) {
     <>
       <Col span={24}>
         <h4>
-          Datos de Venta: <span>{date}</span>
+          Datos de Venta: <span>{dateMongoToClient(date)}</span>
         </h4>
       </Col>
       <Col xs={24} sm={24} lg={8}>

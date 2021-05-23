@@ -934,8 +934,8 @@
 }
 //-------------------------------------------------STORE CART-----------------------------------------------
 .sroreCart-steps-container{
-  background-color: #1d1d1d;
-  background-image: url('../images/background.jpg');
+  background-color: @backgroundFallBack;
+  background-image: @backgroundImage;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -1075,9 +1075,13 @@
   left: 15%;
   overflow-y: scroll;
   z-index: 10;
+  background-color: @backgroundFallBack;
+  background-image: @backgroundImage;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  border: solid @colorPrimary 1px;
+  border-radius: 20px;
   // ---Contenido
-  background-color: #4b3550;
-  background-image: linear-gradient(225deg, #4b3550 0%, #14081e 53%, #813da0 100%);
   color: @colorPrimaryText;
   .card-cover{
     width: 94%;

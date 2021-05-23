@@ -1,11 +1,10 @@
+// -----------------------------Copia de Admin Orders antes del buscador
 // ---Dependencys
 import React, { useEffect, useReducer } from 'react';
 // ---Components
 import StoreMenuCont from 'Cont/Master/StoreMenuCont';
 import OrderTable from 'Comp/Master/AdminOrders/OrderTable';
 import OrderCard from 'Comp/Master/AdminOrders/OrderCard';
-// ---CommonComps
-import ModalConfirmation from 'CommonComps/ModalConfirmation';
 // ---Redux
 import { useDispatch } from 'react-redux';
 import { updateLoading } from 'Actions/appInfo';
@@ -128,15 +127,7 @@ function AdminOrders() {
     dispatch({ type: PAGE_CHANGE, payload });
     dispatch({ type: NOT_UPDATED });
   }
-  function onDelete(id) {
-    const question = '¿Deseas eliminar ésta orden?';
-    const details = `La orden: ${id} será eliminada permanentemente`;
-    ModalConfirmation(question, details, onDeleteOrder, id);
-  }
   // ----------------------- Metodos Auxiliares
-  function onDeleteOrder(id) {
-    console.log('Orden eliminada... ', id);
-  }
   function getAll() {
     isLoading(true);
     const fixedData = formatDataForRequest(state.searchParams);
@@ -181,7 +172,6 @@ function AdminOrders() {
         current={state.searchParams.pageNumber}
         pageSize={state.searchParams.pageSize}
         total={state.orderCount}
-        onDelete={onDelete}
         onViewCard={onViewCard}
         onPageChange={onPageChange}
       />
