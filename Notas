@@ -32,6 +32,9 @@
 -Estandarizar custom Inputs y agregar mas formularios de ejemplo en  CommonComps
 -Hacer un formulario no controlado con validaciones de joi utilizando una master function tipo switch case y funciones validadoras para cada caso tipo promise resolve
 -Repasar nombres con mi hermana
+-Meter ventaTipo catalogo a los jsons estáticos
+-Hacer que en busquedas exitosas se contraiga el filtro
+-Falta limpiar filtros ordenes
 
 
     Smurfeado:

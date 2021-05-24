@@ -19,7 +19,10 @@ const OrderTable = props => {
     onPageChange,
     onViewCard
   } = props;
-  const dataSource = orders.map(item => ({ ...item, key: item._id })); // add key prop
+  const dataSource =
+    orders && orders.length > 0
+      ? orders.map(item => ({ ...item, key: item._id }))
+      : []; // add key prop
 
   function handleDelete(value) {
     // console.log(value);
@@ -73,12 +76,12 @@ const OrderTable = props => {
       render: _id => <Link to={`/master/editOrder?${_id}`}>Editar orden</Link>
     },
     {
-      title: 'Borrar',
+      title: 'Cancelar',
       dataIndex: '_id',
       key: '_id',
       render: _id => (
         <Button onClick={() => handleDelete(_id)} type="danger">
-          Borrar
+          Cancelar
         </Button>
       )
     },

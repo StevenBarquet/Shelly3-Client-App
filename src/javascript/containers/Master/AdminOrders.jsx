@@ -4,6 +4,7 @@ import React, { useEffect, useReducer } from 'react';
 import StoreMenuCont from 'Cont/Master/StoreMenuCont';
 import OrderTable from 'Comp/Master/AdminOrders/OrderTable';
 import OrderCard from 'Comp/Master/AdminOrders/OrderCard';
+import OrderSearcher from 'Comp/Master/AdminOrders/OrderSearcher';
 // ---CommonComps
 import ModalConfirmation from 'CommonComps/ModalConfirmation';
 // ---Redux
@@ -14,7 +15,7 @@ import { asyncHandler } from 'Others/requestHandlers.js';
 import { searchOrders } from 'Others/peticiones.js';
 // ---Others
 import { removeEmptyAndNull } from 'Others/otherMethods';
-
+import { dateFormToServer } from 'Others/dateMethods';
 // ---AUX COMPONENTS
 
 // ------------------------------------------ REDUCER -----------------------------------------
@@ -22,22 +23,24 @@ const typesR = {
   UPDATE_ORDERS: 'UPDATE_ORDERS',
   HIDE_CARD: 'HIDE_CARD',
   VIEW_CARD: 'VIEW_CARD',
-  PAGE_CHANGE: 'PAGE_CHANGE',
-  NOT_UPDATED: 'NOT_UPDATED'
+  SEARCH_PARMS_CHANGE: 'SEARCH_PARMS_CHANGE',
+  NOT_UPDATED: 'NOT_UPDATED',
+  IS_UPDATED: 'IS_UPDATED'
 };
 
 const {
   UPDATE_ORDERS,
   HIDE_CARD,
   VIEW_CARD,
-  PAGE_CHANGE,
-  NOT_UPDATED
+  SEARCH_PARMS_CHANGE,
+  NOT_UPDATED,
+  IS_UPDATED
 } = typesR;
 
-const searchParams = {
+const searchParamsInitial = {
   pageNumber: 1,
   pageSize: 50,
-  searchedValue: null,
+  searchedValue: '',
   filters: {
     finalDate: null,
     startDate: null,
@@ -49,7 +52,7 @@ const searchParams = {
 };
 
 const initialState = {
-  searchParams,
+  searchParams: searchParamsInitial,
   orderCount: 0,
   orders: [],
   viewCard: false,
@@ -68,14 +71,10 @@ function reducer(state, action) {
         isUpdated: true
       };
 
-    case PAGE_CHANGE:
+    case SEARCH_PARMS_CHANGE:
       return {
         ...state,
-        searchParams: {
-          ...state.searchParams,
-          pageNumber: payload.newPage,
-          pageSize: payload.newSize
-        }
+        searchParams: payload
       };
 
     case HIDE_CARD:
@@ -97,6 +96,12 @@ function reducer(state, action) {
         isUpdated: false
       };
 
+    case IS_UPDATED:
+      return {
+        ...state,
+        isUpdated: true
+      };
+
     default:
       return state;
   }
@@ -114,6 +119,8 @@ function AdminOrders() {
   // ----------------------- Metodos Principales
   function updatedOrders() {
     if (!state.isUpdated) {
+      console.log('get all called');
+      dispatch({ type: IS_UPDATED });
       getAll();
     }
   }
@@ -124,8 +131,15 @@ function AdminOrders() {
     dispatch({ type: VIEW_CARD, payload: index });
   }
   function onPageChange(newPage, newSize) {
-    const payload = { newPage, newSize };
-    dispatch({ type: PAGE_CHANGE, payload });
+    const { searchedValue, filters, sortBy } = state.searchParams;
+    const payload = {
+      pageNumber: newPage,
+      pageSize: newSize,
+      searchedValue,
+      filters: { ...filters }, // Trick to not mutate searchData
+      sortBy
+    };
+    dispatch({ type: SEARCH_PARMS_CHANGE, payload });
     dispatch({ type: NOT_UPDATED });
   }
   function onDelete(id) {
@@ -133,13 +147,33 @@ function AdminOrders() {
     const details = `La orden: ${id} será eliminada permanentemente`;
     ModalConfirmation(question, details, onDeleteOrder, id);
   }
+  function onFinishForm(params) {
+    const { pageNumber, pageSize } = state.searchParams;
+    const { searchedValue, sortBy, filters } = params;
+    const payload = {
+      pageNumber,
+      pageSize,
+      searchedValue,
+      filters: { ...filters }, // Trick to not mutate searchData
+      sortBy
+    };
+    dispatch({ type: SEARCH_PARMS_CHANGE, payload });
+    dispatch({ type: NOT_UPDATED });
+  }
   // ----------------------- Metodos Auxiliares
+  function formDateFix(formDate) {
+    if (formDate) {
+      const date = formDate._d;
+      return dateFormToServer(date);
+    }
+    return null;
+  }
   function onDeleteOrder(id) {
     console.log('Orden eliminada... ', id);
   }
   function getAll() {
     isLoading(true);
-    const fixedData = formatDataForRequest(state.searchParams);
+    const fixedData = formatDataForRequest();
     asyncHandler(searchOrders, onSuccessOrder, onErrorOrder, fixedData);
   }
   function updateOrders(data) {
@@ -149,11 +183,29 @@ function AdminOrders() {
       payload: { orderCount, orders }
     });
   }
-  function formatDataForRequest(data) {
-    return {
-      ...removeEmptyAndNull(data),
-      sortBy: JSON.parse(data.sortBy)
+  function formatDataForRequest() {
+    const { searchParams } = state;
+    const {
+      pageNumber,
+      pageSize,
+      searchedValue,
+      filters,
+      sortBy
+    } = searchParams;
+    const toFix = {
+      pageNumber,
+      pageSize,
+      searchedValue,
+      filters: {
+        ...filters,
+        startDate: formDateFix(filters.startDate),
+        finalDate: formDateFix(filters.finalDate)
+      },
+      sortBy: JSON.parse(sortBy)
     };
+    const fixed = removeEmptyAndNull(toFix);
+
+    return fixed;
   }
   function onSuccessOrder(data) {
     updateOrders(data);
@@ -166,25 +218,21 @@ function AdminOrders() {
   // ----------------------- Render
   return (
     <StoreMenuCont>
-      <div className="store-content-container">
-        <h1>Administrar Ordenes</h1>
-      </div>
-      <div className="store-content-container">
-        <p>Buscador de Ordenes</p>
-        <p>
-          Tabla de ordenes: Carga desde el principio las más recientes, con
-          boton de vistazo y edicion de ordenes
-        </p>
-      </div>
-      <OrderTable
-        orders={state.orders}
-        current={state.searchParams.pageNumber}
-        pageSize={state.searchParams.pageSize}
-        total={state.orderCount}
-        onDelete={onDelete}
-        onViewCard={onViewCard}
-        onPageChange={onPageChange}
+      <OrderSearcher
+        onFinishForm={onFinishForm}
+        defaultValues={state.searchParams}
       />
+      {state.orders && state.orders.length > 0 && (
+        <OrderTable
+          orders={state.orders}
+          current={state.searchParams.pageNumber}
+          pageSize={state.searchParams.pageSize}
+          total={state.orderCount}
+          onDelete={onDelete}
+          onViewCard={onViewCard}
+          onPageChange={onPageChange}
+        />
+      )}
       {state.viewCard && (
         <OrderCard data={state.cardOrder} onHideCard={onHideCard} />
       )}

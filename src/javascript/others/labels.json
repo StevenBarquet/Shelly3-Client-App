@@ -56,5 +56,82 @@
     "AdminOrdersPage": {
       "title": "Administrador de ordenes"
     }
+  },
+  "catalogos":{
+    "ventaTipoFiltro": [
+      {
+        "label": "Sin filtrar",
+        "value": null
+      },
+      {
+        "label": "local 133",
+        "value": "local 133"
+      },
+      {
+        "label": "Tienda online",
+        "value": "Tienda online"
+      },
+      {
+        "label": "Facebook",
+        "value": "Facebook"
+      },
+      {
+        "label": "Mercado Libre",
+        "value": "Mercado Libre"
+      }],
+    "metodoPagoFiltro": [
+      {
+        "label": "Sin filtrar",
+        "value": null
+      },
+      {
+        "label": "Efectivo",
+        "value": "Efectivo"
+      },
+      {
+        "label": "Tarjeta",
+        "value": "Tarjeta"
+      },
+      {
+        "label": "Transferencia",
+        "value": "Transferencia"
+      }],
+    "estatusFiltro": [
+      {
+        "label": "Sin filtrar",
+        "value": null
+      },
+      {
+        "label": "Iniciado",
+        "value": "Iniciado"
+      },
+      {
+        "label": "En revision de pago",
+        "value": "En revision de pago"
+      },
+      {
+        "label": "Pagado",
+        "value": "Pagado"
+      },
+      {
+        "label": "En proceso de envío",
+        "value": "En proceso de envío"
+      },
+      {
+        "label": "Enviado",
+        "value": "Enviado"
+      },
+      {
+        "label": "Finalizado",
+        "value": "Finalizado"
+      },
+      {
+        "label": "Cancelado",
+        "value": "Cancelado"
+      },
+      {
+        "label": "Entrega a convenir programada",
+        "value": "Entrega a convenir programada"
+      }]
   }
 }

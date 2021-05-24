@@ -1,7 +1,7 @@
 /* eslint-disable prefer-promise-reject-errors */
 // ---Dependencys
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, Input, Select, Radio } from 'antd';
+import { Row, Col, Form, Input, Select, Radio, DatePicker } from 'antd';
 import {
   LoginOutlined,
   VerticalAlignBottomOutlined,
@@ -12,9 +12,42 @@ import {
 import ButtonMlg from 'CommonComps/ButtonMlg';
 import mapOptions from 'CommonComps/mapOptions';
 // ---Other
-import { productos } from 'Others/store-data.json';
+import { catalogos } from 'Others/labels.json';
+import { validate } from './OrderSearcherJoi';
 
 // ---AUX COMPONENTS
+function FiltersSelect(props) {
+  const { options, name, label } = props;
+  return (
+    <Form.Item
+      labelCol={{ span: 12 }}
+      wrapperCol={{ span: 12 }}
+      name={['filters', name]}
+      label={label}
+    >
+      <Select>{mapOptions(options)}</Select>
+    </Form.Item>
+  );
+}
+function InputValidated(props) {
+  const { name, label } = props;
+  return (
+    <Form.Item
+      labelCol={{ span: 6 }}
+      wrapperCol={{ span: 17 }}
+      name={name}
+      label={label}
+      rules={[
+        {
+          required: false
+        },
+        { validator: validate[name] }
+      ]}
+    >
+      <Input />
+    </Form.Item>
+  );
+}
 function SubmitButton(props) {
   const { advanceSearch } = props;
   if (!advanceSearch)
@@ -88,48 +121,21 @@ function ClearFiltersButton(props) {
   return null;
 }
 // ------------------------------------------ COMPONENT-----------------------------------------
-function ProductSearcher(props) {
+function OrderSearcher(props) {
   // ----------------------- hooks, const, props y states
-  const { defaultValues, submitData, clearFilters } = props;
+  const { defaultValues, onFinishForm, clearFilters } = props;
   const [advanceSearch, setAdvanceSearch] = useState(false);
-  const filterOption = [
-    {
-      label: 'Ambos',
-      value: null
-    },
-    {
-      label: 'Si',
-      value: true
-    },
-    {
-      label: 'No',
-      value: false
-    }
-  ];
+  const [render, setRender] = useState(true);
+
+  useEffect(() => setRender(true), [render]);
 
   // ----------------------- Metodos Principales
   const changeAdvance = () => setAdvanceSearch(!advanceSearch);
-  const [render, setRender] = useState(true);
-  useEffect(() => setRender(true), [render]);
-
-  function onFinish(data) {
-    setAdvanceSearch(false);
-    submitData(data);
-  }
   function onClearFilters() {
     clearFilters();
     setRender(false);
   }
-  // ----------------------- Metodos Auxiliares
-  function validate(rule, value) {
-    // Valida:
-    // -Si la cadena no está vacía que tenga entre 3 y 25 de longitud
-    if (!value || (value.length > 2 && value.length < 26)) {
-      return Promise.resolve();
-    }
-    return Promise.reject('Ingresa una palabra entre 3 y 25 caracteres');
-  }
-
+  // console.log('defaultValues: ', defaultValues);
   // ----------------------- Render
   if (render)
     return (
@@ -138,25 +144,11 @@ function ProductSearcher(props) {
         <Form
           style={{ width: '100%' }}
           initialValues={defaultValues || null}
-          onFinish={onFinish}
+          onFinish={onFinishForm}
         >
           <Row>
             <Col style={{ marginTop: '20px' }} xl={17}>
-              <Form.Item
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 17 }}
-                name="searchedValue"
-                label="Palabra clave"
-                rules={[
-                  {
-                    required: false,
-                    message: 'Máximo 50 caracteres'
-                  },
-                  { validator: validate }
-                ]}
-              >
-                <Input />
-              </Form.Item>
+              <InputValidated name="searchedValue" label="Palabra clave" />
             </Col>
             <SubmitButton advanceSearch={advanceSearch} />
             <ClearFiltersButton
@@ -175,47 +167,48 @@ function ProductSearcher(props) {
                 <h2>Filtrar por:</h2>
               </Col>
               <Col xs={11} sm={11} lg={7}>
-                <Form.Item
-                  labelCol={{ span: 12 }}
-                  wrapperCol={{ span: 12 }}
-                  name={['filters', 'online']}
-                  label="Venta Online"
-                >
-                  <Select>{mapOptions(filterOption)}</Select>
-                </Form.Item>
+                <FiltersSelect
+                  name="ventaTipo"
+                  label="Tipo de venta"
+                  options={catalogos.ventaTipoFiltro}
+                />
               </Col>
               <Col
                 xs={{ span: 11, offset: 1 }}
                 sm={{ span: 11, offset: 1 }}
                 lg={7}
               >
-                <Form.Item
-                  labelCol={{ span: 12 }}
-                  wrapperCol={{ span: 12 }}
-                  name={['filters', 'nuevo']}
-                  label="Producto Nuevo"
-                >
-                  <Select>{mapOptions(filterOption)}</Select>
-                </Form.Item>
+                <FiltersSelect
+                  name="metodoPago"
+                  label="Método de pago"
+                  options={catalogos.metodoPagoFiltro}
+                />
               </Col>
               <Col xs={11} sm={11} lg={7}>
+                <FiltersSelect
+                  name="estatus"
+                  label="Estatus"
+                  options={catalogos.estatusFiltro}
+                />
+              </Col>
+              <Col xs={24} sm={24} lg={12}>
                 <Form.Item
                   labelCol={{ span: 12 }}
-                  wrapperCol={{ span: 12 }}
-                  name={['filters', 'descuento']}
-                  label="Descuento"
+                  wrapperCol={{ span: 10 }}
+                  name={['filters', 'startDate']}
+                  label="Fecha inicial"
                 >
-                  <Select>{mapOptions(filterOption)}</Select>
+                  <DatePicker format="YYYY/MM/DD" />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} lg={18}>
+              <Col xs={24} sm={24} lg={12}>
                 <Form.Item
-                  labelCol={{ span: 4 }}
-                  wrapperCol={{ span: 18 }}
-                  name={['filters', 'categoria']}
-                  label="Categoria"
+                  labelCol={{ span: 12 }}
+                  wrapperCol={{ span: 10 }}
+                  name={['filters', 'finalDate']}
+                  label="Fecha final"
                 >
-                  <Select>{mapOptions(productos.categoriasFiltro)}</Select>
+                  <DatePicker format="YYYY/MM/DD" />
                 </Form.Item>
               </Col>
               {/* --Sort-- */}
@@ -227,87 +220,59 @@ function ProductSearcher(props) {
                   <Radio.Group>
                     <Row style={{ marginTop: 25 }}>
                       <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "nombre": 1 }'}>
+                        <Radio value={'{ "date": -1 }'}>
                           <h5>
-                            Nombre <span>A-Z</span>
+                            Fecha <span>Reciente-Antigua</span>
                           </h5>
                         </Radio>
                       </Col>
                       <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "nombre": -1 }'}>
+                        <Radio value={'{ "date": 1 }'}>
                           <h5>
-                            Nombre <span>Z-A</span>
+                            Fecha <span>Antigua-Reciente</span>
                           </h5>
                         </Radio>
                       </Col>
                       <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "marca": 1 }'}>
+                        <Radio value={'{ "totalVenta": 1 }'}>
                           <h5>
-                            Marca <span>A-Z</span>
+                            Venta <span>+ -</span>
                           </h5>
                         </Radio>
                       </Col>
                       <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "marca": -1 }'}>
+                        <Radio value={'{ "totalVenta": -1 }'}>
                           <h5>
-                            Marca <span>Z-A</span>
+                            Venta <span>- +</span>
                           </h5>
                         </Radio>
                       </Col>
                       <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "precioOnline": -1 }'}>
+                        <Radio value={'{ "responsableVenta": 1 }'}>
                           <h5>
-                            Precio <span>- +</span>
+                            Responsable <span>A - Z</span>
                           </h5>
                         </Radio>
                       </Col>
                       <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "precioOnline": 1 }'}>
+                        <Radio value={'{ "responsableVenta": -1 }'}>
                           <h5>
-                            Precio <span>+ -</span>
+                            Responsable <span>Z - A</span>
                           </h5>
                         </Radio>
                       </Col>
 
                       <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "countVisits": 1 }'}>
+                        <Radio value={'{ "estatus": 1 }'}>
                           <h5>
-                            Visitas <span>+ -</span>
+                            Estatus <span>A - Z</span>
                           </h5>
                         </Radio>
                       </Col>
                       <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "countVisits": -1 }'}>
+                        <Radio value={'{ "estatus": -1 }'}>
                           <h5>
-                            Visitas <span>- +</span>
-                          </h5>
-                        </Radio>
-                      </Col>
-                      <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "countQuestions": 1 }'}>
-                          <h5>
-                            Preguntas <span>+ -</span>
-                          </h5>
-                        </Radio>
-                      </Col>
-                      <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "countQuestions": -1 }'}>
-                          <h5>
-                            Preguntas <span>- +</span>
-                          </h5>
-                        </Radio>
-                      </Col>
-                      <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "countPurchases": 1 }'}>
-                          <h5>
-                            Ventas <span>+ -</span>
-                          </h5>
-                        </Radio>
-                      </Col>
-                      <Col xs={12} sm={12} lg={6}>
-                        <Radio value={'{ "countPurchases": -1 }'}>
-                          <h5>
-                            Ventas <span>- +</span>
+                            Estatus <span>Z - A</span>
                           </h5>
                         </Radio>
                       </Col>
@@ -323,4 +288,4 @@ function ProductSearcher(props) {
     );
   return null;
 }
-export default ProductSearcher;
+export default OrderSearcher;

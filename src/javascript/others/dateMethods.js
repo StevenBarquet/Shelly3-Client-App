@@ -14,4 +14,11 @@ export function dateMongoToClientShort(someDate) {
     .format('MMMM DD YYYY');
 }
 
+export function dateFormToServer(someDate) {
+  return moment(someDate)
+    .add(5, 'hours')
+    .locale('es')
+    .format('YYYY-MM-DD');
+}
+
 export default null;

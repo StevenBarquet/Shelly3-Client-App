@@ -13,7 +13,7 @@ function Item(props) {
   const { item } = props;
   const { images, nombre, costo, precio, piezas, _id } = item;
   return (
-    <div key={_id} className="order-item">
+    <div className="order-item">
       <h1 className="elipse">{nombre}</h1>
       <Row>
         <Col xs={24} sm={24} lg={6}>
@@ -62,7 +62,7 @@ function ItemList(props) {
   return (
     <>
       {items.map(item => (
-        <Item item={item} />
+        <Item key={item._id} item={item} />
       ))}
     </>
   );
