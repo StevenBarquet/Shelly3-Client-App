@@ -1,10 +1,11 @@
+// ---Dependencys
 const express = require('express');
-
-const app = express();
-
+const path = require('path');
 const open = require('open');
-
-app.use('/dist', express.static('dist'));
+// -----------------------------------CONFIG-------------------------------
+const app = express();
+// -----------------------------------MIDDLEWARES-------------------------------
+app.use(express.static(path.join(__dirname, 'dist'))); // serve static files
 
 app.get('/*', (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');

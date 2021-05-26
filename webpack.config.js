@@ -105,7 +105,7 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html')
+      template: path.resolve(__dirname, './src/html/index.html')
     }),
     new webpack.DllReferencePlugin({
       manifest: require('./modules-manifest.json')
