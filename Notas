@@ -35,6 +35,8 @@
 -Meter ventaTipo catalogo a los jsons estáticos
 -Hacer que en busquedas exitosas se contraiga el filtro
 -Falta limpiar filtros ordenes
+-El get home no para la carga en error
+-Agregar nota de busqueda sin resultados en admin orders
 
 
     Smurfeado:

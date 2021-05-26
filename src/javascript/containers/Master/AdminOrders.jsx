@@ -115,7 +115,6 @@ function AdminOrders() {
   const isLoading = flag => dispatchR(updateLoading(flag));
 
   useEffect(() => updatedOrders(), [state]);
-
   // ----------------------- Metodos Principales
   function updatedOrders() {
     if (!state.isUpdated) {
@@ -123,6 +122,18 @@ function AdminOrders() {
       dispatch({ type: IS_UPDATED });
       getAll();
     }
+  }
+  function clearFilters() {
+    const { pageNumber, pageSize } = state.searchParams;
+    const { searchedValue, sortBy, filters } = searchParamsInitial;
+    const payload = {
+      pageNumber,
+      pageSize,
+      searchedValue,
+      filters: { ...filters }, // Trick to not mutate searchData
+      sortBy
+    };
+    dispatch({ type: SEARCH_PARMS_CHANGE, payload });
   }
   function onHideCard() {
     dispatch({ type: HIDE_CARD });
@@ -221,6 +232,7 @@ function AdminOrders() {
       <OrderSearcher
         onFinishForm={onFinishForm}
         defaultValues={state.searchParams}
+        clearFilters={clearFilters}
       />
       {state.orders && state.orders.length > 0 && (
         <OrderTable

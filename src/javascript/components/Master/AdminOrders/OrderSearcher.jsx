@@ -127,7 +127,7 @@ function OrderSearcher(props) {
   const [advanceSearch, setAdvanceSearch] = useState(false);
   const [render, setRender] = useState(true);
 
-  useEffect(() => setRender(true), [render]);
+  useEffect(() => setRender(true), [render]); // Trick to reload filters
 
   // ----------------------- Metodos Principales
   const changeAdvance = () => setAdvanceSearch(!advanceSearch);
@@ -135,7 +135,11 @@ function OrderSearcher(props) {
     clearFilters();
     setRender(false);
   }
-  // console.log('defaultValues: ', defaultValues);
+  function onFinish(data) {
+    onFinishForm(data);
+    setRender(false);
+    setAdvanceSearch(false);
+  }
   // ----------------------- Render
   if (render)
     return (
@@ -144,7 +148,7 @@ function OrderSearcher(props) {
         <Form
           style={{ width: '100%' }}
           initialValues={defaultValues || null}
-          onFinish={onFinishForm}
+          onFinish={onFinish}
         >
           <Row>
             <Col style={{ marginTop: '20px' }} xl={17}>

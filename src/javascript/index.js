@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 
 // redux configuration
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import reduxThunk from 'redux-thunk';
 
 // reducers
@@ -15,7 +15,13 @@ import reducers from 'Reducers';
 import AppContainer from './AppContainer';
 
 // More redux configuration
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__; // For redux browser devTool
+let composeEnhancers = null;
+if (process.env.NODE_ENV === 'development') {
+  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+} else {
+  composeEnhancers = compose;
+}
+
 const store = createStore(
   reducers, // todos los reducers
   {}, // estado inicial

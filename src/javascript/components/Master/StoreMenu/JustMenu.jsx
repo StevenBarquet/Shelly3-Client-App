@@ -8,6 +8,7 @@ import {
   BarChartOutlined,
   DesktopOutlined,
   CodepenOutlined,
+  BarcodeOutlined,
   CarryOutOutlined,
   DollarCircleOutlined
 } from '@ant-design/icons';
@@ -48,7 +49,14 @@ function JustMenu(props) {
         >
           Home publico
         </Menu.Item>
-        <SubMenu key="3" icon={<CodepenOutlined />} title="Productos">
+        <Menu.Item
+          icon={<CodepenOutlined />}
+          key="/master/shippingMethods"
+          onClick={() => goToRoute('/master/shippingMethods')}
+        >
+          Metodos de envío
+        </Menu.Item>
+        <SubMenu key="3" icon={<BarcodeOutlined />} title="Productos">
           <Menu.Item
             key="/master/adminProductos"
             onClick={() => goToRoute('/master/adminProductos')}
