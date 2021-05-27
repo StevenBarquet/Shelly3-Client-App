@@ -46,12 +46,24 @@ function ClearButton(props) {
 }
 // ------------------------------------------ COMPONENT-----------------------------------------
 function CartContainer(props) {
-  const { addToCart, items, updatePiezas, onDeleteButton, onClearCart } = props;
+  const {
+    addToCart,
+    items,
+    updatePiezas,
+    onDeleteButton,
+    onClearCart,
+    handleResponsable,
+    responsableVenta
+  } = props;
   return (
     <>
       <Row style={{ marginTop: 30 }}>
         <Col xs={24} sm={24} lg={24}>
-          <SearchCont addToCart={addToCart} />
+          <SearchCont
+            handleResponsable={handleResponsable}
+            responsableVenta={responsableVenta}
+            addToCart={addToCart}
+          />
         </Col>
         <ClearButton length={items.length} onClearCart={onClearCart} />
         <Col xs={24} sm={24} lg={24}>

@@ -10,13 +10,9 @@ import StoreMenuCont from 'Cont/Master/StoreMenuCont';
 import ProductForm from 'Comp/Master/AddProducts/ProductForm';
 import SearchMercadoLibre from 'Comp/Master/AddProducts/SearchMercadoLibre';
 // ---Others
-import {
-  isId,
-  ignoreArgs,
-  removeNullProperties,
-  removeBlankProperties
-} from 'Others/otherMethods';
+import { isId, ignoreArgs, removeEmptyAndNull } from 'Others/otherMethods';
 import superMLhandler from 'Others/superMLhandler';
+
 // --Request
 import { asyncHandler, testError } from 'Others/requestHandlers.js';
 import {
@@ -188,7 +184,14 @@ function AddProducts() {
         newData = { ...newData, [key]: values[i] };
       }
     });
-    // console.log('fit data: ', newData);
+    const { categoria } = newData;
+    if (categoria) {
+      newData = {
+        ...newData,
+        categoria: categoria[0],
+        subcategoria: categoria[1] || undefined
+      };
+    }
     return newData;
   }
   function fitDataToRequest(data) {
@@ -198,11 +201,16 @@ function AddProducts() {
       'countVisits',
       'countQuestions',
       'countPurchases',
-      'countLocalPurchases'
+      'countLocalPurchases',
+      'subcategoria'
     ];
-    let cleanData = ignoreArgs(data, ignore);
-    cleanData = removeBlankProperties(cleanData);
-    cleanData = removeNullProperties(cleanData);
+    const { categoria, subcategoria } = data;
+    const categoryFix = {
+      ...data,
+      categoria: subcategoria ? [categoria, subcategoria] : [categoria]
+    };
+    let cleanData = ignoreArgs(categoryFix, ignore);
+    cleanData = removeEmptyAndNull(cleanData);
     const keys = Object.keys(cleanData);
     const values = Object.values(cleanData);
     // console.log(cleanData);

@@ -132,6 +132,24 @@
       {
         "label": "Entrega a convenir programada",
         "value": "Entrega a convenir programada"
-      }]
+      }],
+      "responsables": [
+        {
+          "label": "Kros",
+          "value": "Kros"
+        },
+        {
+          "label": "Pedrito",
+          "value": "Pedrito"
+        },
+        {
+          "label": "El Angel",
+          "value": "El Angel"
+        },
+        {
+          "label": "Viego",
+          "value": "Viego"
+        }
+      ]
   }
 }

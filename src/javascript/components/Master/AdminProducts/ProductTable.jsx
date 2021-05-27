@@ -44,7 +44,8 @@ const ProductTable = props => {
     {
       title: 'Categoria',
       dataIndex: 'categoria',
-      key: 'categoria'
+      key: 'categoria',
+      render: categoria => <span>{categoria[0]}</span>
     },
     {
       title: 'Borrar',

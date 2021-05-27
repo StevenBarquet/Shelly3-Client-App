@@ -5,6 +5,8 @@ import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 // ---ComonComponents
 import ButtonMlg from 'CommonComps/ButtonMlg';
 import mapOptions from 'CommonComps/mapOptions';
+// ---Others
+import { productos } from 'Others/store-data.json';
 
 // --------------------------------------- FORM COMPONENT --------------------------------------
 function ProductForm(props) {
@@ -249,7 +251,7 @@ function ProductForm(props) {
               help={categoria.status === 'error' ? categoria.message : null}
               rules={[{ required: false, message: categoria.message }]}
             >
-              <Select>{mapOptions(genderOptions)}</Select>
+              <Select>{mapOptions(productos.categorias)}</Select>
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} lg={12}>

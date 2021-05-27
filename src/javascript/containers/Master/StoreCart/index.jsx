@@ -26,6 +26,17 @@ import { asyncHandler } from 'Others/requestHandlers.js';
 import { createLocalOrder } from 'Others/peticiones.js';
 import { joiFormValidate, messagesSchema } from './OrderDataFormJoi';
 
+// --- AUX COMPONENTS
+function ResponsableError(props) {
+  const { responsableVenta } = props;
+  if (!responsableVenta)
+    return (
+      <div className="submit-container">
+        <h4>Selecciona Responsable de venta</h4>
+      </div>
+    );
+  return null;
+}
 // ------------------------------------------ REDUCER -----------------------------------------
 const typesR = {
   ADD_TO_CART: 'ADD_TO_CART',
@@ -35,7 +46,8 @@ const typesR = {
   RESET_VALIDATIONS: 'RESET_VALIDATIONS',
   UPDATE_MATHS: 'UPDATE_MATHS',
   UPDATE_TOTAL: 'UPDATE_TOTAL',
-  RESET_ALL: 'RESET_ALL'
+  RESET_ALL: 'RESET_ALL',
+  CHANGE_RESPONSABLE: 'CHANGE_RESPONSABLE'
 };
 
 const {
@@ -46,7 +58,8 @@ const {
   UPDATE_MSGSCHEMA,
   UPDATE_MATHS,
   UPDATE_TOTAL,
-  RESET_ALL
+  RESET_ALL,
+  CHANGE_RESPONSABLE
 } = typesR;
 
 const initialState = {
@@ -54,7 +67,7 @@ const initialState = {
     items: [],
     ventaTipo: 'local 133',
     estatus: 'Finalizado',
-    responsableVenta: 'Pruebas',
+    responsableVenta: undefined,
     totalVenta: 0
   },
   step: 0,
@@ -120,13 +133,22 @@ function reducer(state, action) {
         step: payload
       };
 
+    case CHANGE_RESPONSABLE:
+      return {
+        ...state,
+        orderData: {
+          ...state.orderData,
+          responsableVenta: payload
+        }
+      };
+
     case RESET_ALL:
       return {
         orderData: {
           items: [],
           ventaTipo: 'local 133',
           estatus: 'Finalizado',
-          responsableVenta: 'Pruebas',
+          responsableVenta: state.orderData.responsableVenta,
           totalVenta: 0
         },
         step: 0,
@@ -162,6 +184,13 @@ function StoreCart() {
         payload: item
       });
     }
+  }
+  function handleResponsable(value) {
+    // console.log('handleResponsable: ', value);
+    dispatch({
+      type: CHANGE_RESPONSABLE,
+      payload: value
+    });
   }
   function toStep(number) {
     dispatch({
@@ -243,11 +272,16 @@ function StoreCart() {
     });
     const ignore = ['concepto', 'cantidad', 'montoCliente'];
     let newData = ignoreArgs(data, ignore);
+    const { telefono } = newData;
+    newData = telefono
+      ? { ...newData, telefono: telefono.toString() }
+      : newData;
     newData = { ...newData, cobroAdicional, items: newItems };
 
     return removeEmptyAndNull(newData);
   }
   function onSuccessOrder(response) {
+    console.log('state.orderData before reset', state.orderData);
     isLoading(false);
     dispatch({ type: RESET_ALL });
     notUpdated();
@@ -326,7 +360,6 @@ function StoreCart() {
     });
     return newItems;
   }
-
   // ----------------------- Render
   return (
     <StoreMenuCont>
@@ -345,6 +378,8 @@ function StoreCart() {
           updatePiezas={updatePiezas}
           onDeleteButton={onDeleteButton}
           onClearCart={onClearCart}
+          handleResponsable={handleResponsable}
+          responsableVenta={state.orderData.responsableVenta}
         />
       ) : (
         <OrderDataForm
@@ -358,7 +393,12 @@ function StoreCart() {
           responsableVenta={state.orderData.responsableVenta}
         />
       )}
-      <AdvanceButtons toStep={toStep} step={state.step} />
+      <ResponsableError responsableVenta={state.orderData.responsableVenta} />
+      <AdvanceButtons
+        responsableVenta={state.orderData.responsableVenta}
+        toStep={toStep}
+        step={state.step}
+      />
     </StoreMenuCont>
   );
 }

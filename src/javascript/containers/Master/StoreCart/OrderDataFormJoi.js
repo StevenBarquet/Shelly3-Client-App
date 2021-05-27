@@ -60,7 +60,7 @@ export function joiFormValidate(formData) {
     correo: Joi.string().allow(''),
     nombre: Joi.string().allow(''),
     apellido: Joi.string().allow(''),
-    telefono: Joi.number()
+    telefono: Joi.number().integer()
   });
   return validateSchema(schema, formData, messagesSchema);
 }

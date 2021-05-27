@@ -44,24 +44,40 @@
     ],
     "categorias": [
       {
-        "label": "Videojuegos",
-        "value": "Videojuegos"
+        "label": "Laptops",
+        "value": "Laptops"
       },
       {
-        "label": "Dulces",
-        "value": "Dulces"
+        "label": "Mobil",
+        "value": "Mobil"
       },
       {
-        "label": "Computo",
-        "value": "Computo"
+        "label": "Gaming",
+        "value": "Gaming"
       },
       {
-        "label": "Celular",
-        "value": "Celular"
+        "label": "Almacenamiento",
+        "value": "Almacenamiento"
       },
       {
-        "label": "Sublimado",
-        "value": "Sublimado"
+        "label": "Accesorios cool",
+        "value": "Accesorios cool"
+      },
+      {
+        "label": "Redes",
+        "value": "Redes"
+      },
+      {
+        "label": "Para geeks",
+        "value": "Para geeks"
+      },
+      {
+        "label": "Tu vehículo",
+        "value": "Tu vehículo"
+      },
+      {
+        "label": "Cosas que no necesitas",
+        "value": "Cosas que no necesitas"
       }
     ],
     "origen": [

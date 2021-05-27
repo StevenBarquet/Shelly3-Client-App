@@ -1,5 +1,6 @@
 // ---Dependencys
 import React, { useEffect, useState } from 'react';
+import { Row, Col, Select } from 'antd';
 // ---Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLoading } from 'Actions/appInfo';
@@ -14,7 +15,10 @@ import {
 import ProductTable from 'Comp/Master/StoreCart/ProductTable';
 import ProductCard from 'Comp/Master/StoreCart/ProductCard';
 import ProductSearcher from 'Comp/Master/AdminProducts/ProductSearcher';
+// ---ComonComponents
+import mapOptions from 'CommonComps/mapOptions';
 // ---Others
+import { catalogos } from 'Others/labels.json';
 import { removeNullProperties } from 'Others/otherMethods';
 // --Request
 import { asyncHandler, testError } from 'Others/requestHandlers.js';
@@ -49,10 +53,30 @@ function ProductsDisplay(props) {
     />
   );
 }
-
+function ResponsableSelect(props) {
+  const { options, handleResponsable, responsableVenta } = props;
+  return (
+    <div style={{ marginTop: 30 }} className="store-content-container">
+      <Row>
+        <Col xs={24} sm={24} lg={10}>
+          <span className="label">Responsable:</span>
+        </Col>
+        <Col xs={24} sm={24} lg={14}>
+          <Select
+            style={{ width: '100%' }}
+            value={responsableVenta}
+            onChange={handleResponsable}
+          >
+            {mapOptions(options)}
+          </Select>
+        </Col>
+      </Row>
+    </div>
+  );
+}
 // ------------------------------------------ COMPONENT-----------------------------------------
 function SearchCont(props) {
-  const { addToCart } = props;
+  const { addToCart, handleResponsable, responsableVenta } = props;
   const initialState = {
     showCard: false,
     productData: {}
@@ -147,12 +171,21 @@ function SearchCont(props) {
   }
 
   return (
-    <>
-      <ProductSearcher
-        clearFilters={clearFilters}
-        submitData={submitData}
-        defaultValues={searchParams}
-      />
+    <Row>
+      <Col xs={24} sm={24} lg={6}>
+        <ResponsableSelect
+          options={catalogos.responsables}
+          handleResponsable={handleResponsable}
+          responsableVenta={responsableVenta}
+        />
+      </Col>
+      <Col xs={24} sm={24} lg={18}>
+        <ProductSearcher
+          clearFilters={clearFilters}
+          submitData={submitData}
+          defaultValues={searchParams}
+        />
+      </Col>
       <div className="store-content-container">
         <ProductsDisplay
           firstRender={firstRender}
@@ -168,7 +201,7 @@ function SearchCont(props) {
       {state.showCard && (
         <ProductCard onHideCard={onHideCard} data={state.productData} />
       )}
-    </>
+    </Row>
   );
 }
 

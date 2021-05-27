@@ -6,7 +6,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import ButtonMlg from 'CommonComps/ButtonMlg';
 // ------------------------------------------ COMPONENT-----------------------------------------
 function AdvanceButtons(props) {
-  const { step, toStep } = props;
+  const { step, toStep, responsableVenta } = props;
   function before() {
     toStep(0);
   }
@@ -29,7 +29,7 @@ function AdvanceButtons(props) {
       </Col>
       <Col xs={24} sm={24} lg={{ span: 8, offset: 8 }}>
         <ButtonMlg
-          variant={step === 0 ? 'yellow' : 'block'}
+          variant={step === 1 || !responsableVenta ? 'block' : 'yellow'}
           size="small"
           htmlType="button"
           widthB="85%"
