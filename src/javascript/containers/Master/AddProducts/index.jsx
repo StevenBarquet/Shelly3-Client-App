@@ -1,5 +1,5 @@
 // ---Dependencys
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 // ---Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateLoading } from 'Actions/appInfo';
@@ -28,7 +28,25 @@ const typesR = {
   UPDATE_FORM: 'UPDATE_FORM',
   STOP_RELOAD: 'STOP_RELOAD',
   START_RELOAD: 'START_RELOAD',
-  RESET_VALIDATIONS: 'RESET_VALIDATIONS'
+  RESET_VALIDATIONS: 'RESET_VALIDATIONS',
+  RESET_FORM: 'RESET_FORM'
+};
+
+const {
+  RESET_VALIDATIONS,
+  RESET_FORM,
+  UPDATE_FORM,
+  UPDATE_MSGSCHEMA,
+  START_RELOAD
+} = typesR;
+
+const initialState = {
+  msgSchema: messagesSchema,
+  form: {
+    nuevo: true,
+    online: false
+  },
+  isValidForm: true
 };
 
 function reducer(state, action) {
@@ -39,6 +57,12 @@ function reducer(state, action) {
         ...state,
         isValidForm: true,
         msgSchema: messagesSchema
+      };
+
+    case RESET_FORM:
+      return {
+        ...state,
+        ...initialState
       };
 
     case typesR.UPDATE_MSGSCHEMA:
@@ -54,13 +78,9 @@ function reducer(state, action) {
         form: { ...state.form, ...payload }
       };
 
-    case typesR.STOP_RELOAD:
-      return { ...state, reload: false };
-
     case typesR.START_RELOAD:
       return {
         ...state,
-        reload: true,
         form: { ...state.form, ...payload },
         isValidForm: true,
         msgSchema: messagesSchema
@@ -73,23 +93,10 @@ function reducer(state, action) {
 // ------------------------------------------ CONTAINER-----------------------------------------
 function AddProducts() {
   // ----------------------- hooks, const, props y states
-  const {
-    RESET_VALIDATIONS,
-    UPDATE_FORM,
-    UPDATE_MSGSCHEMA,
-    STOP_RELOAD,
-    START_RELOAD
-  } = typesR;
-  const initialState = {
-    msgSchema: messagesSchema,
-    form: {
-      nuevo: true,
-      online: false
-    },
-    isValidForm: true,
-    reload: false
-  };
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [ReRender, setReRender] = useState(false);
+  useEffect(() => setReRender(false));
+
   // Redux States
   const { currentParams } = useSelector(reducers => reducers.appInfoReducer);
   const dispatchR = useDispatch();
@@ -98,7 +105,7 @@ function AddProducts() {
   const isLoading = flag => dispatchR(updateLoading(flag));
 
   useEffect(() => getProductData(), [currentParams]);
-  useEffect(() => dispatch({ type: STOP_RELOAD }), [state.reload]); // truco para hacer un rerendero condicional
+
   // ----------------------- Metodos Principales
   function onChangeForm(formData) {
     // console.log('onChangeForm: ', formData);
@@ -141,7 +148,11 @@ function AddProducts() {
   }
   function createProduct(data) {
     isLoading(true);
-    asyncHandler(createProductRequest, isLoadingFalse, onError, data);
+    asyncHandler(createProductRequest, onSuccessCreateProduct, onError, data);
+  }
+  function onClearForm() {
+    dispatch({ type: RESET_FORM });
+    setReRender(true);
   }
   // ----------------------- Metodos Auxiliares
   function validateForm(formData) {
@@ -152,6 +163,10 @@ function AddProducts() {
     });
     return validation;
   }
+  function onSuccessCreateProduct() {
+    dispatch({ type: RESET_FORM });
+    isLoading(false);
+  }
   function isLoadingFalse() {
     isLoading(false);
   }
@@ -159,6 +174,7 @@ function AddProducts() {
     const fixedData = fitDataToForm(data);
     dispatch({ type: START_RELOAD, payload: fixedData });
     isLoading(false);
+    setReRender(true);
   }
   function onError(err) {
     testError(err);
@@ -271,7 +287,7 @@ function AddProducts() {
       <SearchPush pushPath="/master/addProductos" />
       <SearchMercadoLibre onFinish={onSearchML} />
       <div className="store-form-container">
-        {!state.reload && (
+        {!ReRender && (
           <ProductForm
             onChangeForm={onChangeForm}
             defaultValues={state.form}
@@ -279,6 +295,7 @@ function AddProducts() {
             validation={state.msgSchema}
             isValidForm={state.isValidForm}
             isEdit={state.form._id}
+            onClearForm={onClearForm}
           />
         )}
       </div>

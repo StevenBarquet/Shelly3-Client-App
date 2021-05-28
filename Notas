@@ -38,6 +38,13 @@
 -El get home no para la carga en error
 -Agregar nota de busqueda sin resultados en admin orders
 -Meter Select en responsable
+-Limpiar formulario de edicion de productos
+-Bug en cancelar, checa eso
+-Agregar readme para documentar
+-Configura prettier para formateo en save
+-Bugsnag o mixpanel trackear errores
+-Revisar Enrutamiento productivo
+-Al agregar productos, disponibes entero positivo
 
 
     Smurfeado:

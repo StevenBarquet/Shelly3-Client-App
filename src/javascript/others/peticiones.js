@@ -95,6 +95,16 @@ export async function searchOrders(data) {
     return error;
   }
 }
+export async function cancelOrderRequest(id) {
+  const endpoint = 'ordenes/cancelar/' + id;
+  const url = urlServer + endpoint;
+  try {
+    const respose = await axios.delete(url);
+    return respose;
+  } catch (error) {
+    return error;
+  }
+}
 // -------------------------------------------Old----------------------------------------
 export async function genericGet(url) {
   try {

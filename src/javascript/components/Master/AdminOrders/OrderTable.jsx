@@ -12,7 +12,7 @@ import { dateMongoToClientShort } from 'Others/dateMethods';
 const OrderTable = props => {
   const {
     orders,
-    onDelete,
+    onCancel,
     current,
     pageSize,
     total,
@@ -26,7 +26,7 @@ const OrderTable = props => {
 
   function handleDelete(value) {
     // console.log(value);
-    onDelete(value);
+    onCancel(value);
   }
 
   const columns = [
@@ -79,8 +79,12 @@ const OrderTable = props => {
       title: 'Cancelar',
       dataIndex: '_id',
       key: '_id',
-      render: _id => (
-        <Button onClick={() => handleDelete(_id)} type="danger">
+      render: (_id, fullData) => (
+        <Button
+          disabled={fullData && fullData.estatus === 'Cancelado'}
+          onClick={() => handleDelete(_id)}
+          type="danger"
+        >
           Cancelar
         </Button>
       )

@@ -281,7 +281,6 @@ function StoreCart() {
     return removeEmptyAndNull(newData);
   }
   function onSuccessOrder(response) {
-    console.log('state.orderData before reset', state.orderData);
     isLoading(false);
     dispatch({ type: RESET_ALL });
     notUpdated();

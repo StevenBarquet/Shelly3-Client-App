@@ -11,8 +11,8 @@ import ModalConfirmation from 'CommonComps/ModalConfirmation';
 import { useDispatch } from 'react-redux';
 import { updateLoading } from 'Actions/appInfo';
 // --Request
-import { asyncHandler } from 'Others/requestHandlers.js';
-import { searchOrders } from 'Others/peticiones.js';
+import { asyncHandler, testError } from 'Others/requestHandlers.js';
+import { searchOrders, cancelOrderRequest } from 'Others/peticiones.js';
 // ---Others
 import { removeEmptyAndNull } from 'Others/otherMethods';
 import { dateFormToServer } from 'Others/dateMethods';
@@ -123,6 +123,11 @@ function AdminOrders() {
       getAll();
     }
   }
+  function onCancelButton(data) {
+    const question = '¿Deseas cancelar ésta orden?';
+    const details = `La utilidad será eliminada y el estatus de orden cambiara a 'Cancelado' permanentemente`;
+    ModalConfirmation(question, details, onCancelOrder, data);
+  }
   function clearFilters() {
     const { pageNumber, pageSize } = state.searchParams;
     const { searchedValue, sortBy, filters } = searchParamsInitial;
@@ -153,11 +158,6 @@ function AdminOrders() {
     dispatch({ type: SEARCH_PARMS_CHANGE, payload });
     dispatch({ type: NOT_UPDATED });
   }
-  function onDelete(id) {
-    const question = '¿Deseas eliminar ésta orden?';
-    const details = `La orden: ${id} será eliminada permanentemente`;
-    ModalConfirmation(question, details, onDeleteOrder, id);
-  }
   function onFinishForm(params) {
     const { pageNumber, pageSize } = state.searchParams;
     const { searchedValue, sortBy, filters } = params;
@@ -172,15 +172,24 @@ function AdminOrders() {
     dispatch({ type: NOT_UPDATED });
   }
   // ----------------------- Metodos Auxiliares
+  function onCancelOrder(id) {
+    isLoading(true);
+    asyncHandler(cancelOrderRequest, onSuccessDelete, onError, id);
+  }
+  function onSuccessDelete() {
+    isLoading(false);
+    dispatch({ type: NOT_UPDATED });
+  }
+  function onError(err) {
+    testError(err);
+    isLoading(false);
+  }
   function formDateFix(formDate) {
     if (formDate) {
       const date = formDate._d;
       return dateFormToServer(date);
     }
     return null;
-  }
-  function onDeleteOrder(id) {
-    console.log('Orden eliminada... ', id);
   }
   function getAll() {
     isLoading(true);
@@ -240,9 +249,9 @@ function AdminOrders() {
           current={state.searchParams.pageNumber}
           pageSize={state.searchParams.pageSize}
           total={state.orderCount}
-          onDelete={onDelete}
           onViewCard={onViewCard}
           onPageChange={onPageChange}
+          onCancel={onCancelButton}
         />
       )}
       {state.viewCard && (

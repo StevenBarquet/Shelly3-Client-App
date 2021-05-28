@@ -55,6 +55,9 @@
     },
     "AdminOrdersPage": {
       "title": "Administrador de ordenes"
+    },
+    "EditOrdersPage": {
+      "title": "Editar de ordenes"
     }
   },
   "catalogos":{

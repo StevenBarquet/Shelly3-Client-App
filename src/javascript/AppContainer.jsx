@@ -12,6 +12,7 @@ import MasterLogin from 'Pages/Master/MasterLoginPage';
 import MasterLogout from 'Pages/Master/MasterLogoutPage';
 import StoreCart from 'Pages/Master/StoreCartPage';
 import AdminOrders from 'Pages/Master/AdminOrdersPage';
+import EditOrders from 'Pages/Master/EditOrdersPage';
 // ---Pages Client
 import HomePage from 'Pages/Client/HomePage';
 // ---Pages Others
@@ -46,9 +47,14 @@ function AppContainer() {
         />
         {/* Orders */}
         <Route exact path="/master/storeCart" component={StoreCart} />
+        <Route exact path="/master/adminOrders" component={AdminOrders} />
+        <Route
+          exact
+          path="/master/editOrder([?0-9a-zA-Z]*)"
+          component={EditOrders}
+        />
         {/* Others */}
         <Route exact path="/master/publicHome" component={AdminPublicHome} />
-        <Route exact path="/master/adminOrders" component={AdminOrders} />
         <Route exact path="/master/login" component={MasterLogin} />
         <Route exact path="/master/salir" component={MasterLogout} />
         {/* --------- Client routes --------- */}

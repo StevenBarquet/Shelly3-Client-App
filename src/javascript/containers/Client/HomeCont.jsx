@@ -48,7 +48,7 @@ function HomeCont() {
   }
   // ----------------------- Render
   return (
-    <React.Fragment>
+    <>
       <div className="h-title">
         {main} <span>{sub}</span>
       </div>
@@ -62,7 +62,7 @@ function HomeCont() {
         <BuySteps />
         <ButtonProd />
       </div>
-    </React.Fragment>
+    </>
   );
 }
 

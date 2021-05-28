@@ -1,7 +1,7 @@
 // ---Dependencys
 import React from 'react';
 import { Form, Row, Col, Input, Select, Switch, InputNumber } from 'antd';
-import { EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { EditOutlined, PlusOutlined, ClearOutlined } from '@ant-design/icons';
 // ---ComonComponents
 import ButtonMlg from 'CommonComps/ButtonMlg';
 import mapOptions from 'CommonComps/mapOptions';
@@ -16,8 +16,10 @@ function ProductForm(props) {
     onSubmit,
     validation,
     isValidForm,
-    isEdit
+    isEdit,
+    onClearForm
   } = props;
+
   const {
     _id,
     marca,
@@ -336,14 +338,29 @@ function ProductForm(props) {
               </div>
             )}
             <div className="submit-container">
-              <ButtonMlg
-                variant="purple"
-                size="small"
-                htmlType="submit"
-                widthB="85%"
-                label={isEdit ? 'Editar producto' : 'Agregar producto'}
-                icon={isEdit ? <EditOutlined /> : <PlusOutlined />}
-              />
+              <Row style={{ width: '100%' }}>
+                <Col xs={24} sm={24} lg={6}>
+                  <ButtonMlg
+                    variant="blue-outline"
+                    size="small"
+                    htmlType="button"
+                    onClick={onClearForm}
+                    widthB="85%"
+                    label="Limpiar formulario"
+                    icon={<ClearOutlined />}
+                  />
+                </Col>
+                <Col xs={24} sm={24} lg={18}>
+                  <ButtonMlg
+                    variant="purple"
+                    size="small"
+                    htmlType="submit"
+                    widthB="85%"
+                    label={isEdit ? 'Editar producto' : 'Agregar producto'}
+                    icon={isEdit ? <EditOutlined /> : <PlusOutlined />}
+                  />
+                </Col>
+              </Row>
             </div>
           </Col>
         </Row>
