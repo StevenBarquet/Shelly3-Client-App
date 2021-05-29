@@ -6,28 +6,28 @@ const webpack = require('webpack'); // hot reloader plugin
 // equivalente a export default
 module.exports = {
   entry: {
-    index: path.resolve(__dirname, 'src/javascript/index.js')
+    index: path.resolve(__dirname, '../src/javascript/index.js')
   },
   mode: 'production',
   output: {
-    path: path.resolve(__dirname, 'dist'), // Genera ruta dependiendo tu SO, dist es una convencion donde van los js compilados
+    path: path.resolve(__dirname, '../dist'), // Genera ruta dependiendo tu SO, dist es una convencion donde van los js compilados
     // filename: 'papu-bundle-[name].js'
     filename: 'javascript/[name].js', // name corresponde a los nombres key de el objeto entry
-    publicPath: '/'
+    publicPath: '/' // Path desde donde se van a solicitar recursos
   },
   // Crear shortcuts para paths absolutos
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      Comp: path.resolve(__dirname, 'src/javascript/components'),
-      Cont: path.resolve(__dirname, 'src/javascript/containers'),
-      Pages: path.resolve(__dirname, 'src/javascript/cPages'),
-      CommonComps: path.resolve(__dirname, 'src/javascript/commonComps'),
-      Others: path.resolve(__dirname, 'src/javascript/others'),
-      Actions: path.resolve(__dirname, 'src/javascript/reduxActions'),
-      Reducers: path.resolve(__dirname, 'src/javascript/reduxReducers'),
-      Types: path.resolve(__dirname, 'src/javascript/reduxTypes'),
-      Images: path.resolve(__dirname, 'src/images')
+      Comp: path.resolve(__dirname, '../src/javascript/components'),
+      Cont: path.resolve(__dirname, '../src/javascript/containers'),
+      Pages: path.resolve(__dirname, '../src/javascript/cPages'),
+      CommonComps: path.resolve(__dirname, '../src/javascript/commonComps'),
+      Others: path.resolve(__dirname, '../src/javascript/others'),
+      Actions: path.resolve(__dirname, '../src/javascript/reduxActions'),
+      Reducers: path.resolve(__dirname, '../src/javascript/reduxReducers'),
+      Types: path.resolve(__dirname, '../src/javascript/reduxTypes'),
+      Images: path.resolve(__dirname, '../src/images')
     }
   },
   // aqui van los loaders
@@ -35,7 +35,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        use: ['babel-loader'], // incluir babel
+        use: 'babel-loader', // incluir babel
         exclude: /node_modules/ // excluye esa carpeta
       },
       {
@@ -105,7 +105,7 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/html/index.html')
+      template: path.resolve(__dirname, '../src/html/index.html')
     }),
     new webpack.DllReferencePlugin({
       manifest: require('./modules-manifest.json')

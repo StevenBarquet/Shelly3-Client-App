@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "webpack-dev-server --config ./webpack.dev.config.js",
-    "build-dll": "webpack --config ./webpack.dll.config.js",
-    "build-prod": "webpack --config ./webpack.config.js",
-    "prod": "webpack --config ./webpack.dll.config.js && webpack --config ./webpack.config.js && node server.js"
+    "dev": "webpack-dev-server --config ./webpack/webpack.dev.config.js",
+    "build-dll": "webpack --config ./webpack/webpack.dll.config.js",
+    "build-prod": "webpack --config ./webpack/webpack.config.js",
+    "prod": "webpack --config ./webpack/webpack.dll.config.js && webpack --config ./webpack/webpack.config.js && node server.js"
   },
   "keywords": [
     "webpack"

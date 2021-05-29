@@ -16,7 +16,10 @@ function DinamicCarousel(props) {
         <div className="carousel-cont">
           <Carousel autoplay effect="fade" dotPosition="top">
             {banners.map(element => (
-              <Banner srcImg={isMovil ? element.imgMovil : element.imgDesk} />
+              <Banner
+                key={element._id}
+                srcImg={isMovil ? element.imgMovil : element.imgDesk}
+              />
             ))}
           </Carousel>
         </div>

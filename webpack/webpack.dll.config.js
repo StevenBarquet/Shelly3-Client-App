@@ -8,7 +8,7 @@ module.exports = {
   },
   mode: 'production',
   output: {
-    path: path.resolve(__dirname, 'dist'), // Genera ruta dependiendo tu SO, dist es una convencion donde van los js compilados
+    path: path.resolve(__dirname, '../dist'), // Genera ruta dependiendo tu SO, dist es una convencion donde van los js compilados
     // filename: 'papu-bundle-[name].js'
     filename: 'javascript/[name].js', // name corresponde a los nombres key de el objeto entry,
     library: 'modules'
