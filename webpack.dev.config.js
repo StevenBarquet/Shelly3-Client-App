@@ -17,6 +17,7 @@ module.exports = {
   devServer: {
     hot: true,
     port: 3000,
+    public: 'localhost:3000',
     open: true,
     historyApiFallback: true, // fix cannot get on refresh
     contentBase: path.resolve(__dirname, 'src'),

@@ -47,7 +47,7 @@ async function getValuesFromOtherApis(data, originalUrl) {
   const resCategory = await genericGet(categoryAPIurl);
   const resDetails = await genericGet(detailsAPIurl);
 
-  const descripcion = resDetails.data.plain_text;
+  const descripcion = resDetails.data ? resDetails.data.plain_text : '';
   const shortMicro = handleCategory(resCategory.data.path_from_root);
   const seller = {
     idMercadoLibre: resSeller.data.id.toString(),
