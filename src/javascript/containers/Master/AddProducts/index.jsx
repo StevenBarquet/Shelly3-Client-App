@@ -44,7 +44,8 @@ const initialState = {
   msgSchema: messagesSchema,
   form: {
     nuevo: true,
-    online: false
+    online: false,
+    descuento: 0
   },
   isValidForm: true
 };
@@ -164,7 +165,7 @@ function AddProducts() {
     return validation;
   }
   function onSuccessCreateProduct() {
-    dispatch({ type: RESET_FORM });
+    onClearForm();
     isLoading(false);
   }
   function isLoadingFalse() {
@@ -269,7 +270,7 @@ function AddProducts() {
     // Retorna:
     // -El id de la url o falso
     if (value && value === '') {
-      onChangeForm({ nuevo: true, online: false });
+      onChangeForm({ nuevo: true, online: false, descuento: 0 });
       return false;
     }
     if (value && value.length === 25) {

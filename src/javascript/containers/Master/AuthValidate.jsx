@@ -13,7 +13,8 @@ const AuthValidate = withRouter(props => {
     localStorage.getItem('htFBgj3nK6QwY5hm');
     if (localStorage.getItem('htFBgj3nK6QwY5hm') !== 'U38Sw5Q8MtNwCYKW') {
       history.push('/master/login');
-    } else if (currentPath === '/master') history.push('/master/tienda');
+    } else if (currentPath === '/master' || currentPath === '/master/')
+      history.push('/master/tienda');
   }
 
   return <React.Fragment>{props.children}</React.Fragment>;
