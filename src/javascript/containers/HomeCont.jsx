@@ -5,10 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getPublicHomeAction } from 'Actions/home';
 import { updateLoading } from 'Actions/appInfo';
 // ---Components
-import DinamicCarousel from 'Comp/Client/Home/DinamicCarousel';
-import BuySteps from 'Comp/Client/Home/BuySteps';
-import ButtonProd from 'Comp/Client/Home/ButtonProd';
-import Destacados from 'Comp/Client/Home/Destacados';
+import DinamicCarousel from 'Comp/Home/DinamicCarousel';
+import BuySteps from 'Comp/Home/BuySteps';
+import ButtonProd from 'Comp/Home/ButtonProd';
+import Destacados from 'Comp/Home/Destacados';
 // ---Others
 import { title } from 'Others/labels.json';
 // --Request

@@ -2,8 +2,8 @@
 import React from 'react';
 import { Row } from 'antd';
 // ---Components
-import ProductBoxModel from 'Comp/Client/Home/ProductBoxModel';
-import ProductBoxModelPromo from 'Comp/Client/Home/ProductBoxModelPromo';
+import ProductBoxModel from 'Comp/Home/ProductBoxModel';
+import ProductBoxModelPromo from 'Comp/Home/ProductBoxModelPromo';
 
 // ------------------------------------------ COMPONENT-----------------------------------------
 function Destacados() {
